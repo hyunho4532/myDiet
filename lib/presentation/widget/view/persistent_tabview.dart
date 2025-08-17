@@ -10,13 +10,25 @@ class PersistentTabview extends StatefulWidget {
 }
 
 class _PersistentTabviewState extends State<PersistentTabview> {
-  final PersistentTabController _controller = PersistentTabController(initialIndex: 0);
+  late final PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
       context,
+      onItemSelected: (index) {
+        setState(() {
+          _controller.index = index;
+        });
+      },
       controller: _controller,
+      floatingActionButton: _controller.index == 1 // Diet 탭일 때만
+          ? FloatingActionButton(
+        onPressed: () {
+
+        },
+        child: const Icon(Icons.add),
+      ) : null,
       screens: Const().buildScreens(),
       items: Const().buildNavItems(),
       handleAndroidBackButtonPress: true,
@@ -39,6 +51,7 @@ class _PersistentTabviewState extends State<PersistentTabview> {
       ),
       confineToSafeArea: true,
       navBarHeight: kBottomNavigationBarHeight,
+      navBarStyle: NavBarStyle.style3,
     );
   }
 }

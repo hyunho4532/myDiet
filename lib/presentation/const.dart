@@ -10,7 +10,8 @@ class Const {
   List<Color> buildColors() {
     return [
       Color(0xff2d67f4),
-      Color(0xffb8b8b8)
+      Color(0xffb8b8b8),
+      Color(0xff9ac2ff)
     ];
   }
 
@@ -46,7 +47,7 @@ class Const {
         routeAndNavigatorSettings: buildRouteAndNaviSettings()
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.note_alt),
+        icon: Icon(Icons.add),
         title: ("식단"),
         activeColorPrimary: buildColors()[0],
         inactiveColorPrimary: buildColors()[1],

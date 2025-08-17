@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/widget/view/persistent_tabview.dart';
-import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabview();
+    return Scaffold(
+        body: PersistentTabview()
+    );
   }
 }
