@@ -35,6 +35,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # 플러터 네이티브 스플래시 화면
+  flutter_native_splash: ^2.4.6
+
+  # 바텀 네비게이션
+  persistent_bottom_nav_bar: ^6.2.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
