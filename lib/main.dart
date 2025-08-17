@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mydiet/presentation/widget/view/persistent_tabview.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 
+  );
+
   runApp(const MyApp());
 }
 

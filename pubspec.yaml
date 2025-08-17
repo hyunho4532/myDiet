@@ -41,6 +41,9 @@ dependencies:
   # 바텀 네비게이션
   persistent_bottom_nav_bar: ^6.2.1
 
+  # supabase 셋팅
+  supabase_flutter: ^2.9.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
