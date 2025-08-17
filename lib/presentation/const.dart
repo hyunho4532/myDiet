@@ -36,6 +36,21 @@ class Const {
     );
   }
 
+  // 네비바 에니메이션 설정
+  NavBarAnimationSettings buildNavBarAnimationSettings() {
+    return const NavBarAnimationSettings(
+      navBarItemAnimation: ItemAnimationSettings(
+        duration: Duration(milliseconds: 400),
+        curve: Curves.ease,
+      ),
+      screenTransitionAnimation: ScreenTransitionAnimationSettings(
+        animateTabTransition: true,
+        duration: Duration(milliseconds: 200),
+        screenTransitionAnimationType: ScreenTransitionAnimationType.fadeIn,
+      ),
+    );
+  }
+
   // 네비게이션 아이템 관리
   List<PersistentBottomNavBarItem> buildNavItems() {
     return [

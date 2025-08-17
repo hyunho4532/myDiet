@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/utils/visible.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class PersistentTabview extends StatefulWidget {
@@ -22,13 +23,7 @@ class _PersistentTabviewState extends State<PersistentTabview> {
         });
       },
       controller: _controller,
-      floatingActionButton: _controller.index == 1 // Diet 탭일 때만
-          ? FloatingActionButton(
-        onPressed: () {
-
-        },
-        child: const Icon(Icons.add),
-      ) : null,
+      floatingActionButton: Visible().visibleFloating(_controller.index),
       screens: Const().buildScreens(),
       items: Const().buildNavItems(),
       handleAndroidBackButtonPress: true,
@@ -38,17 +33,7 @@ class _PersistentTabviewState extends State<PersistentTabview> {
       padding: const EdgeInsets.only(top: 8),
       backgroundColor: Colors.white,
       isVisible: true,
-      animationSettings: const NavBarAnimationSettings(
-        navBarItemAnimation: ItemAnimationSettings(
-          duration: Duration(milliseconds: 400),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: ScreenTransitionAnimationSettings(
-          animateTabTransition: true,
-          duration: Duration(milliseconds: 200),
-          screenTransitionAnimationType: ScreenTransitionAnimationType.fadeIn,
-        ),
-      ),
+      animationSettings: Const().buildNavBarAnimationSettings(),
       confineToSafeArea: true,
       navBarHeight: kBottomNavigationBarHeight,
       navBarStyle: NavBarStyle.style3,
