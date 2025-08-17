@@ -12,6 +12,13 @@ class _DietScreenState extends State<DietScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+
+
+        },
+        child: ,
+      ),
     );
   }
 }
