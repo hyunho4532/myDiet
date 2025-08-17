@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mydiet/presentation/const.dart';
+import 'package:get/get.dart';
 import 'package:mydiet/presentation/widget/view/persistent_tabview.dart';
-import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:mydiet/service/supabase_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Supabase 세팅
+  await SupabaseSerivce().init();
+
   runApp(const MyApp());
 }
 
@@ -13,7 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -36,6 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabview();
+    return Scaffold(
+        body: PersistentTabview()
+    );
   }
 }
