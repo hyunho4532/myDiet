@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
       stateManagement: true,
       hideNavigationBarWhenKeyboardAppears: true,
       padding: const EdgeInsets.only(top: 8),
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: Colors.white,
       isVisible: true,
       animationSettings: const NavBarAnimationSettings(
         navBarItemAnimation: ItemAnimationSettings(

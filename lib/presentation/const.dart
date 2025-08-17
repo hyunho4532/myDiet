@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mydiet/presentation/screens/diet_screen.dart';
 import 'package:mydiet/presentation/screens/home_screen.dart';
 import 'package:mydiet/presentation/screens/profile_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
@@ -9,7 +10,7 @@ class Const {
   List<Color> buildColors() {
     return [
       Color(0xff2d67f4),
-      Color(0xffe1e1e1)
+      Color(0xffb8b8b8)
     ];
   }
 
@@ -17,8 +18,21 @@ class Const {
   List<Widget> buildScreens() {
     return [
       HomeScreen(),
+      DietScreen(),
       ProfileScreen()
     ];
+  }
+
+  // 네비게이션 라우트 및 네비게이터 설정
+  RouteAndNavigatorSettings buildRouteAndNaviSettings() {
+    return RouteAndNavigatorSettings(
+      initialRoute: "/",
+      routes: {
+        "/first": (final context) => const HomeScreen(),
+        "/second": (final context) => const DietScreen(),
+        "/third": (final context) => const ProfileScreen(),
+      },
+    );
   }
 
   // 네비게이션 아이템 관리
@@ -29,26 +43,21 @@ class Const {
         title: ("홈"),
         activeColorPrimary: buildColors()[0],
         inactiveColorPrimary: buildColors()[1],
-        routeAndNavigatorSettings: RouteAndNavigatorSettings(
-          initialRoute: "/",
-          routes: {
-            "/first": (final context) => const HomeScreen(),
-            "/second": (final context) => const ProfileScreen(),
-          },
-        ),
+        routeAndNavigatorSettings: buildRouteAndNaviSettings()
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.note_alt),
+        title: ("식단"),
+        activeColorPrimary: buildColors()[0],
+        inactiveColorPrimary: buildColors()[1],
+        routeAndNavigatorSettings: buildRouteAndNaviSettings()
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.person),
         title: ("프로필"),
         activeColorPrimary: buildColors()[0],
         inactiveColorPrimary: buildColors()[1],
-        routeAndNavigatorSettings: RouteAndNavigatorSettings(
-          initialRoute: "/",
-          routes: {
-            "/first": (final context) => const HomeScreen(),
-            "/second": (final context) => const ProfileScreen(),
-          },
-        ),
+        routeAndNavigatorSettings: buildRouteAndNaviSettings()
       ),
     ];
   }
