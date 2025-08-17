@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mydiet/presentation/screens/diet_screen.dart';
-import 'package:mydiet/presentation/screens/home_screen.dart';
-import 'package:mydiet/presentation/screens/profile_screen.dart';
+import 'package:mydiet/presentation/screens/diet_s.dart';
+import 'package:mydiet/presentation/screens/home_s.dart';
+import 'package:mydiet/presentation/screens/profile_s.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 /// Const: 전역 상수 관리
