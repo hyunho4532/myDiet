@@ -82,9 +82,16 @@ class _DietIState extends State<DietI> {
               ),
 
               Chips(
-                  type: 'FOOD_KIND',
-                  tags: tagKind,
-                  data: foodKind.commons
+                type: 'FOOD_KIND',
+                tags: tagKind,
+                data: foodKind.commons,
+                onChanged: (val) {
+                    setState(() {
+                      tagKind = val;
+
+                      final name = foodKind.commons[val].name;
+                    });
+                },
               ),
 
               Padding(
@@ -98,9 +105,16 @@ class _DietIState extends State<DietI> {
               ),
 
               Chips(
-                  type: 'FOOD_AMOUNT',
-                  tags: tagAmount,
-                  data: foodAmount.commons
+                type: 'FOOD_AMOUNT',
+                tags: tagAmount,
+                data: foodAmount.commons,
+                onChanged: (val) {
+                  setState(() {
+                    tagAmount = val;
+
+                    final name = foodAmount.commons[val].name;
+                  });
+                },
               ),
             ],
           );
