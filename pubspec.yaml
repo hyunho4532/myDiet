@@ -53,6 +53,9 @@ dependencies:
   # getX 상태 관리
   get: ^4.7.2
 
+  # Chip 라이브러리
+  chips_choice: ^3.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -76,6 +79,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - .env
 
   # To add assets to your application, add an assets section, like this:
   # assets:

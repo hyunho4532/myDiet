@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mydiet/presentation/widget/view/persistent_tabview.dart';
 import 'package:mydiet/service/supabase_service.dart';
 
@@ -6,7 +7,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Supabase 세팅
-  SupabaseSerivce().init();
+  await SupabaseSerivce().init();
 
   runApp(const MyApp());
 }
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/screens/feature/diet_i.dart';
 
 class Floating extends StatefulWidget {
   final Icon icon;
@@ -21,7 +23,8 @@ class _FloatingState extends State<Floating> {
       child: FloatingActionButton(
         backgroundColor: Const().buildColors()[0],
         onPressed: () {
-
+          print("xptmxm");
+          Get.to(DietI());
         },
         child: widget.icon,
       ),

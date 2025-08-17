@@ -18,9 +18,9 @@ class Const {
   // 네비게이션 화면 관리
   List<Widget> buildScreens() {
     return [
-      HomeScreen(),
-      DietScreen(),
-      ProfileScreen()
+      HomeS(),
+      DietS(),
+      ProfileS()
     ];
   }
 
@@ -29,9 +29,9 @@ class Const {
     return RouteAndNavigatorSettings(
       initialRoute: "/",
       routes: {
-        "/first": (final context) => const HomeScreen(),
-        "/second": (final context) => const DietScreen(),
-        "/third": (final context) => const ProfileScreen(),
+        "/first": (final context) => const HomeS(),
+        "/second": (final context) => const DietS(),
+        "/third": (final context) => const ProfileS(),
       },
     );
   }

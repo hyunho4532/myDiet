@@ -2,7 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SupabaseSerivce {
-  void init() async {
+  Future<void> init() async {
     await dotenv.load(fileName: ".env");
 
     await Supabase.initialize(
