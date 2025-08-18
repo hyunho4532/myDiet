@@ -4,9 +4,11 @@ import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mydiet/domain/common_code.dart';
+import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/common_c.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
+import 'package:mydiet/presentation/screens/feature/diet_info_i.dart';
 import 'package:mydiet/presentation/widget/chips/chip.dart';
 
 class DietI extends StatefulWidget {
@@ -215,12 +217,12 @@ class _DietIState extends State<DietI> {
 
                     CircleAvatar(
                       radius: 18,
-                      backgroundColor: Colors.blue,
+                      backgroundColor: Const().buildColors()[0],
                       child: IconButton(
                         padding: EdgeInsets.zero,
                         icon: Icon(Icons.add, color: Colors.white, size: 24),
                         onPressed: () {
-                          // 버튼 클릭 시 동작
+                          Get.to(DietInfoI());
                         },
                       ),
                     ),
