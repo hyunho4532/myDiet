@@ -14,10 +14,15 @@ class Diet {
   @JsonKey(name: 'food_amount')
   final String foodAmount;
 
+  // 식사한 날짜
+  @JsonKey(name: 'food_date')
+  final DateTime foodDate;
+
   Diet({
     required this.id,
     required this.foodKind,
-    required this.foodAmount
+    required this.foodAmount,
+    required this.foodDate
   });
 
   factory Diet.fromJson(Map<String, dynamic> json) => _$DietFromJson(json);

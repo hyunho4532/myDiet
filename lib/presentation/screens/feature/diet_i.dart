@@ -1,8 +1,12 @@
 import 'package:chips_choice/chips_choice.dart';
+import 'package:day_night_time_picker/day_night_time_picker.dart';
+import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mydiet/domain/common_code.dart';
 import 'package:mydiet/presentation/controller/common_c.dart';
 import 'package:get/get.dart';
+import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/widget/chips/chip.dart';
 
 class DietI extends StatefulWidget {
@@ -13,6 +17,7 @@ class DietI extends StatefulWidget {
 }
 
 class _DietIState extends State<DietI> {
+  final DietController diets = Get.put(DietController());
   final CommonCodeController foodKind = Get.put(CommonCodeController(), tag: 'foodKind');
   final CommonCodeController foodAmount = Get.put(CommonCodeController(), tag: 'foodAmount');
 
@@ -26,6 +31,23 @@ class _DietIState extends State<DietI> {
 
   int tagKind = 1;
   int tagAmount = 1;
+
+  Time _time = Time(hour: 11, minute: 30, second: 20);
+
+  void onTimeChanged(Time newTime) {
+    setState(() {
+      _time = newTime;
+
+      final oldDate = diets.selectedDate.value;
+      diets.selectedDate.value = DateTime(
+        oldDate.year,
+        oldDate.month,
+        oldDate.day,
+        newTime.hour,
+        newTime.minute,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +137,50 @@ class _DietIState extends State<DietI> {
                     final name = foodAmount.commons[val].name;
                   });
                 },
+              ),
+
+              EasyDateTimeLinePicker(
+                locale: Locale('ko'),
+                monthYearPickerOptions: MonthYearPickerOptions(
+                  confirmTextStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold
+                  ),
+                  cancelTextStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold
+                  )
+                ),
+                headerOptions: HeaderOptions(
+                  headerType: HeaderType.picker
+                ),
+                focusedDate: diets.selectedDate.value,
+                firstDate: DateTime(2024, 3, 18),
+                lastDate: DateTime(2030, 3, 18),
+                onDateChange: (date) {
+                  setState(() {
+                    diets.setFoodDate(date);
+                  });
+                },
+              ),
+
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    showPicker(
+                      context: context,
+                      value: _time,
+                      sunrise: TimeOfDay(hour: 6, minute: 0), // optional
+                      sunset: TimeOfDay(hour: 18, minute: 0), // optional
+                      duskSpanInMinutes: 120, // optional
+                      onChange: onTimeChanged,
+                    ),
+                  );
+                },
+                child: Text(
+                  "${DateFormat('yyyy-MM-dd HH:mm').format(diets.selectedDate.value)} 시간 선택하기",
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ],
           );

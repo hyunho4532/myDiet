@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/widget/view/persistent_tabview.dart';
 import 'package:mydiet/service/supabase_service.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Const().buildColors()[0]),
       ),
       home: const MyHomePage(),
     );
