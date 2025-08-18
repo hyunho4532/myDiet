@@ -144,15 +144,15 @@ class _DietIState extends State<DietI> {
                 monthYearPickerOptions: MonthYearPickerOptions(
                   confirmTextStyle: TextStyle(
                     fontSize: 14,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
                   ),
                   cancelTextStyle: TextStyle(
                     fontSize: 14,
-                    fontWeight: FontWeight.bold
-                  )
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 headerOptions: HeaderOptions(
-                  headerType: HeaderType.picker
+                  headerType: HeaderType.picker,
                 ),
                 focusedDate: diets.selectedDate.value,
                 firstDate: DateTime(2024, 3, 18),
@@ -170,18 +170,63 @@ class _DietIState extends State<DietI> {
                     showPicker(
                       context: context,
                       value: _time,
-                      sunrise: TimeOfDay(hour: 6, minute: 0), // optional
-                      sunset: TimeOfDay(hour: 18, minute: 0), // optional
-                      duskSpanInMinutes: 120, // optional
+                      sunrise: TimeOfDay(hour: 6, minute: 0),  // optional
+                      sunset: TimeOfDay(hour: 18, minute: 0),  // optional
+                      duskSpanInMinutes: 120,                  // optional
                       onChange: onTimeChanged,
                     ),
                   );
                 },
-                child: Text(
-                  "${DateFormat('yyyy-MM-dd HH:mm').format(diets.selectedDate.value)} 시간 선택하기",
-                  style: TextStyle(color: Colors.black),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      DateFormat('yyyy-MM-dd HH:mm').format(diets.selectedDate.value),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    Text(
+                      '⏱ 시간 선택하기',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ],
                 ),
               ),
+
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: Text(
+                        '식단을 등록해주세요',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    const SizedBox(width: 8), // 간격
+
+                    CircleAvatar(
+                      radius: 18,
+                      backgroundColor: Colors.blue,
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: Icon(Icons.add, color: Colors.white, size: 24),
+                        onPressed: () {
+                          // 버튼 클릭 시 동작
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           );
         }
