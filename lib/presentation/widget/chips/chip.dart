@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/domain/common_code.dart';
 import 'package:mydiet/presentation/const.dart';
-import 'package:mydiet/presentation/controller/diet_c.dart';
 
 class Chips extends StatefulWidget {
   final String type;
@@ -34,7 +33,8 @@ class _ChipState extends State<Chips> {
         }
       },
       choiceStyle: C2ChipStyle(
-        backgroundColor: Colors.blue,
+        foregroundColor: Const().buildColors()[0],
+        backgroundColor: Const().buildColors()[0],
         overlayColor: Const().buildColors()[2],
         foregroundStyle: TextStyle(
           color: Colors.black
