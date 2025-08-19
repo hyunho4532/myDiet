@@ -4,151 +4,151 @@ part 'food.g.dart';
 
 @JsonSerializable()
 class Food {
-  @JsonKey(name: 'food_code')
+  @JsonKey(name: 'food_code', defaultValue: '')
   final String foodCode;
 
-  @JsonKey(name: 'food_name')
+  @JsonKey(name: 'food_name', defaultValue: '')
   final String foodName;
 
-  @JsonKey(name: 'data_type_code')
+  @JsonKey(name: 'data_type_code', defaultValue: '')
   final String dataTypeCode;
 
-  @JsonKey(name: 'data_type_name')
+  @JsonKey(name: 'data_type_name', defaultValue: '')
   final String dataTypeName;
 
-  @JsonKey(name: 'food_origin_code')
+  @JsonKey(name: 'food_origin_code', defaultValue: '')
   final String foodOriginCode;
 
-  @JsonKey(name: 'food_origin_name')
+  @JsonKey(name: 'food_origin_name', defaultValue: '')
   final String foodOriginName;
 
-  @JsonKey(name: 'food_major_category_code')
+  @JsonKey(name: 'food_major_category_code', defaultValue: '')
   final String foodMajorCategoryCode;
 
-  @JsonKey(name: 'food_major_category_name')
+  @JsonKey(name: 'food_major_category_name', defaultValue: '')
   final String foodMajorCategoryName;
 
-  @JsonKey(name: 'representative_food_code')
+  @JsonKey(name: 'representative_food_code', defaultValue: '')
   final String representativeFoodCode;
 
-  @JsonKey(name: 'representative_food_name')
+  @JsonKey(name: 'representative_food_name', defaultValue: '')
   final String representativeFoodName;
 
-  @JsonKey(name: 'food_middle_category_code')
+  @JsonKey(name: 'food_middle_category_code', defaultValue: '')
   final String foodMiddleCategoryCode;
 
-  @JsonKey(name: 'food_middle_category_name')
+  @JsonKey(name: 'food_middle_category_name', defaultValue: '')
   final String foodMiddleCategoryName;
 
-  @JsonKey(name: 'food_sub_category_code')
+  @JsonKey(name: 'food_sub_category_code', defaultValue: '')
   final String foodSubCategoryCode;
 
-  @JsonKey(name: 'food_sub_category_name')
+  @JsonKey(name: 'food_sub_category_name', defaultValue: '')
   final String foodSubCategoryName;
 
-  @JsonKey(name: 'food_detail_category_code')
+  @JsonKey(name: 'food_detail_category_code', defaultValue: '')
   final String foodDetailCategoryCode;
 
-  @JsonKey(name: 'food_detail_category_name')
+  @JsonKey(name: 'food_detail_category_name', defaultValue: '')
   final String foodDetailCategoryName;
 
-  @JsonKey(name: 'nutrition_reference_amount')
+  @JsonKey(name: 'nutrition_reference_amount', defaultValue: '')
   final String nutritionReferenceAmount;
 
-  @JsonKey(name: 'energy_kcal')
+  @JsonKey(name: 'energy_kcal', defaultValue: 0.0)
   final double energyKcal;
 
-  @JsonKey(name: 'water_g')
+  @JsonKey(name: 'water_g', defaultValue: 0.0)
   final double waterG;
 
-  @JsonKey(name: 'protein_g')
+  @JsonKey(name: 'protein_g', defaultValue: 0.0)
   final double proteinG;
 
-  @JsonKey(name: 'fat_g')
+  @JsonKey(name: 'fat_g', defaultValue: 0.0)
   final double fatG;
 
-  @JsonKey(name: 'ash_g')
+  @JsonKey(name: 'ash_g', defaultValue: 0.0)
   final double ashG;
 
-  @JsonKey(name: 'carbohydrate_g')
+  @JsonKey(name: 'carbohydrate_g', defaultValue: 0.0)
   final double carbohydrateG;
 
-  @JsonKey(name: 'sugars_g')
+  @JsonKey(name: 'sugars_g', defaultValue: 0.0)
   final double sugarsG;
 
-  @JsonKey(name: 'dietary_fiber_g')
+  @JsonKey(name: 'dietary_fiber_g', defaultValue: 0.0)
   final double dietaryFiberG;
 
-  @JsonKey(name: 'calcium_mg')
+  @JsonKey(name: 'calcium_mg', defaultValue: 0.0)
   final double calciumMg;
 
-  @JsonKey(name: 'iron_mg')
+  @JsonKey(name: 'iron_mg', defaultValue: 0.0)
   final double ironMg;
 
-  @JsonKey(name: 'phosphorus_mg')
+  @JsonKey(name: 'phosphorus_mg', defaultValue: 0.0)
   final double phosphorusMg;
 
-  @JsonKey(name: 'potassium_mg')
+  @JsonKey(name: 'potassium_mg', defaultValue: 0.0)
   final double potassiumMg;
 
-  @JsonKey(name: 'sodium_mg')
+  @JsonKey(name: 'sodium_mg', defaultValue: 0.0)
   final double sodiumMg;
 
-  @JsonKey(name: 'vitamin_a_μg_rae')
+  @JsonKey(name: 'vitamin_a_μg_rae', defaultValue: 0.0)
   final double vitaminARae;
 
-  @JsonKey(name: 'retinol_μg')
+  @JsonKey(name: 'retinol_μg', defaultValue: 0.0)
   final double retinol;
 
-  @JsonKey(name: 'beta_carotene_μg')
+  @JsonKey(name: 'beta_carotene_μg', defaultValue: 0.0)
   final double betaCarotene;
 
-  @JsonKey(name: 'thiamin_mg')
+  @JsonKey(name: 'thiamin_mg', defaultValue: 0.0)
   final double thiaminMg;
 
-  @JsonKey(name: 'riboflavin_mg')
+  @JsonKey(name: 'riboflavin_mg', defaultValue: 0.0)
   final double riboflavinMg;
 
-  @JsonKey(name: 'niacin_mg')
+  @JsonKey(name: 'niacin_mg', defaultValue: 0.0)
   final double niacinMg;
 
-  @JsonKey(name: 'vitamin_c_mg')
+  @JsonKey(name: 'vitamin_c_mg', defaultValue: 0.0)
   final double vitaminCMg;
 
-  @JsonKey(name: 'vitamin_d_μg')
+  @JsonKey(name: 'vitamin_d_μg', defaultValue: 0.0)
   final double vitaminDMicrog;
 
-  @JsonKey(name: 'cholesterol_mg')
+  @JsonKey(name: 'cholesterol_mg', defaultValue: 0.0)
   final double cholesterolMg;
 
-  @JsonKey(name: 'saturated_fat_g')
+  @JsonKey(name: 'saturated_fat_g', defaultValue: 0.0)
   final double saturatedFatG;
 
-  @JsonKey(name: 'trans_fat_g')
+  @JsonKey(name: 'trans_fat_g', defaultValue: 0.0)
   final double transFatG;
 
-  @JsonKey(name: 'source_code')
+  @JsonKey(name: 'source_code', defaultValue: '')
   final String sourceCode;
 
-  @JsonKey(name: 'source_name')
+  @JsonKey(name: 'source_name', defaultValue: '')
   final String sourceName;
 
-  @JsonKey(name: 'food_weight')
+  @JsonKey(name: 'food_weight', defaultValue: '')
   final String foodWeight;
 
-  @JsonKey(name: 'manufacturer')
+  @JsonKey(name: 'manufacturer', defaultValue: '')
   final String manufacturer;
 
-  @JsonKey(name: 'data_creation_method_code')
+  @JsonKey(name: 'data_creation_method_code', defaultValue: '')
   final String dataCreationMethodCode;
 
-  @JsonKey(name: 'data_creation_method_name')
+  @JsonKey(name: 'data_creation_method_name', defaultValue: '')
   final String dataCreationMethodName;
 
-  @JsonKey(name: 'data_creation_date')
+  @JsonKey(name: 'data_creation_date', defaultValue: '')
   final String dataCreationDate;
 
-  @JsonKey(name: 'data_reference_date')
+  @JsonKey(name: 'data_reference_date', defaultValue: '')
   final String dataReferenceDate;
 
   Food({
