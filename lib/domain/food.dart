@@ -17,37 +17,37 @@ class Food {
   final String dataTypeName;
 
   @JsonKey(name: 'food_origin_code')
-  final int foodOriginCode;
+  final String foodOriginCode;
 
   @JsonKey(name: 'food_origin_name')
   final String foodOriginName;
 
   @JsonKey(name: 'food_major_category_code')
-  final int foodMajorCategoryCode;
+  final String foodMajorCategoryCode;
 
   @JsonKey(name: 'food_major_category_name')
   final String foodMajorCategoryName;
 
   @JsonKey(name: 'representative_food_code')
-  final int representativeFoodCode;
+  final String representativeFoodCode;
 
   @JsonKey(name: 'representative_food_name')
   final String representativeFoodName;
 
   @JsonKey(name: 'food_middle_category_code')
-  final int foodMiddleCategoryCode;
+  final String foodMiddleCategoryCode;
 
   @JsonKey(name: 'food_middle_category_name')
   final String foodMiddleCategoryName;
 
   @JsonKey(name: 'food_sub_category_code')
-  final int foodSubCategoryCode;
+  final String foodSubCategoryCode;
 
   @JsonKey(name: 'food_sub_category_name')
   final String foodSubCategoryName;
 
   @JsonKey(name: 'food_detail_category_code')
-  final int foodDetailCategoryCode;
+  final String foodDetailCategoryCode;
 
   @JsonKey(name: 'food_detail_category_name')
   final String foodDetailCategoryName;
@@ -128,7 +128,7 @@ class Food {
   final double transFatG;
 
   @JsonKey(name: 'source_code')
-  final int sourceCode;
+  final String sourceCode;
 
   @JsonKey(name: 'source_name')
   final String sourceName;
@@ -140,7 +140,7 @@ class Food {
   final String manufacturer;
 
   @JsonKey(name: 'data_creation_method_code')
-  final int dataCreationMethodCode;
+  final String dataCreationMethodCode;
 
   @JsonKey(name: 'data_creation_method_name')
   final String dataCreationMethodName;

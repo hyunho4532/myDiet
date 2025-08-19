@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/controller/food_c.dart';
+import 'package:get/get.dart';
 
 class DietInfoI extends StatefulWidget {
   const DietInfoI({super.key});
@@ -10,6 +12,7 @@ class DietInfoI extends StatefulWidget {
 
 class _DietInfoIState extends State<DietInfoI> {
   final TextEditingController _searchController = TextEditingController();
+  final FoodController foodController = Get.put(FoodController());
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +53,7 @@ class _DietInfoIState extends State<DietInfoI> {
                       fillColor: Colors.grey.shade100,
                       contentPadding:
                       const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
-                    ),
-                    onChanged: (value) {
-                      print("검색어: $value");
-                    },
+                    )
                   ),
                 ),
 
@@ -61,7 +61,10 @@ class _DietInfoIState extends State<DietInfoI> {
 
                 ElevatedButton(
                   onPressed: () {
-                    // 검색 실행
+                    final query = _searchController.text.trim();
+                    if (query.isNotEmpty) {
+                      foodController.fetchFood(query); // 🔥 Controller 호출
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
@@ -77,12 +80,27 @@ class _DietInfoIState extends State<DietInfoI> {
           ),
 
           Expanded(
-            child: Center(
-              child: Text(
-                '검색 결과가 여기에 표시됩니다',
-                style: TextStyle(color: Colors.grey.shade600),
-              ),
-            ),
+            child: Obx(() {
+              if (foodController.foods.isEmpty) {
+                return Center(
+                  child: Text(
+                    '검색 결과가 없습니다',
+                    style: TextStyle(color: Colors.grey.shade600),
+                  ),
+                );
+              }
+
+              return ListView.builder(
+                itemCount: foodController.foods.length,
+                itemBuilder: (context, index) {
+                  final food = foodController.foods[index];
+                  return ListTile(
+                    title: Text(food.foodName),
+                    subtitle: Text(food.foodCode),
+                  );
+                },
+              );
+            }),
           ),
         ],
       ),
