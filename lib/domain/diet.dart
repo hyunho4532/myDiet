@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mydiet/domain/food.dart';
 
 part 'diet.g.dart';
 
@@ -18,11 +19,16 @@ class Diet {
   @JsonKey(name: 'food_date')
   final DateTime foodDate;
 
+  // 식단 정보
+  @JsonKey(name: 'food_list')
+  final List<Food> foodList;
+
   Diet({
     required this.id,
     required this.foodKind,
     required this.foodAmount,
-    required this.foodDate
+    required this.foodDate,
+    required this.foodList
   });
 
   factory Diet.fromJson(Map<String, dynamic> json) => _$DietFromJson(json);

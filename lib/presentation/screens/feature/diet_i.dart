@@ -1,9 +1,7 @@
-import 'package:chips_choice/chips_choice.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mydiet/domain/common_code.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/common_c.dart';
 import 'package:get/get.dart';
@@ -141,64 +139,13 @@ class _DietIState extends State<DietI> {
                 },
               ),
 
-              EasyDateTimeLinePicker(
-                locale: Locale('ko'),
-                monthYearPickerOptions: MonthYearPickerOptions(
-                  confirmTextStyle: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0, top: 12.0),
+                child: Text(
+                  '언제 식사를 하셨나요?',
+                  style: TextStyle(
+                      fontSize: 16
                   ),
-                  cancelTextStyle: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                headerOptions: HeaderOptions(
-                  headerType: HeaderType.picker,
-                ),
-                focusedDate: diets.selectedDate.value,
-                firstDate: DateTime(2024, 3, 18),
-                lastDate: DateTime(2030, 3, 18),
-                onDateChange: (date) {
-                  setState(() {
-                    diets.setFoodDate(date);
-                  });
-                },
-              ),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    showPicker(
-                      context: context,
-                      value: _time,
-                      sunrise: TimeOfDay(hour: 6, minute: 0),  // optional
-                      sunset: TimeOfDay(hour: 18, minute: 0),  // optional
-                      duskSpanInMinutes: 120,                  // optional
-                      onChange: onTimeChanged,
-                    ),
-                  );
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      DateFormat('yyyy-MM-dd HH:mm').format(diets.selectedDate.value),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    Text(
-                      '⏱ 시간 선택하기',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold
-                      ),
-                    )
-                  ],
                 ),
               ),
 
@@ -228,7 +175,27 @@ class _DietIState extends State<DietI> {
                     ),
                   ],
                 ),
-              )
+              ),
+
+              Expanded(
+                child: Obx(() {
+                  final foods = diets.foods;
+
+                  return SizedBox(
+                    height: 40,
+                    child: ListView.builder(
+                      itemCount: foods.length,
+                      itemBuilder: (context, index) {
+                        final food = foods[index];
+                        return ListTile(
+                          title: Text(food.foodName),
+                          subtitle: Text("${food.energyKcal} kcal"),
+                        );
+                      },
+                    ),
+                  );
+                }),
+              ),
             ],
           );
         }

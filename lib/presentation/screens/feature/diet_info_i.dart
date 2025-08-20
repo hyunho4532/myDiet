@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/controller/food_c.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/widget/row/row.dart';
@@ -14,6 +15,7 @@ class DietInfoI extends StatefulWidget {
 class _DietInfoIState extends State<DietInfoI> {
   final TextEditingController _searchController = TextEditingController();
   final FoodController foodController = Get.put(FoodController());
+  final DietController dietController = Get.put(DietController());
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +103,22 @@ class _DietInfoIState extends State<DietInfoI> {
                       crossAxisAlignment: CrossAxisAlignment.start,
 
                       children: [
-                        Text(food.foodName),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                          children: [
+                            Text(food.foodName),
+                            GestureDetector(
+                              onTap: () {
+                                dietController.setFoodList(index, food);
+                              },
+                              child: Icon(
+                                Icons.check,
+                                color: Const().buildColors()[0],
+                              ),
+                            )
+                          ],
+                        ),
                         Text(
                           "${food.energyKcal}kcal",
                           style: TextStyle(
@@ -121,9 +138,16 @@ class _DietInfoIState extends State<DietInfoI> {
                             DietInfoRow(text: '탄수화물(g)', data: food.carbohydrateG),
                             DietInfoRow(text: '당류(g)', data: food.sugarsG)
                           ],
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Divider(
+                            height: 1,
+                          ),
                         )
                       ],
-                    )
+                    ),
                   );
                 },
               );

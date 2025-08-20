@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
 import 'package:mydiet/domain/diet.dart';
+import 'package:mydiet/domain/food.dart';
 
 class DietController extends GetxController {
   var diets = <Diet>[].obs;
+
+  // 음식 리스트 관리 (식단 관리)
+  var foods = <Food>[].obs;
 
   var selectedDate = DateTime.now().obs;
 
@@ -14,12 +18,22 @@ class DietController extends GetxController {
         id: diets[index].id,
         foodKind: foodKind,
         foodAmount: diets[index].foodAmount,
-        foodDate: DateTime.now()
+        foodDate: DateTime.now(),
+        foodList: []
       );
     }
   }
 
   void setFoodDate(DateTime date) {
     selectedDate.value = date;
+  }
+
+  void setFoodList(int id, Food food) {
+    foods.add(food);
+  }
+
+  // 조회 함수
+  List<Food> getFoodList(int dietId) {
+    return foods;
   }
 }
