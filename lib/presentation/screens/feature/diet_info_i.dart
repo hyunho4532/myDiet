@@ -95,8 +95,92 @@ class _DietInfoIState extends State<DietInfoI> {
                 itemBuilder: (context, index) {
                   final food = foodController.foods[index];
                   return ListTile(
-                    title: Text(food.foodName),
-                    subtitle: Text(food.foodCode),
+                    title: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children: [
+                        Text(food.foodName),
+                        Text(
+                          "${food.energyKcal}kcal",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey
+                          ),
+                        ),
+                        
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+
+                              children: [
+                                Text(
+                                  '수분(g)',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey
+                                  ),
+                                ),
+
+                                Text(
+                                  "${food.waterG}",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+
+                              children: [
+                                Text(
+                                  '단백질(g)',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey
+                                  ),
+                                ),
+
+                                Text(
+                                  "${food.proteinG}",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+
+                              children: [
+                                Text(
+                                  '지방(g)',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey
+                                  ),
+                                ),
+
+                                Text(
+                                  "${food.fatG}",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    )
                   );
                 },
               );
