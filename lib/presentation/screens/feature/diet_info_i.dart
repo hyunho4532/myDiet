@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/food_c.dart';
 import 'package:get/get.dart';
+import 'package:mydiet/presentation/widget/row/row.dart';
 
 class DietInfoI extends StatefulWidget {
   const DietInfoI({super.key});
@@ -104,79 +105,21 @@ class _DietInfoIState extends State<DietInfoI> {
                         Text(
                           "${food.energyKcal}kcal",
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 16,
                             color: Colors.grey
                           ),
                         ),
-                        
+
+                        /**
+                         * 영양 성분 공개
+                         */
                         Column(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-
-                              children: [
-                                Text(
-                                  '수분(g)',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey
-                                  ),
-                                ),
-
-                                Text(
-                                  "${food.waterG}",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black
-                                  ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-
-                              children: [
-                                Text(
-                                  '단백질(g)',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey
-                                  ),
-                                ),
-
-                                Text(
-                                  "${food.proteinG}",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black
-                                  ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-
-                              children: [
-                                Text(
-                                  '지방(g)',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey
-                                  ),
-                                ),
-
-                                Text(
-                                  "${food.fatG}",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black
-                                  ),
-                                )
-                              ],
-                            ),
+                            DietInfoRow(text: '수분(g)', data: food.waterG),
+                            DietInfoRow(text: '단백질(g)', data: food.proteinG),
+                            DietInfoRow(text: '지방(g)', data: food.fatG),
+                            DietInfoRow(text: '탄수화물(g)', data: food.carbohydrateG),
+                            DietInfoRow(text: '당류(g)', data: food.sugarsG)
                           ],
                         )
                       ],
