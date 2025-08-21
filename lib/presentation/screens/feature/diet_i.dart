@@ -70,6 +70,12 @@ class _DietIState extends State<DietI> {
       ),
 
       body: Obx(() {
+
+        final foods = diets.foods;
+
+        // 칼로리 계산
+        final sumKcal = foods.fold(0.0, (sum, item) => sum += item.energyKcal);
+
         if (foodKind.commons.isEmpty && foodAmount.commons.isEmpty) {
           return Center(
             child: Text(
@@ -177,18 +183,47 @@ class _DietIState extends State<DietI> {
                 ),
               ),
 
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0),
+                child: Column(
+                  children: [
+                    Text(
+                      '총 칼로리: $sumKcal kcal',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey
+                      ),
+                    )
+                  ],
+                ),
+              ),
+
               Expanded(
                 child: Obx(() {
-                  final foods = diets.foods;
-
                   return SizedBox(
                     height: 40,
                     child: ListView.builder(
                       itemCount: foods.length,
                       itemBuilder: (context, index) {
                         final food = foods[index];
+
                         return ListTile(
-                          title: Text(food.foodName),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                            children: [
+                              Text(food.foodName),
+                              GestureDetector(
+                                onTap: () {
+                                  diets.deleteFoodList(index, food);
+                                },
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Const().buildColors()[2],
+                                ),
+                              )
+                            ],
+                          ),
                           subtitle: Text("${food.energyKcal} kcal"),
                         );
                       },

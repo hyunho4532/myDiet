@@ -28,12 +28,19 @@ class DietController extends GetxController {
     selectedDate.value = date;
   }
 
+  // 식단 추가
   void setFoodList(int id, Food food) {
     foods.add(food);
+  }
+
+  // 식단 삭제
+  void deleteFoodList(int id, Food food) {
+    foods.removeAt(id);
   }
 
   // 조회 함수
   List<Food> getFoodList(int dietId) {
     return foods;
   }
+
 }
