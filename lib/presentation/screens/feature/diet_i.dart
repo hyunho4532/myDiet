@@ -1,5 +1,3 @@
-import 'package:day_night_time_picker/day_night_time_picker.dart';
-import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mydiet/presentation/const.dart';
@@ -8,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/screens/feature/diet_info_i.dart';
 import 'package:mydiet/presentation/widget/chips/chip.dart';
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:mydiet/presentation/widget/input/bottom_picker.dart';
 
 class DietI extends StatefulWidget {
   const DietI({super.key});
@@ -17,6 +17,8 @@ class DietI extends StatefulWidget {
 }
 
 class _DietIState extends State<DietI> {
+  final TextEditingController _controller = TextEditingController();
+
   final DietController diets = Get.put(DietController());
   final CommonCodeController foodKind = Get.put(CommonCodeController(), tag: 'foodKind');
   final CommonCodeController foodAmount = Get.put(CommonCodeController(), tag: 'foodAmount');
@@ -31,23 +33,6 @@ class _DietIState extends State<DietI> {
 
   int tagKind = 1;
   int tagAmount = 1;
-
-  Time _time = Time(hour: 11, minute: 30, second: 20);
-
-  void onTimeChanged(Time newTime) {
-    setState(() {
-      _time = newTime;
-
-      final oldDate = diets.selectedDate.value;
-      diets.selectedDate.value = DateTime(
-        oldDate.year,
-        oldDate.month,
-        oldDate.day,
-        newTime.hour,
-        newTime.minute,
-      );
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,6 +136,24 @@ class _DietIState extends State<DietI> {
                   '언제 식사를 하셨나요?',
                   style: TextStyle(
                       fontSize: 16
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0, top: 12.0),
+                child: SizedBox(
+                  width: 240,
+                  height: 40,
+                  child: TextField(
+                    controller: _controller,
+                    readOnly: true, // 키보드 안 뜨게
+                    decoration: const InputDecoration(
+                      labelText: "날짜 입력",
+                      border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.calendar_today),
+                      ),
+                      onTap: () => BottomPickers().showDatePicker(context),
                   ),
                 ),
               ),

@@ -65,6 +65,9 @@ dependencies:
   # 포맷 라이브러리
   intl: ^0.19.0
 
+  # 날짜 선택 라이브러리
+  bottom_picker: ^4.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
