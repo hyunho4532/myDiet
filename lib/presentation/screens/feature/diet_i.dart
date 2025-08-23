@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/common_c.dart';
 import 'package:get/get.dart';
@@ -17,8 +18,6 @@ class DietI extends StatefulWidget {
 }
 
 class _DietIState extends State<DietI> {
-  final TextEditingController _controller = TextEditingController();
-
   final DietController diets = Get.put(DietController());
   final CommonCodeController foodKind = Get.put(CommonCodeController(), tag: 'foodKind');
   final CommonCodeController foodAmount = Get.put(CommonCodeController(), tag: 'foodAmount');
@@ -42,12 +41,24 @@ class _DietIState extends State<DietI> {
         backgroundColor: Colors.white,
         leading: const Icon(Icons.arrow_back),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 12),
-            child: Text(
-               '기록',
-              style: TextStyle(
-                fontWeight: FontWeight.bold
+          GestureDetector(
+            onTap: () {
+              final diet = Diet(
+                  foodKind: foodKind.commons[tagKind].name,
+                  foodAmount: foodAmount.commons[tagAmount].name,
+                  foodDate: diets.selectedDate.value,
+                  foodList: diets.foods.toList()
+              );
+
+              diets.insert(diet);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: Text(
+                 '기록',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold
+                ),
               ),
             ),
           )
@@ -101,8 +112,6 @@ class _DietIState extends State<DietI> {
                 onChanged: (val) {
                     setState(() {
                       tagKind = val;
-
-                      final name = foodKind.commons[val].name;
                     });
                 },
               ),
@@ -124,8 +133,6 @@ class _DietIState extends State<DietI> {
                 onChanged: (val) {
                   setState(() {
                     tagAmount = val;
-
-                    final name = foodAmount.commons[val].name;
                   });
                 },
               ),
@@ -144,16 +151,35 @@ class _DietIState extends State<DietI> {
                 padding: const EdgeInsets.only(left: 12.0, top: 12.0),
                 child: SizedBox(
                   width: 240,
-                  height: 40,
+                  height: 60,
                   child: TextField(
-                    controller: _controller,
+                    controller: TextEditingController(
+                      text:
+                      "${diets.selectedDate.value.month}월 ${diets.selectedDate.value.day}일 "
+                          "${diets.selectedDate.value.hour.toString().padLeft(2, "0")}시 "
+                          "${diets.selectedDate.value.minute.toString().padLeft(2, "0")}분",
+                    ),
                     readOnly: true, // 키보드 안 뜨게
-                    decoration: const InputDecoration(
-                      labelText: "날짜 입력",
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.calendar_today),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: "섭취 시간",
+                      labelStyle: TextStyle(
+                        color: Const().buildColors()[0],
+                        fontWeight: FontWeight.bold,
                       ),
-                      onTap: () => BottomPickers().showDatePicker(context),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      suffixIcon: Icon(Icons.fastfood_sharp, color: Const().buildColors()[0]),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                    ),
+                    onTap: () => BottomPickers().showDatePicker(context, diets),
                   ),
                 ),
               ),

@@ -5,7 +5,7 @@ part 'diet.g.dart';
 
 @JsonSerializable()
 class Diet {
-  final int id;
+  final int? id;
 
   // 식사 종류
   @JsonKey(name: 'food_kind')
@@ -24,7 +24,7 @@ class Diet {
   final List<Food> foodList;
 
   Diet({
-    required this.id,
+    this.id,
     required this.foodKind,
     required this.foodAmount,
     required this.foodDate,

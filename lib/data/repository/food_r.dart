@@ -1,3 +1,4 @@
+import 'package:mydiet/domain/diet.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class FoodRepository<T> {
@@ -11,5 +12,11 @@ class FoodRepository<T> {
 
     final data = response as List<dynamic>;
     onSuccess(data);
+  }
+
+  void insert(Diet diet) async {
+    await _client
+        .from('Diet')
+        .insert(diet);
   }
 }

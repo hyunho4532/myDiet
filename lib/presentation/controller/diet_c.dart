@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mydiet/data/repository/food_r.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/food.dart';
 
@@ -15,7 +16,6 @@ class DietController extends GetxController {
     final index = diets.indexWhere((d) => d.id == id);
     if (index != -1) {
       diets[index] = Diet(
-        id: diets[index].id,
         foodKind: foodKind,
         foodAmount: diets[index].foodAmount,
         foodDate: DateTime.now(),
@@ -43,4 +43,7 @@ class DietController extends GetxController {
     return foods;
   }
 
+  void insert(Diet diet) {
+    FoodRepository().insert(diet);
+  }
 }
