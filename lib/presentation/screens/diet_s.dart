@@ -40,30 +40,7 @@ class _DietSState extends State<DietS> {
                 titleCentered: true
               ),
               calendarBuilders: CalendarBuilders(
-                markerBuilder: (context, day, events) {
-                  // 해당 날짜에 Diet가 있는지 확인
-                  final dayDiets = dietController.diets.where(
-                          (diet) => isSameDay(diet.foodDate, day)
-                  ).toList();
-
-                  if (dayDiets.isEmpty) return SizedBox(); // 없으면 표시 안함
-
-                  // 점 여러 개 표시 (diet 개수만큼)
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: dayDiets.map((diet) {
-                      return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 1),
-                        width: 6,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          color: Colors.blue, // 점 색상
-                          shape: BoxShape.circle,
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
+                markerBuilder: (context, day, events) => buildMarker(context, day, dietController),
                 dowBuilder: (context, day) => buildDow(context, day),
               )
             )
