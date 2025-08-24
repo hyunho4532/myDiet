@@ -9,6 +9,7 @@ import 'package:mydiet/presentation/screens/feature/diet_info_i.dart';
 import 'package:mydiet/presentation/widget/chips/chip.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:mydiet/presentation/widget/input/bottom_picker.dart';
+import 'package:uuid/uuid.dart';
 
 class DietI extends StatefulWidget {
   const DietI({super.key});
@@ -44,10 +45,10 @@ class _DietIState extends State<DietI> {
           GestureDetector(
             onTap: () {
               final diet = Diet(
-                  foodKind: foodKind.commons[tagKind].name,
-                  foodAmount: foodAmount.commons[tagAmount].name,
-                  foodDate: diets.selectedDate.value,
-                  foodList: diets.foods.toList()
+                foodKind: foodKind.commons[tagKind].name,
+                foodAmount: foodAmount.commons[tagAmount].name,
+                foodDate: diets.selectedDate.value,
+                foodList: diets.foods.toList()
               );
 
               diets.insert(diet);

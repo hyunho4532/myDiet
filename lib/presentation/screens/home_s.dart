@@ -11,6 +11,11 @@ class _HomeSState extends State<HomeS> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Column(
+        children: [
+          Text('1234')
+        ],
+      ),
       backgroundColor: Colors.white,
     );
   }

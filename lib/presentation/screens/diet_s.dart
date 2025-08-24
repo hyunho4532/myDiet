@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:calendar_view/calendar_view.dart';
 
 class DietS extends StatefulWidget {
   const DietS({super.key});
@@ -11,10 +12,12 @@ class _DietSState extends State<DietS> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-
-      ),
       backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          MonthView()
+        ],
+      ),
     );
   }
 }

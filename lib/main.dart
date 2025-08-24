@@ -1,3 +1,4 @@
+import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/const.dart';
@@ -20,22 +21,25 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      locale: const Locale('ko', 'KR'),
-      supportedLocales: const [
-        Locale('ko', 'KR'),
-        Locale('en', 'US'),
-      ],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Const().buildColors()[0]),
+    return CalendarControllerProvider(
+      controller: EventController(),
+      child: GetMaterialApp(
+        title: 'Flutter Demo',
+        locale: const Locale('ko', 'KR'),
+        supportedLocales: const [
+          Locale('ko', 'KR'),
+          Locale('en', 'US'),
+        ],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Const().buildColors()[0]),
+        ),
+        home: const MyHomePage(),
       ),
-      home: const MyHomePage(),
     );
   }
 }

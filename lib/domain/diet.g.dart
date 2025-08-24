@@ -18,7 +18,7 @@ Diet _$DietFromJson(Map<String, dynamic> json) => Diet(
 );
 
 Map<String, dynamic> _$DietToJson(Diet instance) => <String, dynamic>{
-  'id': instance.id,
+  if (instance.id != null) 'id': instance.id,
   'food_kind': instance.foodKind,
   'food_amount': instance.foodAmount,
   'food_date': instance.foodDate.toIso8601String(),

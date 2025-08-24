@@ -68,6 +68,12 @@ dependencies:
   # 날짜 선택 라이브러리
   bottom_picker: ^4.1.0
 
+  # UUID 라이브러리
+  uuid: ^4.4.2
+
+  # 캘린더 뷰 라이브러리
+  table_calendar: ^3.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
