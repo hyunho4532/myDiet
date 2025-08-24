@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mydiet/data/repository/diet_r.dart';
 import 'package:mydiet/data/repository/food_r.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/food.dart';
@@ -10,6 +11,12 @@ class DietController extends GetxController {
   var foods = <Food>[].obs;
 
   var selectedDate = DateTime.now().obs;
+
+  Future<void> fetchDiet() {
+    return DietRepository().fetchDiet((data) {
+      diets.value = data.map((e) => Diet.fromJson(e)).toList();
+    });
+  }
 
   // 특정 다이어트의 foodKind 수정
   void setFoodKind(int id, String foodKind) {
