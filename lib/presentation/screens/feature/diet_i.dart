@@ -45,6 +45,7 @@ class _DietIState extends State<DietI> {
           GestureDetector(
             onTap: () {
               final diet = Diet(
+                foodType: '식단',
                 foodKind: foodKind.commons[tagKind].name,
                 foodAmount: foodAmount.commons[tagAmount].name,
                 foodDate: diets.selectedDate.value,

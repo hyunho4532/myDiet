@@ -23,6 +23,7 @@ class DietController extends GetxController {
     final index = diets.indexWhere((d) => d.id == id);
     if (index != -1) {
       diets[index] = Diet(
+        foodType: '',
         foodKind: foodKind,
         foodAmount: diets[index].foodAmount,
         foodDate: DateTime.now(),

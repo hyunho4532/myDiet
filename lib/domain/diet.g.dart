@@ -8,6 +8,7 @@ part of 'diet.dart';
 
 Diet _$DietFromJson(Map<String, dynamic> json) => Diet(
   id: (json['id'] as num?)?.toInt(),
+  foodType: json['food_type'] as String,
   foodKind: json['food_kind'] as String?,
   foodAmount: json['food_amount'] as String?,
   foodDate: DateTime.parse(json['food_date'] as String),
@@ -19,6 +20,7 @@ Diet _$DietFromJson(Map<String, dynamic> json) => Diet(
 
 Map<String, dynamic> _$DietToJson(Diet instance) => <String, dynamic>{
   'id': instance.id,
+  'food_type': instance.foodType,
   'food_kind': instance.foodKind,
   'food_amount': instance.foodAmount,
   'food_date': instance.foodDate.toIso8601String(),

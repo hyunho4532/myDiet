@@ -7,6 +7,10 @@ part 'diet.g.dart';
 class Diet {
   final int? id;
 
+  // 식사 타입
+  @JsonKey(name: 'food_type')
+  final String foodType;
+
   // 식사 종류
   @JsonKey(name: 'food_kind')
   final String? foodKind;
@@ -25,6 +29,7 @@ class Diet {
 
   Diet({
     this.id,
+    required this.foodType,
     required this.foodKind,
     required this.foodAmount,
     required this.foodDate,
