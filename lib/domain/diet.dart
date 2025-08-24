@@ -3,7 +3,7 @@ import 'package:mydiet/domain/food.dart';
 
 part 'diet.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Diet {
   final int? id;
 
