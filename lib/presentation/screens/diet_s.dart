@@ -75,33 +75,38 @@ class _DietSState extends State<DietS> {
                       crossAxisAlignment: CrossAxisAlignment.center,
 
                       children: [
+                        // 점 + 음식 세로
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: diet.foodList.map((food) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 8, bottom: 2),
+                                  child: Text(food.foodName),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+
+                        Spacer(), // ← 여기서 왼쪽 내용과 오른쪽 칼로리 사이 공간 만들기
+
+                        // 오른쪽 끝 칼로리
+                        Text(
+                          '${sumKcal}kcal',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+
                         Container(
+                          margin: EdgeInsets.only(left: 8),
                           width: 12,
                           height: 12,
                           decoration: BoxDecoration(
                             color: typeColor,
                             shape: BoxShape.circle,
                           ),
-                        ),
-
-                        Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-
-                              children: diet.foodList.map((food) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Text(
-                                      food.foodName
-                                  ),
-                                );
-                              }).toList()
-                            ),
-                            Text(
-                                '${sumKcal}kcal'
-                            )
-                          ],
                         ),
                       ],
                     ),
