@@ -67,9 +67,13 @@ class _DietSState extends State<DietS> {
                       typeColor = Colors.grey;
                   }
 
+                  final sumKcal = diet.foodList.fold(0.0, (sum, item) => sum += item.energyKcal);
+
                   return ListTile(
                     title: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+
                       children: [
                         Container(
                           width: 12,
@@ -80,28 +84,30 @@ class _DietSState extends State<DietS> {
                           ),
                         ),
 
-                        // food 리스트
-                        ...diet.foodList.map((food) => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Row(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
 
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 6),
-                                  child: Text("${food.foodName}, "),
-                                ),
-                              ],
+                              children: diet.foodList.map((food) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Text(
+                                      food.foodName
+                                  ),
+                                );
+                              }).toList()
                             ),
+                            Text(
+                                '${sumKcal}kcal'
+                            )
                           ],
-                        )),
+                        ),
                       ],
                     ),
                   );
                 }).toList(),
               );
-
             })
           ],
         ),
