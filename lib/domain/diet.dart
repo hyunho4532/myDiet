@@ -9,11 +9,11 @@ class Diet {
 
   // 식사 종류
   @JsonKey(name: 'food_kind')
-  final String foodKind;
+  final String? foodKind;
 
   // 식사량
   @JsonKey(name: 'food_amount')
-  final String foodAmount;
+  final String? foodAmount;
 
   // 식사한 날짜
   @JsonKey(name: 'food_date')
