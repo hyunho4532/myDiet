@@ -51,69 +51,62 @@ class _DietSState extends State<DietS> {
               );
             }),
             
-            Obx(() {
-              final diets = dietController.diets
-                .where((diet) => isSameDay(diet.foodDate, dietController.selectedDate.value)).toList();
+            Expanded(
+              child: Obx(() {
+                final diets = dietController.diets
+                  .where((diet) => isSameDay(diet.foodDate, dietController.selectedDate.value)).toList();
 
-              return Column(
-                children: diets.map((diet) {
-                  // foodType별 색상 지정
-                  Color typeColor;
-                  switch (diet.foodType) {
-                    case '식단':
-                      typeColor = Const().buildColors()[0];
-                      break;
-                    default:
-                      typeColor = Colors.grey;
-                  }
+                return ListView.builder(
+                  itemCount: diets.length,
+                  itemBuilder: (context, index) {
+                    final diet = diets[index];
 
-                  final sumKcal = diet.foodList.fold(0.0, (sum, item) => sum += item.energyKcal);
+                    // foodType별 색상 지정
+                    Color typeColor;
+                    switch (diet.foodType) {
+                      case '식단':
+                        typeColor = Const().buildColors()[0];
+                        break;
+                      default:
+                        typeColor = Colors.grey;
+                    }
 
-                  return ListTile(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    final sumKcal = diet.foodList.fold(
+                      0.0,
+                          (sum, item) => sum += item.energyKcal,
+                    );
 
-                      children: [
-                        // 점 + 음식 세로
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: diet.foodList.map((food) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(left: 8, bottom: 2),
-                                  child: Text(food.foodName),
-                                );
-                              }).toList(),
+                    return ListTile(
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          for (int i = 0; i < diet.foodList.length; i += 2)
+                            Row(
+                              children: [
+                                for (int j = i; j < i + 2 && j < diet.foodList.length; j++)
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 8, bottom: 4),
+                                    child: SizedBox(
+                                      height: 80,
+                                      child: Card(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(6.0),
+                                          child: Text(diet.foodList[j].foodName),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
-                          ],
-                        ),
-
-                        Spacer(), // ← 여기서 왼쪽 내용과 오른쪽 칼로리 사이 공간 만들기
-
-                        // 오른쪽 끝 칼로리
-                        Text(
-                          '${sumKcal}kcal',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-
-                        Container(
-                          margin: EdgeInsets.only(left: 8),
-                          width: 12,
-                          height: 12,
-                          decoration: BoxDecoration(
-                            color: typeColor,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              );
-            })
+                        ],
+                      ),
+                      trailing: Text("${sumKcal.toStringAsFixed(0)} kcal"),
+                    );
+                  },
+                );
+              }),
+            )
           ],
         ),
       )
