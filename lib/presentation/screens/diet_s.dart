@@ -101,46 +101,90 @@ class _DietSState extends State<DietS> {
                     }
 
                     return ListTile(
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 4.0),
-                            child: Text(
-                              dietMessages,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey
-                              ),
-                            ),
-                          ),
-
-                          for (int i = 0; i < diet.foodList.length; i += 2)
-                            Row(
-                              children: [
-                                for (int j = i; j < i + 2 && j < diet.foodList.length; j++)
+                      title: Card(
+                        elevation: 0,
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(
+                            color: Colors.grey,
+                            width: 0.5
+                          )
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                        right: 8, bottom: 4),
-                                    child: SizedBox(
-                                      height: 80,
-                                      child: Card(
-                                        child: Padding(
-                                          padding: EdgeInsets.all(6.0),
-                                          child: Column(
-                                            children: [
-                                              Text(diet.foodList[j].foodName),
-                                            ],
-                                          ),
-                                        ),
+                                    padding: const EdgeInsets.only(bottom: 4.0),
+                                    child: Text(
+                                      dietMessages,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey
                                       ),
                                     ),
                                   ),
-                              ],
-                            ),
-                        ],
-                      ),
-                      trailing: Text("${sumKcal.toStringAsFixed(0)} kcal"),
+
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 4.0),
+                                    child: Text(
+                                      "9시 30분",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              ),
+
+                              for (int i = 0; i < diet.foodList.length; i += 2)
+                                Row(
+                                  children: [
+                                    for (int j = i; j < i + 2 && j < diet.foodList.length; j++)
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 8, bottom: 4),
+                                        child: Container(
+                                          constraints: BoxConstraints(
+                                            minWidth: 100,
+                                            minHeight: 60
+                                          ),
+                                          child: Card(
+                                            color: Const().buildColors()[2],
+                                            child: Padding(
+                                              padding: EdgeInsets.all(6.0),
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    diet.foodList[j].foodName,
+                                                    style: TextStyle(
+                                                      color: Colors.white
+                                                    ),
+                                                  ),
+
+                                                  Text(
+                                                    "${diet.foodList[j].energyKcal} kcal",
+                                                    style: TextStyle(
+                                                      color: Colors.white
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        ),
+                      )
                     );
                   },
                 );
