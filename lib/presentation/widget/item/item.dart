@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/utils/math.dart';
 
 class Item<T> extends StatefulWidget {
   final List<T> data;
@@ -24,34 +25,19 @@ class _ItemState extends State<Item> {
         String dietMessages = "";
 
         // 칼로리 합계
-        final sumKcal = diet.foodList.fold(
-          0.0,
-              (sum, item) => sum += item.energyKcal,
-        );
+        final sumKcal = Math().sumBy(diet, (item) => item.energyKcal);
 
         // 단백질 합계
-        final sumProtein = diet.foodList.fold(
-          0.0,
-              (sum, item) => sum += item.proteinG,
-        );
+        final sumProtein = Math().sumBy(diet, (item) => item.proteinG);
 
         // 당류 합계
-        final sumSugar = diet.foodList.fold(
-          0.0,
-              (sum, item) => sum += item.sugarsG,
-        );
+        final sumSugar = Math().sumBy(diet, (item) => item.sugarsG);
 
         // 지방 합계
-        final sumFat = diet.foodList.fold(
-          0.0,
-              (sum, item) => sum += item.fatG,
-        );
+        final sumFat = Math().sumBy(diet, (item) => item.fatG);
 
         // 탄수화물 합계
-        final sumCarbohydrate = diet.foodList.fold(
-          0.0,
-              (sum, item) => sum += item.carbohydrateG,
-        );
+        final sumCarbohydrate = Math().sumBy(diet, (item) => item.carbohydrateG);
 
         if (diet.foodKind == '아침') {
           if (sumKcal < 400) {
@@ -90,16 +76,50 @@ class _ItemState extends State<Item> {
             Row(
               children: [
                 Expanded(
-                  child: Center(child: Text("$sumProtein")),
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Center(
+                            child: Text(
+                                sumProtein.toStringAsFixed(2)
+                            )
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Expanded(
-                  child: Center(child: Text("$sumCarbohydrate")),
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Center(
+                            child: Text(
+                                sumCarbohydrate.toStringAsFixed(2)
+                            )
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Expanded(
-                  child: Center(child: Text("$sumSugar")),
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Center(
+                            child: Text(
+                                sumSugar.toStringAsFixed(2)
+                            )
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Expanded(
-                  child: Center(child: Text("$sumFat")),
+                  child: Center(
+                      child: Text(
+                          sumFat.toStringAsFixed(2)
+                      )
+                  ),
                 ),
               ]
             ),
