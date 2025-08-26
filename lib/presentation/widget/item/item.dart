@@ -89,32 +89,17 @@ class _ItemState extends State<Item> {
           children: [
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 24),
-                  child: Text(
-                      "$sumProtein"
-                  ),
+                Expanded(
+                  child: Center(child: Text("$sumProtein")),
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.only(left: 24),
-                  child: Text(
-                      "$sumCarbohydrate"
-                  ),
+                Expanded(
+                  child: Center(child: Text("$sumCarbohydrate")),
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.only(left: 24),
-                  child: Text(
-                      "$sumSugar"
-                  ),
+                Expanded(
+                  child: Center(child: Text("$sumSugar")),
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.only(left: 24),
-                  child: Text(
-                      "$sumFat"
-                  ),
+                Expanded(
+                  child: Center(child: Text("$sumFat")),
                 ),
               ]
             ),
