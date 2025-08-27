@@ -69,145 +69,188 @@ class _ItemState extends State<Item> {
           }
         }
 
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+        return Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: Card(
+            color: Colors.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Card(
-                    child: Column(
-                      children: [
-                        Center(
-                            child: Text(
-                                sumProtein.toStringAsFixed(2)
-                            )
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Card(
-                    child: Column(
-                      children: [
-                        Center(
-                            child: Text(
-                                sumCarbohydrate.toStringAsFixed(2)
-                            )
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Card(
-                    child: Column(
-                      children: [
-                        Center(
-                            child: Text(
-                                sumSugar.toStringAsFixed(2)
-                            )
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Center(
-                      child: Text(
-                          sumFat.toStringAsFixed(2)
-                      )
-                  ),
-                ),
-              ]
-            ),
-
-            ListTile(
-                title: Card(
-                  elevation: 0,
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(
-                          color: Colors.grey,
-                          width: 0.5
-                      )
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 4.0),
-                              child: Text(
-                                dietMessages,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey
-                                ),
-                              ),
-                            ),
-
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 4.0),
-                              child: Text(
-                                "${diet.foodDate.hour}시 ${diet.foodDate.minute}분",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        for (int i = 0; i < diet.foodList.length; i += 3)
-                          Row(
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 60,
+                          child: Column(
                             children: [
-                              for (int j = i; j < i + 3 && j < diet.foodList.length; j++)
-                                Container(
-                                  constraints: BoxConstraints(
-                                      minWidth: 100,
-                                      minHeight: 60
-                                  ),
-                                  child: Card(
-                                    color: Const().buildColors()[2],
-                                    child: Padding(
-                                      padding: EdgeInsets.all(6.0),
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            diet.foodList[j].foodName,
-                                            style: TextStyle(
-                                                color: Colors.white
-                                            ),
-                                          ),
+                              Center(
+                                child: Text(
+                                  '단백질'
+                                ),
+                              ),
 
-                                          Text(
-                                            "${diet.foodList[j].energyKcal} kcal",
-                                            style: TextStyle(
-                                                color: Colors.white
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                              Center(
+                                  child: Text(
+                                      sumProtein.toStringAsFixed(2)
+                                  )
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          height: 60,
+                          child: Column(
+                            children: [
+                              Center(
+                                child: Text(
+                                    '탄수화물'
+                                ),
+                              ),
+
+                              Center(
+                                  child: Text(
+                                      sumCarbohydrate.toStringAsFixed(2)
+                                  )
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          height: 60,
+                          child: Column(
+                            children: [
+                              Center(
+                                  child: Text(
+                                    '당류'
+                                  )
+                              ),
+
+                              Center(
+                                  child: Text(
+                                      sumSugar.toStringAsFixed(2)
+                                  )
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          height: 60,
+                          child: Column(
+                            children: [
+                              Center(
+                                  child: Text(
+                                    '지방'
+                                  )
+                              ),
+
+                              Center(
+                                  child: Text(
+                                      sumFat.toStringAsFixed(2)
+                                  )
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]
+                  ),
+                ),
+
+                ListTile(
+                    title: Card(
+                      elevation: 0,
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(
+                              color: Colors.grey,
+                              width: 0.5
+                          )
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  child: Text(
+                                    dietMessages,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey
                                     ),
                                   ),
                                 ),
-                            ],
-                          ),
-                      ],
+
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  child: Text(
+                                    "${diet.foodDate.hour}시 ${diet.foodDate.minute}분",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            for (int i = 0; i < diet.foodList.length; i += 3)
+                              Row(
+                                children: [
+                                  for (int j = i; j < i + 3 && j < diet.foodList.length; j++)
+                                    Container(
+                                      constraints: BoxConstraints(
+                                          minWidth: 100,
+                                          minHeight: 60
+                                      ),
+                                      child: Card(
+                                        color: Const().buildColors()[2],
+                                        child: Padding(
+                                          padding: EdgeInsets.all(6.0),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                diet.foodList[j].foodName,
+                                                style: TextStyle(
+                                                    color: Colors.white
+                                                ),
+                                              ),
+
+                                              Text(
+                                                "${diet.foodList[j].energyKcal} kcal",
+                                                style: TextStyle(
+                                                    color: Colors.white
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                )
+                ),
+              ],
             ),
-          ],
+          ),
         );
       },
     );
