@@ -23,13 +23,18 @@ class _DietIState extends State<DietI> {
   final CommonCodeController foodKind = Get.put(CommonCodeController(), tag: 'foodKind');
   final CommonCodeController foodAmount = Get.put(CommonCodeController(), tag: 'foodAmount');
 
-
   @override
   void initState() {
     super.initState();
 
     id = Get.arguments as int;
+
+    // 항상 초기화
     diets = Get.put(DietController(id));
+
+    if (id != 0) {
+      diets.dietById(id);
+    }
 
     foodKind.fetchCommon('FOOD_KIND');
     foodAmount.fetchCommon('FOOD_AMOUNT');
@@ -37,6 +42,12 @@ class _DietIState extends State<DietI> {
 
   int tagKind = 1;
   int tagAmount = 1;
+
+  @override
+  void dispose() {
+    super.dispose();
+    diets.fetchDiet();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +83,6 @@ class _DietIState extends State<DietI> {
       ),
 
       body: Obx(() {
-
         final foods = diets.foods;
 
         // 칼로리 계산

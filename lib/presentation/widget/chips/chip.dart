@@ -32,14 +32,6 @@ class _ChipState extends State<Chips> {
           widget.onChanged!(val);
         }
       },
-      choiceStyle: C2ChipStyle(
-        foregroundColor: Const().buildColors()[0],
-        backgroundColor: Const().buildColors()[0],
-        overlayColor: Const().buildColors()[2],
-        foregroundStyle: TextStyle(
-          color: Colors.black
-        ),
-      ),
       choiceItems: C2Choice.listFrom<int, CommonCode>(
           source: widget.data,
           value: (i, item) => item.index,

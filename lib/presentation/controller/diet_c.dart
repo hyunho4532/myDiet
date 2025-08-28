@@ -10,9 +10,10 @@ class DietController extends GetxController {
 
   final dynamic id;
 
+  // 식단 관리
   var diets = <Diet>[].obs;
 
-  // 음식 리스트 관리 (식단 관리)
+  // 음식 리스트 관리
   var foods = <Food>[].obs;
 
   var selectedDate = DateTime.now().obs;
@@ -21,6 +22,17 @@ class DietController extends GetxController {
     return DietRepository().fetchDiet((data) {
       diets.value = data.map((e) => Diet.fromJson(e)).toList();
     });
+  }
+
+  Future<void> dietById(int id) async {
+    final result = await DietRepository().dietById(id);
+
+    for (var item in result) {
+      selectedDate.value = item.foodDate;
+      foods.value = item.foodList;
+    }
+
+    diets.assignAll(result);
   }
 
   // 특정 다이어트의 foodKind 수정
