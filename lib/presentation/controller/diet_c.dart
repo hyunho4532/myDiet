@@ -5,6 +5,11 @@ import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/food.dart';
 
 class DietController extends GetxController {
+
+  DietController(this.id);
+
+  final dynamic id;
+
   var diets = <Diet>[].obs;
 
   // 음식 리스트 관리 (식단 관리)

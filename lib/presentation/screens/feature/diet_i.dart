@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/common_c.dart';
@@ -7,9 +6,7 @@ import 'package:get/get.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/screens/feature/diet_info_i.dart';
 import 'package:mydiet/presentation/widget/chips/chip.dart';
-import 'package:bottom_picker/bottom_picker.dart';
 import 'package:mydiet/presentation/widget/input/bottom_picker.dart';
-import 'package:uuid/uuid.dart';
 
 class DietI extends StatefulWidget {
   const DietI({super.key});
@@ -19,13 +16,20 @@ class DietI extends StatefulWidget {
 }
 
 class _DietIState extends State<DietI> {
-  final DietController diets = Get.put(DietController());
+
+  late final int id;
+
+  late final DietController diets;
   final CommonCodeController foodKind = Get.put(CommonCodeController(), tag: 'foodKind');
   final CommonCodeController foodAmount = Get.put(CommonCodeController(), tag: 'foodAmount');
+
 
   @override
   void initState() {
     super.initState();
+
+    id = Get.arguments as int;
+    diets = Get.put(DietController(id));
 
     foodKind.fetchCommon('FOOD_KIND');
     foodAmount.fetchCommon('FOOD_AMOUNT');

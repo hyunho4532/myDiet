@@ -15,7 +15,7 @@ class DietInfoI extends StatefulWidget {
 class _DietInfoIState extends State<DietInfoI> {
   final TextEditingController _searchController = TextEditingController();
   final FoodController foodController = Get.put(FoodController());
-  final DietController dietController = Get.put(DietController());
+  final DietController dietController = Get.put(DietController(0));
 
   @override
   Widget build(BuildContext context) {

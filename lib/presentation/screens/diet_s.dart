@@ -14,7 +14,7 @@ class DietS extends StatefulWidget {
 }
 
 class _DietSState extends State<DietS> with TickerProviderStateMixin {
-  final DietController dietController = Get.put(DietController());
+  final DietController dietController = Get.put(DietController(0));
 
   late final TabController _tabController;
 
