@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/date_c.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/widget/builder/builder.dart';
@@ -24,9 +23,6 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-
-    dietController.fetchDiet();
-
   }
 
   @override
@@ -74,6 +70,8 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
               controller: _tabController,
               children: <Widget>[
                 Obx(() {
+                  dietController.fetchDiet();
+
                   final diets = dietController.diets
                       .where((diet) =>
                       isSameDay(diet.foodDate, dateController.selectedDate.value))

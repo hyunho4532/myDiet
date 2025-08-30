@@ -25,17 +25,6 @@ class _DietInfoIState extends State<DietInfoI> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: const Icon(Icons.arrow_back),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 12),
-            child: Text(
-              '식단 기록',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold
-              ),
-            ),
-          )
-        ],
       ),
       body: Column(
         children: [

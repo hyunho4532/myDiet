@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:mydiet/presentation/controller/date_c.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/screens/feature/diet_info_i.dart';
+import 'package:mydiet/presentation/utils/format.dart';
 import 'package:mydiet/presentation/widget/chips/chip.dart';
 import 'package:mydiet/presentation/widget/input/bottom_picker.dart';
 import 'package:mydiet/presentation/widget/toast/snack_bar.dart';
@@ -46,19 +47,21 @@ class _DietIState extends State<DietI> {
     if (id != 0) {
       diets = Get.put(DietController(id));
       diets.dietById(id).then((_) {
-        textEditingController.text =
-        "${diets.selectedDate.value.month}월 ${diets.selectedDate.value.day}일 "
-            "${diets.selectedDate.value.hour.toString().padLeft(2, "0")}시 "
-            "${diets.selectedDate.value.minute.toString().padLeft(2, "0")}분";
+        textEditingController.text = Format().formatDateTime(diets.selectedDate.value);
       });
     } else {
       diets = Get.put(DietController(0));
 
-      textEditingController.text =
-      "${dateController.selectedDate.value.month}월 ${dateController.selectedDate.value.day}일 "
-          "${dateController.selectedDate.value.hour.toString().padLeft(2, "0")}시 "
-          "${dateController.selectedDate.value.minute.toString().padLeft(2, "0")}분";
+      textEditingController.text = Format().formatDateTime(dateController.selectedDate.value);
     }
+
+    // 날짜 변경 감지
+    ever(dateController.selectedDate, (DateTime date) {
+      textEditingController.text = Format().formatDateTime(date);
+
+      // 선택한 날짜를 diets에도 반영
+      diets.selectedDate.value = date;
+    });
 
     foodKind.fetchCommon('FOOD_KIND');
     foodAmount.fetchCommon('FOOD_AMOUNT');
@@ -68,8 +71,6 @@ class _DietIState extends State<DietI> {
   @override
   void dispose() {
     super.dispose();
-    diets.fetchDiet();
-
     Get.delete<DietController>();
   }
 
@@ -233,7 +234,7 @@ class _DietIState extends State<DietI> {
                         vertical: 12,
                       ),
                     ),
-                    onTap: () => BottomPickers().showDatePicker(context, diets),
+                    onTap: () => BottomPickers().showDatePicker(context, dateController),
                   ),
                 ),
               ),

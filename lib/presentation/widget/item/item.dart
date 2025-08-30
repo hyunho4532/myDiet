@@ -204,7 +204,7 @@ class _ItemState extends State<Item> {
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 4.0),
                                     child: Text(
-                                      "${diet.foodDate.hour}시 ${diet.foodDate.minute}분",
+                                      "${diet.foodDate.hour}시 ${diet.foodDate.minute}분 - ${diet.foodKind }",
                                       style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.grey
