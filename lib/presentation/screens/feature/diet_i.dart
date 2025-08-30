@@ -27,7 +27,7 @@ class _DietIState extends State<DietI> {
   void initState() {
     super.initState();
 
-    id = Get.arguments as int;
+    id = (Get.arguments ?? 0) as int; // 먼저 초기화
 
     // 항상 초기화
     diets = Get.put(DietController(id));
@@ -59,20 +59,33 @@ class _DietIState extends State<DietI> {
         actions: [
           GestureDetector(
             onTap: () {
-              final diet = Diet(
-                foodType: '식단',
-                foodKind: foodKind.commons[tagKind].name,
-                foodAmount: foodAmount.commons[tagAmount].name,
-                foodDate: diets.selectedDate.value,
-                foodList: diets.foods.toList()
-              );
+              if (id != 0) {
+                final diet = Diet(
+                  id: id,
+                  foodType: '식단',
+                  foodKind: foodKind.commons[tagKind].name,
+                  foodAmount: foodAmount.commons[tagAmount].name,
+                  foodDate: diets.selectedDate.value,
+                  foodList: diets.foods.toList()
+                );
 
-              diets.insert(diet);
+                diets.edit(diet);
+              } else {
+                final diet = Diet(
+                    foodType: '식단',
+                    foodKind: foodKind.commons[tagKind].name,
+                    foodAmount: foodAmount.commons[tagAmount].name,
+                    foodDate: diets.selectedDate.value,
+                    foodList: diets.foods.toList()
+                );
+
+                diets.insert(diet);
+              }
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 12),
               child: Text(
-                 '기록',
+                 id != 0 ? '수정' : '기록',
                 style: TextStyle(
                   fontWeight: FontWeight.bold
                 ),

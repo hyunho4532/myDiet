@@ -68,7 +68,13 @@ class DietController extends GetxController {
     return foods;
   }
 
+  // 등록 함수
   void insert(Diet diet) {
     FoodRepository().insert(diet);
+  }
+
+  // 수정 함수
+  void edit(Diet diet) {
+    FoodRepository().edit(diet);
   }
 }

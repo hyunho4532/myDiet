@@ -19,4 +19,18 @@ class FoodRepository<T> {
         .from('Diet')
         .insert(diet);
   }
+
+  void edit(Diet diet) async {
+    await _client
+        .from('Diet')
+        .update({
+          'id': diet.id,
+          'food_type': diet.foodType,
+          'food_kind': diet.foodKind,
+          'food_amount': diet.foodAmount,
+          'food_date': diet.foodDate.toIso8601String(),
+          'food_list': diet.foodList
+        })
+        .eq('id', diet.id!);
+  }
 }

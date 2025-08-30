@@ -2,15 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/widget/view/persistent_tabview.dart';
-import 'package:mydiet/service/supabase_service.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Supabase 세팅
-  await SupabaseSerivce().init();
+  // 1) 환경변수 로드
+  await dotenv.load(fileName: ".env");
 
+  // 2) Supabase 초기화
+  await Supabase.initialize(
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_KEY']!,
+  );
+
+  // 3) 앱 실행
   runApp(const MyApp());
 }
 
