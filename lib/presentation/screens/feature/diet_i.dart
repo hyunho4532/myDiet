@@ -35,11 +35,11 @@ class _DietIState extends State<DietI> {
   // id가 없으면 date_controller의 selectedDate로 조회
   final TextEditingController textEditingController = TextEditingController();
 
+  int tagKind = 1;
+
   @override
   void initState() {
     super.initState();
-
-    print("Diet I");
 
     id = (Get.arguments ?? 0) as int;
 
@@ -58,21 +58,19 @@ class _DietIState extends State<DietI> {
       "${dateController.selectedDate.value.month}월 ${dateController.selectedDate.value.day}일 "
           "${dateController.selectedDate.value.hour.toString().padLeft(2, "0")}시 "
           "${dateController.selectedDate.value.minute.toString().padLeft(2, "0")}분";
-
-      Get.delete<DietController>();
     }
 
     foodKind.fetchCommon('FOOD_KIND');
     foodAmount.fetchCommon('FOOD_AMOUNT');
   }
-
-  int tagKind = 1;
   int tagAmount = 1;
 
   @override
   void dispose() {
     super.dispose();
     diets.fetchDiet();
+
+    Get.delete<DietController>();
   }
 
   @override
@@ -285,34 +283,31 @@ class _DietIState extends State<DietI> {
 
               Expanded(
                 child: Obx(() {
-                  return SizedBox(
-                    height: 40,
-                    child: ListView.builder(
-                      itemCount: foods.length,
-                      itemBuilder: (context, index) {
-                        final food = foods[index];
+                  return ListView.builder(
+                    itemCount: foods.length,
+                    itemBuilder: (context, index) {
+                      final food = foods[index];
 
-                        return ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      return ListTile(
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                            children: [
-                              Text(food.foodName),
-                              GestureDetector(
-                                onTap: () {
-                                  diets.deleteFoodList(index, food);
-                                },
-                                child: Icon(
-                                  Icons.delete,
-                                  color: Const().buildColors()[2],
-                                ),
-                              )
-                            ],
-                          ),
-                          subtitle: Text("${food.energyKcal} kcal"),
-                        );
-                      },
-                    ),
+                          children: [
+                            Text(food.foodName),
+                            GestureDetector(
+                              onTap: () {
+                                diets.deleteFoodList(index, food);
+                              },
+                              child: Icon(
+                                Icons.delete,
+                                color: Const().buildColors()[2],
+                              ),
+                            )
+                          ],
+                        ),
+                        subtitle: Text("${food.energyKcal} kcal"),
+                      );
+                    },
                   );
                 }),
               ),
