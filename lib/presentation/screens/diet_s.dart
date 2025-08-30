@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/controller/date_c.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/widget/builder/builder.dart';
 import 'package:mydiet/presentation/widget/item/item.dart';
@@ -15,6 +16,7 @@ class DietS extends StatefulWidget {
 
 class _DietSState extends State<DietS> with TickerProviderStateMixin {
   final DietController dietController = Get.put(DietController(0));
+  final dateController = Get.put(DateController());
 
   late final TabController _tabController;
 
@@ -40,14 +42,14 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
                   locale: 'ko_KR',
                   firstDay: DateTime.utc(2010, 10, 16),
                   lastDay: DateTime.utc(2030, 3, 14),
-                  focusedDay: dietController.selectedDate.value,
+                  focusedDay: dateController.selectedDate.value,
                   headerStyle: HeaderStyle(
                       formatButtonVisible: false,
                       titleCentered: true
                   ),
-                  selectedDayPredicate: (day) => isSameDay(dietController.selectedDate.value, day),
+                  selectedDayPredicate: (day) => isSameDay(dateController.selectedDate.value, day),
                   onDaySelected: (day, _ ) {
-                    dietController.selectedDate.value = day;
+                    dateController.selectedDate.value = day;
                   },
                   calendarBuilders: CalendarBuilders(
                     markerBuilder: (context, day, events) => buildMarker(context, day, dietController),
@@ -74,7 +76,7 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
                 Obx(() {
                   final diets = dietController.diets
                       .where((diet) =>
-                      isSameDay(diet.foodDate, dietController.selectedDate.value))
+                      isSameDay(diet.foodDate, dateController.selectedDate.value))
                       .toList();
 
                   return Item(

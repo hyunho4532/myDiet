@@ -23,7 +23,6 @@ class _FloatingState extends State<Floating> {
       child: FloatingActionButton(
         backgroundColor: Const().buildColors()[0],
         onPressed: () {
-          print("xptmxm");
           Get.to(DietI());
         },
         child: widget.icon,

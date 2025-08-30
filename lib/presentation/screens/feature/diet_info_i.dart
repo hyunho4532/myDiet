@@ -4,6 +4,7 @@ import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/controller/food_c.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/widget/row/row.dart';
+import 'package:mydiet/presentation/widget/toast/snack_bar.dart';
 
 class DietInfoI extends StatefulWidget {
   const DietInfoI({super.key});
@@ -111,6 +112,7 @@ class _DietInfoIState extends State<DietInfoI> {
                             GestureDetector(
                               onTap: () {
                                 dietController.setFoodList(index, food);
+                                SetToast().bar(context, "${food.foodName}를 선택했습니다!");
                               },
                               child: Icon(
                                 Icons.check,

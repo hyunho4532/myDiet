@@ -3,10 +3,12 @@ import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/common_c.dart';
 import 'package:get/get.dart';
+import 'package:mydiet/presentation/controller/date_c.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/screens/feature/diet_info_i.dart';
 import 'package:mydiet/presentation/widget/chips/chip.dart';
 import 'package:mydiet/presentation/widget/input/bottom_picker.dart';
+import 'package:mydiet/presentation/widget/toast/snack_bar.dart';
 
 class DietI extends StatefulWidget {
   const DietI({super.key});
@@ -19,21 +21,45 @@ class _DietIState extends State<DietI> {
 
   late final int id;
 
+  // diets 선언
   late final DietController diets;
+
+  // 홈에서 TableCalendar 클릭 시, 날짜 조회
+  final DateController dateController = Get.put(DateController());
+
+  // 공통 코드 조회
   final CommonCodeController foodKind = Get.put(CommonCodeController(), tag: 'foodKind');
   final CommonCodeController foodAmount = Get.put(CommonCodeController(), tag: 'foodAmount');
+
+  // id가 있으면 기존 diet의 selectedDate로 조회
+  // id가 없으면 date_controller의 selectedDate로 조회
+  final TextEditingController textEditingController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
-    id = (Get.arguments ?? 0) as int; // 먼저 초기화
+    print("Diet I");
 
-    // 항상 초기화
-    diets = Get.put(DietController(id));
+    id = (Get.arguments ?? 0) as int;
 
     if (id != 0) {
-      diets.dietById(id);
+      diets = Get.put(DietController(id));
+      diets.dietById(id).then((_) {
+        textEditingController.text =
+        "${diets.selectedDate.value.month}월 ${diets.selectedDate.value.day}일 "
+            "${diets.selectedDate.value.hour.toString().padLeft(2, "0")}시 "
+            "${diets.selectedDate.value.minute.toString().padLeft(2, "0")}분";
+      });
+    } else {
+      diets = Get.put(DietController(0));
+
+      textEditingController.text =
+      "${dateController.selectedDate.value.month}월 ${dateController.selectedDate.value.day}일 "
+          "${dateController.selectedDate.value.hour.toString().padLeft(2, "0")}시 "
+          "${dateController.selectedDate.value.minute.toString().padLeft(2, "0")}분";
+
+      Get.delete<DietController>();
     }
 
     foodKind.fetchCommon('FOOD_KIND');
@@ -69,6 +95,8 @@ class _DietIState extends State<DietI> {
                   foodList: diets.foods.toList()
                 );
 
+                SetToast().bar(context, "식단이 수정되었습니다!");
+
                 diets.edit(diet);
               } else {
                 final diet = Diet(
@@ -79,8 +107,12 @@ class _DietIState extends State<DietI> {
                     foodList: diets.foods.toList()
                 );
 
+                SetToast().bar(context, "식단이 등록되었습니다!");
+
                 diets.insert(diet);
               }
+
+              Get.back();
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 12),
@@ -182,12 +214,7 @@ class _DietIState extends State<DietI> {
                   width: 240,
                   height: 60,
                   child: TextField(
-                    controller: TextEditingController(
-                      text:
-                      "${diets.selectedDate.value.month}월 ${diets.selectedDate.value.day}일 "
-                          "${diets.selectedDate.value.hour.toString().padLeft(2, "0")}시 "
-                          "${diets.selectedDate.value.minute.toString().padLeft(2, "0")}분",
-                    ),
+                    controller: textEditingController,
                     readOnly: true, // 키보드 안 뜨게
                     style: const TextStyle(
                       fontSize: 16,
