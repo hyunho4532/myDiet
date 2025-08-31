@@ -11,6 +11,7 @@ import 'package:mydiet/presentation/screens/feature/diet_info_i.dart';
 import 'package:mydiet/presentation/utils/format.dart';
 import 'package:mydiet/presentation/widget/chips/chip.dart';
 import 'package:mydiet/presentation/widget/input/bottom_picker.dart';
+import 'package:mydiet/presentation/widget/painter/cup_painter.dart';
 import 'package:mydiet/presentation/widget/toast/snack_bar.dart';
 
 class DietI extends StatefulWidget {
@@ -312,7 +313,15 @@ class _DietIState extends State<DietI> {
             ],
           ),
 
-          'TYPE_WATER' => Text('물'),
+          'TYPE_WATER' => Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomPaint(
+                size: const Size(280, 280),
+                painter: CupPainter(),
+              )
+            ],
+          ),
           _ => SizedBox.shrink(),
         };
 
