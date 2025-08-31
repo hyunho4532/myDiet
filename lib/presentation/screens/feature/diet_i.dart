@@ -1,9 +1,11 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:mydiet/domain/common_code.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/common_c.dart';
 import 'package:get/get.dart';
-import 'package:mydiet/presentation/controller/date_c.dart';
+import 'package:mydiet/presentation/controller/const_c.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/screens/feature/diet_info_i.dart';
 import 'package:mydiet/presentation/utils/format.dart';
@@ -26,9 +28,10 @@ class _DietIState extends State<DietI> {
   late final DietController diets;
 
   // 홈에서 TableCalendar 클릭 시, 날짜 조회
-  final DateController dateController = Get.put(DateController());
+  final ConstController constController = Get.put(ConstController());
 
   // 공통 코드 조회
+  final CommonCodeController types = Get.put(CommonCodeController(), tag: 'types');
   final CommonCodeController foodKind = Get.put(CommonCodeController(), tag: 'foodKind');
   final CommonCodeController foodAmount = Get.put(CommonCodeController(), tag: 'foodAmount');
 
@@ -52,17 +55,18 @@ class _DietIState extends State<DietI> {
     } else {
       diets = Get.put(DietController(0));
 
-      textEditingController.text = Format().formatDateTime(dateController.selectedDate.value);
+      textEditingController.text = Format().formatDateTime(constController.selectedDate.value);
     }
 
     // 날짜 변경 감지
-    ever(dateController.selectedDate, (DateTime date) {
+    ever(constController.selectedDate, (DateTime date) {
       textEditingController.text = Format().formatDateTime(date);
 
       // 선택한 날짜를 diets에도 반영
       diets.selectedDate.value = date;
     });
 
+    types.fetchCommon("TYPE");
     foodKind.fetchCommon('FOOD_KIND');
     foodAmount.fetchCommon('FOOD_AMOUNT');
   }
@@ -132,20 +136,12 @@ class _DietIState extends State<DietI> {
         // 칼로리 계산
         final sumKcal = foods.fold(0.0, (sum, item) => sum += item.energyKcal);
 
-        if (foodKind.commons.isEmpty && foodAmount.commons.isEmpty) {
-          return Center(
-            child: Text(
-              '데이터를 불러오고 있습니다.'
-            ),
-          );
-        } else {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+        final widget = switch (constController.types.value) {
+          'TYPE_DIET' => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 12.0),
+                padding: const EdgeInsets.only(top: 24.0, left: 12.0),
                 child: Text(
                   '오늘은 어떤 식사를 하셨나요?',
                   style: TextStyle(
@@ -160,7 +156,7 @@ class _DietIState extends State<DietI> {
                 child: Text(
                   '식사 종류는 어떻게 되시나요?',
                   style: TextStyle(
-                    fontSize: 16
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -170,9 +166,9 @@ class _DietIState extends State<DietI> {
                 tags: tagKind,
                 data: foodKind.commons,
                 onChanged: (val) {
-                    setState(() {
-                      tagKind = val;
-                    });
+                  setState(() {
+                    tagKind = val;
+                  });
                 },
               ),
 
@@ -234,7 +230,7 @@ class _DietIState extends State<DietI> {
                         vertical: 12,
                       ),
                     ),
-                    onTap: () => BottomPickers().showDatePicker(context, dateController),
+                    onTap: () => BottomPickers().showDatePicker(context, constController),
                   ),
                 ),
               ),
@@ -274,15 +270,16 @@ class _DietIState extends State<DietI> {
                     Text(
                       '총 칼로리: $sumKcal kcal',
                       style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey
+                          fontSize: 16,
+                          color: Colors.grey
                       ),
                     )
                   ],
                 ),
               ),
 
-              Expanded(
+              SizedBox(
+                height: 230,
                 child: Obx(() {
                   return ListView.builder(
                     itemCount: foods.length,
@@ -312,6 +309,70 @@ class _DietIState extends State<DietI> {
                   );
                 }),
               ),
+            ],
+          ),
+
+          'TYPE_WATER' => Text('물'),
+          _ => SizedBox.shrink(),
+        };
+
+        if (foodKind.commons.isEmpty && foodAmount.commons.isEmpty) {
+          return Center(
+            child: Text(
+              '데이터를 불러오고 있습니다.'
+            ),
+          );
+        } else {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0),
+                child: Text(
+                  '종류를 선택해주세요!',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton2<String>(
+                    isExpanded: true,
+                    hint: Text(
+                    'Select Item',
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context).hintColor,
+                      ),
+                    ),
+                    items: types.commons.map((CommonCode item) {
+                      return DropdownMenuItem<String>(
+                        value: item.code, // 실제 선택값
+                        child: Text(
+                          item.name, // 화면에 보여줄 이름
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      );
+                    }).toList(),
+                    value: types.commons.any((item) => item.code == constController.types.value)
+                            ? constController.types.value
+                            : null,
+                    onChanged: (String? value) {
+                      setState(() {
+                        constController.onSelected(value!);
+                      });
+                    },
+                  )
+                ),
+              ),
+
+              widget,
             ],
           );
         }

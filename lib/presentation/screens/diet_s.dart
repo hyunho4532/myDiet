@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mydiet/presentation/controller/date_c.dart';
+import 'package:mydiet/presentation/controller/const_c.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/widget/builder/builder.dart';
 import 'package:mydiet/presentation/widget/item/item.dart';
@@ -15,7 +15,7 @@ class DietS extends StatefulWidget {
 
 class _DietSState extends State<DietS> with TickerProviderStateMixin {
   final DietController dietController = Get.put(DietController(0));
-  final dateController = Get.put(DateController());
+  final constController = Get.put(ConstController());
 
   late final TabController _tabController;
 
@@ -38,14 +38,14 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
                   locale: 'ko_KR',
                   firstDay: DateTime.utc(2010, 10, 16),
                   lastDay: DateTime.utc(2030, 3, 14),
-                  focusedDay: dateController.selectedDate.value,
+                  focusedDay: constController.selectedDate.value,
                   headerStyle: HeaderStyle(
                       formatButtonVisible: false,
                       titleCentered: true
                   ),
-                  selectedDayPredicate: (day) => isSameDay(dateController.selectedDate.value, day),
+                  selectedDayPredicate: (day) => isSameDay(constController.selectedDate.value, day),
                   onDaySelected: (day, _ ) {
-                    dateController.selectedDate.value = day;
+                    constController.selectedDate.value = day;
                   },
                   calendarBuilders: CalendarBuilders(
                     markerBuilder: (context, day, events) => buildMarker(context, day, dietController),
@@ -60,7 +60,7 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
             tabs: const <Widget>[
               Tab(text: '식단'),
               Tab(text: '운동'),
-              Tab(text: '간식'),
+              Tab(text: '수분'),
             ],
           ),
 
@@ -74,7 +74,7 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
 
                   final diets = dietController.diets
                       .where((diet) =>
-                      isSameDay(diet.foodDate, dateController.selectedDate.value))
+                      isSameDay(diet.foodDate, constController.selectedDate.value))
                       .toList();
 
                   return Item(

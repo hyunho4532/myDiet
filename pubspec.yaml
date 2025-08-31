@@ -74,6 +74,9 @@ dependencies:
   # 캘린더 뷰 라이브러리
   table_calendar: ^3.1.3
 
+  # 드롭다운 버튼 라이브러리
+  dropdown_button2: ^2.3.9
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
