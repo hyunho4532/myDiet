@@ -91,47 +91,67 @@ class _DietIState extends State<DietI> {
         backgroundColor: Colors.white,
         leading: const Icon(Icons.arrow_back),
         actions: [
-          GestureDetector(
-            onTap: () {
-              if (id != 0) {
-                final diet = Diet(
-                  id: id,
-                  foodType: '식단',
-                  foodKind: foodKind.commons[tagKind].name,
-                  foodAmount: foodAmount.commons[tagAmount].name,
-                  foodDate: diets.selectedDate.value,
-                  foodList: diets.foods.toList()
-                );
+          Obx(() {
+            // TYPE_DIET일 때
+            if (constController.types.value == 'TYPE_DIET') {
+              return GestureDetector(
+                onTap: () {
+                  if (id != 0) {
+                    final diet = Diet(
+                      id: id,
+                      foodType: '식단',
+                      foodKind: foodKind.commons[tagKind].name,
+                      foodAmount: foodAmount.commons[tagAmount].name,
+                      foodDate: diets.selectedDate.value,
+                      foodList: diets.foods.toList(),
+                    );
 
-                SetToast().bar(context, "식단이 수정되었습니다!");
+                    SetToast().bar(context, "식단이 수정되었습니다!");
+                    diets.edit(diet);
+                  } else {
+                    final diet = Diet(
+                      foodType: '식단',
+                      foodKind: foodKind.commons[tagKind].name,
+                      foodAmount: foodAmount.commons[tagAmount].name,
+                      foodDate: diets.selectedDate.value,
+                      foodList: diets.foods.toList(),
+                    );
 
-                diets.edit(diet);
-              } else {
-                final diet = Diet(
-                    foodType: '식단',
-                    foodKind: foodKind.commons[tagKind].name,
-                    foodAmount: foodAmount.commons[tagAmount].name,
-                    foodDate: diets.selectedDate.value,
-                    foodList: diets.foods.toList()
-                );
-
-                SetToast().bar(context, "식단이 등록되었습니다!");
-
-                diets.insert(diet);
-              }
-
-              Get.back();
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 12),
-              child: Text(
-                 id != 0 ? '수정' : '기록',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold
+                    SetToast().bar(context, "식단이 등록되었습니다!");
+                    diets.insert(diet);
+                  }
+                  Get.back();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: Text(
+                    id != 0 ? '수정' : '기록',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-            ),
-          )
+              );
+            }
+            // TYPE_WATER일 때
+            else if (constController.types.value == 'TYPE_WATER') {
+              return GestureDetector(
+                onTap: () {
+
+                  SetToast().bar(context, "수분이 등록되었습니다!");
+                },
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 12),
+                  child: Text(
+                    '등록',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              );
+            }
+            // 기본값 (버튼 없음)
+            else {
+              return const SizedBox.shrink();
+            }
+          })
         ],
       ),
 

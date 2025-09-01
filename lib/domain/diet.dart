@@ -3,6 +3,7 @@ import 'package:mydiet/domain/food.dart';
 
 part 'diet.g.dart';
 
+// 식단 테이블
 @JsonSerializable(includeIfNull: false)
 class Diet {
   final int? id;
