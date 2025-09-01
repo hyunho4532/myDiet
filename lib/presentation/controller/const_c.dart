@@ -6,6 +6,9 @@ class ConstController extends GetxController {
 
   var types = "TYPE_DIET".obs;
 
+  // 물 하루 권장량 2L
+  var dailyGoal = 2000.obs;
+
   void onSelected(String type) {
     types.value = type;
   }

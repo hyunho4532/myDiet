@@ -7,6 +7,7 @@ import 'package:mydiet/presentation/controller/common_c.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/controller/const_c.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
+import 'package:mydiet/presentation/controller/mois_c.dart';
 import 'package:mydiet/presentation/screens/feature/diet_info_i.dart';
 import 'package:mydiet/presentation/utils/format.dart';
 import 'package:mydiet/presentation/widget/chips/chip.dart';
@@ -30,6 +31,9 @@ class _DietIState extends State<DietI> {
 
   // 홈에서 TableCalendar 클릭 시, 날짜 조회
   final ConstController constController = Get.put(ConstController());
+
+  // 수분 선언
+  final MoisController moisController = Get.put(MoisController());
 
   // 공통 코드 조회
   final CommonCodeController types = Get.put(CommonCodeController(), tag: 'types');
@@ -132,10 +136,9 @@ class _DietIState extends State<DietI> {
       ),
 
       body: Obx(() {
-        final foods = diets.foods;
 
         // 칼로리 계산
-        final sumKcal = foods.fold(0.0, (sum, item) => sum += item.energyKcal);
+        final sumKcal = diets.foods.fold(0.0, (sum, item) => sum += item.energyKcal);
 
         final widget = switch (constController.types.value) {
           'TYPE_DIET' => Column(
@@ -283,9 +286,9 @@ class _DietIState extends State<DietI> {
                 height: 230,
                 child: Obx(() {
                   return ListView.builder(
-                    itemCount: foods.length,
+                    itemCount: diets.foods.length,
                     itemBuilder: (context, index) {
-                      final food = foods[index];
+                      final food = diets.foods[index];
 
                       return ListTile(
                         title: Row(
@@ -314,12 +317,117 @@ class _DietIState extends State<DietI> {
           ),
 
           'TYPE_WATER' => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CustomPaint(
-                size: const Size(280, 280),
-                painter: CupPainter(),
-              )
+              Obx(() {
+                double waterLevel = (moisController.currentWater.value / constController.dailyGoal.value).clamp(0.0, 1.0);
+
+                return Center(
+                  child: CustomPaint(
+                    size: const Size(300, 300),
+                    painter: CupPainter(
+                      waterLevel: waterLevel,
+                      repaint: moisController.currentWaterNotifier
+                    ),
+                  ),
+                );
+              }),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      moisController.onSelected(500);
+                    },
+                    child: SizedBox(
+                      width: 80,
+                      height: 40,
+
+                      child: Card(
+                        color: Colors.white,
+                        child: Center(
+                          child: Text(
+                              '+ 500ML'
+                          ),
+                        )
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: 6,
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+                      moisController.onSelected(100);
+                    },
+                    child: SizedBox(
+                      width: 80,
+                      height: 40,
+
+                      child: Card(
+                        color: Colors.white,
+                        child: Center(
+                          child: Text(
+                              '+ 100ML'
+                          ),
+                        )
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: 6,
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+                      moisController.onSelected(-500);
+                    },
+                    child: SizedBox(
+                      width: 80,
+                      height: 40,
+
+                      child: Card(
+                        color: Colors.white,
+                        child: Center(
+                          child: Text(
+                              '- 500ML'
+                          ),
+                        )
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: 6,
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+                      moisController.onSelected(-100);
+                    },
+                    child: SizedBox(
+                      width: 80,
+                      height: 40,
+
+                      child: Card(
+                        color: Colors.white,
+                        child: Center(
+                          child: Text(
+                              '- 100ML'
+                          ),
+                        )
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
           _ => SizedBox.shrink(),
