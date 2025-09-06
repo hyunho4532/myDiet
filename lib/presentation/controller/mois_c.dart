@@ -13,7 +13,13 @@ class MoisController extends GetxController {
 
   Future<void> fetchMois() {
     return MoisRepository().fetchMois((data) {
-      moiss.value = data.map((e) => Mois.fromJson(e)).toList();
+      final fetched = data.map((e) => Mois.fromJson(e)).toList();
+      moiss.value = fetched;
+
+      // amount_mois 합계를 구해서 currentWaterNotifier에 반영
+      final total = fetched.fold<double>(0.0, (sum, item) => sum + (item.amountMois));
+      currentWater.value = total;
+      currentWaterNotifier.value = total;
     });
   }
 

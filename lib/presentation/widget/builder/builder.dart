@@ -61,7 +61,7 @@ Widget buildMarker(BuildContext context, DateTime day, DietController dietContro
         width: 6,
         height: 6,
         decoration: BoxDecoration(
-          color: Const().buildColors()[2], // 식단 색상
+          color: Const().buildColors()[1], // 식단 색상
           shape: BoxShape.circle,
         ),
       ));

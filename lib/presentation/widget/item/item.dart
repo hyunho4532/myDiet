@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/mois.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/controller/const_c.dart';
+import 'package:mydiet/presentation/controller/mois_c.dart';
 import 'package:mydiet/presentation/screens/feature/diet_i.dart';
 import 'package:mydiet/presentation/utils/math.dart';
 import 'package:get/get.dart';
+import 'package:mydiet/presentation/widget/painter/cup_painter.dart';
 
 // Item 위젯 추가
 // type에 따라서 state 구분
@@ -224,10 +227,12 @@ class _DietItemState extends State<Item<Diet>> {
                                 ],
                               ),
 
-                              for (int i = 0; i < diet.foodList.length; i += 3)
+                              for (int i = 0; i < diet.foodList.length; i += 2)
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    for (int j = i; j < i + 3 && j < diet.foodList.length; j++)
+                                    for (int j = i; j < i + 2 && j < diet.foodList.length; j++)
                                       Container(
                                         constraints: BoxConstraints(
                                             minWidth: 100,
@@ -275,64 +280,53 @@ class _DietItemState extends State<Item<Diet>> {
 }
 
 class _MoisItemState extends State<Item<Mois>> {
+  final constController = Get.put(ConstController());
+  final moisController = Get.put(MoisController());
+
   @override
   Widget build(BuildContext context) {
+    // 수분 합계 계산
+    final double sumAmount = widget.data.fold<double>(
+      0.0,
+          (sum, m) => sum + (m.amountMois ?? 0.0),
+    );
+
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       itemCount: widget.data.length,
       itemBuilder: (context, index) {
         final mois = widget.data[index];
 
-        return Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: GestureDetector(
-            onTap: () {
+        double waterLevel = (mois.amountMois / constController.dailyGoal.value).clamp(0.0, 1.0);
 
-            },
-            child: Card(
-              color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTile(
-                    title: Card(
-                      elevation: 0,
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          side: BorderSide(
-                              color: Colors.grey,
-                              width: 0.5
-                          )
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                  child: Text(
-                                    "${mois.amountMois}",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+        return GestureDetector(
+          onTap: () {
+
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            child: Column(
+              children: [
+                Column(
+                  children: [
+                    CustomPaint(
+                      size: const Size(180, 180),
+                      painter: CupPainter(
+                          waterLevel: waterLevel,
+                          repaint: MoisController().currentWaterNotifier
                       ),
                     ),
-                  ),
-                ],
-              ),
+
+                    Text(
+                      "총: ${sumAmount}ml",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         );

@@ -29,6 +29,9 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+
+    dietController.fetchDiet();
+    moisController.fetchMois();
   }
 
   @override
@@ -99,10 +102,15 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
                   );
                 }),
 
-                Card(
-                  margin: const EdgeInsets.all(16.0),
-                  child: Center(child: Text('Specifications tab')),
-                ),
+                Obx(() {
+                  final moiss = moisController.moiss
+                      .where((mois) => isSameDay(mois.moisDate, constController.selectedDate.value))
+                      .toList();
+
+                  return Item(
+                    data: moiss,
+                  );
+                }),
               ],
             ),
           ),
