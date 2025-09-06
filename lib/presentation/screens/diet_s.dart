@@ -54,7 +54,7 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
                     constController.selectedDate.value = day;
                   },
                   calendarBuilders: CalendarBuilders(
-                    markerBuilder: (context, day, events) => buildMarker(context, day, dietController),
+                    markerBuilder: (context, day, events) => buildMarker(context, day, dietController, moisController),
                     dowBuilder: (context, day) => buildDow(context, day),
                   )
               ),
@@ -79,8 +79,7 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
                   dietController.fetchDiet();
 
                   final diets = dietController.diets
-                      .where((diet) =>
-                      isSameDay(diet.foodDate, constController.selectedDate.value))
+                      .where((diet) => isSameDay(diet.foodDate, constController.selectedDate.value))
                       .toList();
 
                   return Item(
@@ -91,6 +90,13 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
                 Obx(() {
                   moisController.fetchMois();
 
+                  final moiss = moisController.moiss
+                    .where((mois) => isSameDay(mois.moisDate, constController.selectedDate.value))
+                    .toList();
+
+                  return Item(
+                    data: moiss,
+                  );
                 }),
 
                 Card(

@@ -1,22 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:mydiet/domain/diet.dart';
+import 'package:mydiet/domain/mois.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/screens/feature/diet_i.dart';
 import 'package:mydiet/presentation/utils/math.dart';
 import 'package:get/get.dart';
 
+// Item 위젯 추가
+// type에 따라서 state 구분
 class Item<T> extends StatefulWidget {
   final List<T> data;
 
   const Item({
     super.key,
-    required this.data
+    required this.data,
   });
 
   @override
-  State<Item> createState() => _ItemState();
+  State<Item<T>> createState() {
+    if (T == Diet) {
+      return _DietItemState() as State<Item<T>>;
+    } else {
+      return _MoisItemState() as State<Item<T>>;
+    }
+  }
 }
 
-class _ItemState extends State<Item> {
+class _DietItemState extends State<Item<Diet>> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -253,6 +263,73 @@ class _ItemState extends State<Item> {
                           ),
                         ),
                       ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _MoisItemState extends State<Item<Mois>> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: const BouncingScrollPhysics(),
+      itemCount: widget.data.length,
+      itemBuilder: (context, index) {
+        final mois = widget.data[index];
+
+        return Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: GestureDetector(
+            onTap: () {
+
+            },
+            child: Card(
+              color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    title: Card(
+                      elevation: 0,
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(
+                              color: Colors.grey,
+                              width: 0.5
+                          )
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  child: Text(
+                                    "${mois.amountMois}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
