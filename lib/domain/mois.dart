@@ -10,7 +10,7 @@ class Mois {
 
   // 수분량
   @JsonKey(name: 'amount_mois')
-  final int amountMois;
+  final double amountMois;
 
   @JsonKey(name: 'mois_date')
   final DateTime moisDate;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/controller/const_c.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
+import 'package:mydiet/presentation/controller/mois_c.dart';
 import 'package:mydiet/presentation/widget/builder/builder.dart';
 import 'package:mydiet/presentation/widget/item/item.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -14,7 +15,12 @@ class DietS extends StatefulWidget {
 }
 
 class _DietSState extends State<DietS> with TickerProviderStateMixin {
+  // 식단 관련 controller
   final DietController dietController = Get.put(DietController(0));
+
+  // 수분 관련 controller
+  final MoisController moisController = Get.put(MoisController());
+
   final constController = Get.put(ConstController());
 
   late final TabController _tabController;
@@ -81,10 +87,12 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
                     data: diets,
                   );
                 }),
-                Card(
-                  margin: const EdgeInsets.all(16.0),
-                  child: Center(child: Text('Specifications tab')),
-                ),
+
+                Obx(() {
+                  moisController.fetchMois();
+
+                }),
+
                 Card(
                   margin: const EdgeInsets.all(16.0),
                   child: Center(child: Text('Specifications tab')),

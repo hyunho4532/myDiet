@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:mydiet/domain/common_code.dart';
 import 'package:mydiet/domain/diet.dart';
+import 'package:mydiet/domain/mois.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/common_c.dart';
 import 'package:get/get.dart';
@@ -135,6 +136,14 @@ class _DietIState extends State<DietI> {
             else if (constController.types.value == 'TYPE_WATER') {
               return GestureDetector(
                 onTap: () {
+                  var now = DateTime.now();
+
+                  final mois = Mois(
+                      amountMois: moisController.currentWater.value,
+                      moisDate: now
+                  );
+
+                  moisController.insert(mois);
 
                   SetToast().bar(context, "수분이 등록되었습니다!");
                 },
