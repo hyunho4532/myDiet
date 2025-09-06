@@ -288,49 +288,40 @@ class _MoisItemState extends State<Item<Mois>> {
     // 수분 합계 계산
     final double sumAmount = widget.data.fold<double>(
       0.0,
-          (sum, m) => sum + (m.amountMois ?? 0.0),
+          (sum, m) => sum + (m.amountMois),
     );
 
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      itemCount: widget.data.length,
-      itemBuilder: (context, index) {
-        final mois = widget.data[index];
+    double waterLevel = (sumAmount / constController.dailyGoal.value).clamp(0.0, 1.0);
 
-        double waterLevel = (mois.amountMois / constController.dailyGoal.value).clamp(0.0, 1.0);
-
-        return GestureDetector(
-          onTap: () {
-
-          },
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.topRight,
           child: Padding(
-            padding: const EdgeInsets.only(left: 8, right: 8),
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    CustomPaint(
-                      size: const Size(180, 180),
-                      painter: CupPainter(
-                          waterLevel: waterLevel,
-                          repaint: MoisController().currentWaterNotifier
-                      ),
-                    ),
-
-                    Text(
-                      "총: ${sumAmount}ml",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+            padding: const EdgeInsets.only(top: 4, right: 6),
+            child: Text(
+              "수분 공급: ${sumAmount}ml",
+              style: TextStyle(
+                fontSize: 14,
+                color: Const().buildColors()[1]
+              ),
             ),
           ),
-        );
-      },
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CustomPaint(
+              size: const Size(140, 140),
+              painter: CupPainter(
+                  waterLevel: waterLevel,
+                  repaint: MoisController().currentWaterNotifier
+              ),
+            ),
+          ],
+        )
+      ],
     );
   }
 }
