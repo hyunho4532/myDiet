@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/const_c.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/controller/mois_c.dart';
@@ -71,6 +72,12 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
               Tab(text: '운동'),
               Tab(text: '수분'),
             ],
+            onTap: (value) => {
+              setState(() {
+                _tabController.index = value;
+              })
+            },
+            indicatorColor: _tabController.index == 0 ? Const().buildColors()[0] : Const().buildColors()[1]
           ),
 
           // 식단 리스트 (스크롤 가능)
