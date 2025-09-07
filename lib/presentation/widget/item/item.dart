@@ -294,27 +294,28 @@ class _MoisItemState extends State<Item<Mois>> {
     double waterLevel = (sumAmount / constController.dailyGoal.value).clamp(0.0, 1.0);
 
     return Padding(
-      padding: const EdgeInsets.only(left: 24.0, right: 24.0, top: 60.0, bottom: 90.0),
-      child: Card(
-        color: Colors.white,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0, right: 6.0),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Text(
-                  "하루 수분 섭취량 (권장): 체중 1kg당 약 30~35ml",
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    color: Const().buildColors()[1]
-                  ),
+      padding: const EdgeInsets.only(left: 0, right: 0, bottom: 40, top: 0),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0, right: 12.0),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Text(
+                "하루 수분 섭취량 (권장): 체중 1kg당 약 30~35ml",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Const().buildColors()[1]
                 ),
               ),
             ),
-            
-            Row(
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 60),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+
               children: [
                 CustomPaint(
                   size: const Size(120, 120),
@@ -329,18 +330,19 @@ class _MoisItemState extends State<Item<Mois>> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 4, right: 6),
                     child: Text(
-                      "오늘 수분을\n${waterLevel}L를 채웠어요!",
+                      "오늘의 수분은? \n${waterLevel}L를 채웠어요!",
                       style: TextStyle(
-                          fontSize: 16,
-                          color: Const().buildColors()[1]
+                        fontSize: 16,
+                        color: Const().buildColors()[1],
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
