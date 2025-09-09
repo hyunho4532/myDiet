@@ -3,6 +3,7 @@ import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/controller/food_c.dart';
 import 'package:get/get.dart';
+import 'package:mydiet/presentation/utils/visible.dart';
 import 'package:mydiet/presentation/widget/row/row.dart';
 import 'package:mydiet/presentation/widget/toast/snack_bar.dart';
 
@@ -97,7 +98,17 @@ class _DietInfoIState extends State<DietInfoI> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                           children: [
-                            Text(food.foodName),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+
+                              children: [
+                                Visible().visibleCategory(food.foodMajorCategoryName),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 4),
+                                  child: Text(food.foodName),
+                                ),
+                              ]
+                            ),
                             GestureDetector(
                               onTap: () {
                                 dietController.setFoodList(index, food);

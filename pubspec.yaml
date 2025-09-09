@@ -104,6 +104,8 @@ flutter:
   assets:
     - .env
     - images/lunch_icon.png
+    - assets/fried.png
+    - assets/rise.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
