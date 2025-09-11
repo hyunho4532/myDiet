@@ -1,0 +1,33 @@
+import 'package:flutter/material.dart';
+import 'package:mydiet/presentation/widget/button/floating.dart';
+
+/// visible: 어떤 상태에 따라서 위젯을 보여줄 지 말지 여부 결정
+class Visible {
+  Floating? visibleFloating(int index) {
+    return index == 1 ? Floating(icon: Icon(Icons.add, color: Colors.white)) : null;
+  }
+
+  // category 설정
+  Widget visibleCategory(String category) {
+    switch (category) {
+      case '튀김류':
+        return Image.asset('assets/fried.png', width: 24, height: 24);
+      case '찜류':
+        return Image.asset('assets/zzim.png', width: 24, height: 24);
+      case '찌개 및 전골류':
+        return Image.asset('assets/soup.png', width: 24, height: 24);
+      case '밥류':
+        return Image.asset('assets/rise.png', width: 24, height: 24);
+      case '죽 및 스프류':
+        return Image.asset('assets/porridge.png', width: 24, height: 24);
+      case '조림류':
+        return Image.asset('assets/afforestation.png', width: 24, height: 24);
+      case '샐러드류':
+        return Image.asset('assets/salad.png', width: 24, height: 24);
+      case '빵 및 과자류':
+        return Image.asset('assets/bread.png', width: 24, height: 24);
+      default:
+        return Icon(Icons.category, color: Colors.grey);
+    }
+  }
+}
