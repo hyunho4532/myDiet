@@ -7,6 +7,7 @@ import 'package:mydiet/presentation/controller/mois_c.dart';
 import 'package:mydiet/presentation/screens/feature/diet_i.dart';
 import 'package:mydiet/presentation/utils/math.dart';
 import 'package:get/get.dart';
+import 'package:mydiet/presentation/utils/visible.dart';
 import 'package:mydiet/presentation/widget/painter/cup_painter.dart';
 
 // Item 위젯 추가
@@ -244,11 +245,18 @@ class _DietItemState extends State<Item<Diet>> {
                                             padding: EdgeInsets.all(6.0),
                                             child: Column(
                                               children: [
-                                                Text(
-                                                  diet.foodList[j].foodName,
-                                                  style: TextStyle(
-                                                      color: Colors.white
-                                                  ),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Visible().visibleCategory(diet.foodList[j].foodMajorCategoryName),
+
+                                                    Text(
+                                                      diet.foodList[j].foodName,
+                                                      style: TextStyle(
+                                                          color: Colors.white
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
 
                                                 Text(
