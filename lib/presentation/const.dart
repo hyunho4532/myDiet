@@ -15,6 +15,23 @@ class Const {
     ];
   }
 
+  // 차트 색상 관리
+  List<Color> buildChartColor() {
+    return [
+      // 탄수화물
+      Color(0xfffff981),
+
+      // 단백질
+      Color(0xff2d67f4),
+
+      // 지방
+      Color(0xffc68484),
+
+      // 비타민
+      Color(0xffa2fb81)
+    ];
+  }
+
   // 네비게이션 화면 관리
   List<Widget> buildScreens() {
     return [

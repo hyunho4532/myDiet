@@ -16,30 +16,33 @@ class _HomeSState extends State<HomeS> {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1.3,
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: PieChart(
-          PieChartData(
-            pieTouchData: PieTouchData(
-              touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                setState(() {
-                  if (!event.isInterestedForInteractions ||
-                      pieTouchResponse == null ||
-                      pieTouchResponse.touchedSection == null) {
-                    touchedIndex = -1;
-                    return;
-                  }
-                  touchedIndex =
-                      pieTouchResponse.touchedSection!.touchedSectionIndex;
-                });
-              },
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: PieChart(
+            PieChartData(
+              pieTouchData: PieTouchData(
+                touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                  setState(() {
+                    if (!event.isInterestedForInteractions ||
+                        pieTouchResponse == null ||
+                        pieTouchResponse.touchedSection == null) {
+                      touchedIndex = -1;
+                      return;
+                    }
+                    touchedIndex =
+                        pieTouchResponse.touchedSection!.touchedSectionIndex;
+                  });
+                },
+              ),
+              borderData: FlBorderData(
+                show: false,
+              ),
+              sectionsSpace: 0,
+              centerSpaceRadius: 0,
+              sections: showingSections(),
             ),
-            borderData: FlBorderData(
-              show: false,
-            ),
-            sectionsSpace: 0,
-            centerSpaceRadius: 0,
-            sections: showingSections(),
           ),
         ),
       ),
@@ -57,7 +60,7 @@ class _HomeSState extends State<HomeS> {
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: Const().buildColors()[2],
+            color: Const().buildChartColor()[1],
             value: 40,
             title: '40%',
             radius: radius,
@@ -76,7 +79,7 @@ class _HomeSState extends State<HomeS> {
           );
         case 1:
           return PieChartSectionData(
-            color: Const().buildColors()[0],
+            color: Const().buildChartColor()[0],
             value: 30,
             title: '30%',
             radius: radius,
@@ -95,7 +98,7 @@ class _HomeSState extends State<HomeS> {
           );
         case 2:
           return PieChartSectionData(
-            color: AppColors.contentColorPurple,
+            color: Const().buildChartColor()[2],
             value: 16,
             title: '16%',
             radius: radius,
@@ -114,7 +117,7 @@ class _HomeSState extends State<HomeS> {
           );
         case 3:
           return PieChartSectionData(
-            color: AppColors.contentColorGreen,
+            color: Const().buildChartColor()[3],
             value: 15,
             title: '15%',
             radius: radius,
@@ -156,18 +159,7 @@ class _Badge extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color: Colors.white,
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: borderColor,
-          width: 2,
-        ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black.withValues(alpha: .5),
-            offset: const Offset(3, 3),
-            blurRadius: 3,
-          ),
-        ],
+        shape: BoxShape.circle
       ),
       padding: EdgeInsets.all(size * .15),
       child: Center(
