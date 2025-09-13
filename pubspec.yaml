@@ -77,6 +77,10 @@ dependencies:
   # 드롭다운 버튼 라이브러리
   dropdown_button2: ^2.3.9
 
+  # 차트 라이브러리
+  fl_chart: ^0.70.2
+  vector_math: ^2.1.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
