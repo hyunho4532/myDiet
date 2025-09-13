@@ -11,6 +11,13 @@ class DietRepository<T> {
     final data = response as List<dynamic>;
     onSuccess(data);
   }
+  
+  Future<void> fetchRatio(Function(List<dynamic>) onSuccess) async {
+    final response = await _client.rpc("get_nutrient_ratio_from_food_list");
+
+    final data = response as List<dynamic>;
+    onSuccess(data);
+  }
 
   Future<RxList<Diet>> dietById(int id) async {
     final response = await _client.from("Diet").select().eq("id", id);

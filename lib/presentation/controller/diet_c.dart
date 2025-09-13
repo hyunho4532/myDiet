@@ -3,6 +3,7 @@ import 'package:mydiet/data/repository/diet_r.dart';
 import 'package:mydiet/data/repository/food_r.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/food.dart';
+import 'package:mydiet/domain/ratio.dart';
 
 class DietController extends GetxController {
 
@@ -13,6 +14,9 @@ class DietController extends GetxController {
   // 식단 관리
   var diets = <Diet>[].obs;
 
+  // 비율 관리
+  var ratios = <Ratio>[].obs;
+
   // 음식 리스트 관리
   var foods = <Food>[].obs;
 
@@ -21,6 +25,12 @@ class DietController extends GetxController {
   Future<void> fetchDiet() {
     return DietRepository().fetchDiet((data) {
       diets.value = data.map((e) => Diet.fromJson(e)).toList();
+    });
+  }
+
+  Future<void> fetchRatio() {
+    return DietRepository().fetchRatio((data) {
+      ratios.value = data.map((e) => Ratio.fromJson(e)).toList();
     });
   }
 
