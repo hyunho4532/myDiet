@@ -251,7 +251,7 @@ class _DietItemState extends State<Item<Diet>> {
                                                     Visible().visibleCategory(diet.foodList[j].foodMajorCategoryName),
 
                                                     Text(
-                                                      diet.foodList[j].foodName,
+                                                      diet.foodList[j].foodName.length > 10 ? diet.foodList[j].foodName.substring(0, 9) : diet.foodList[j].foodName,
                                                       style: TextStyle(
                                                           color: Colors.white
                                                       ),

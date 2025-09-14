@@ -7,16 +7,16 @@ part 'ratio.g.dart';
 @JsonSerializable(includeIfNull: false)
 class Ratio {
   @JsonKey(name: 'protein_pct')
-  final int? proteinPct;
+  final double? proteinPct;
 
   @JsonKey(name: 'fat_pct')
-  final int? fatPct;
+  final double? fatPct;
 
   @JsonKey(name: 'carb_pct')
-  final int? carbPct;
+  final double? carbPct;
 
   @JsonKey(name: 'vitamin_pct')
-  final int? vitaminPct;
+  final double? vitaminPct;
 
   Ratio({
     this.proteinPct,

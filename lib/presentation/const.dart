@@ -19,16 +19,16 @@ class Const {
   List<Color> buildChartColor() {
     return [
       // 탄수화물
-      Color(0xfffff981),
+      Color(0xfffac45d),
 
       // 단백질
-      Color(0xff2d67f4),
+      Color(0xff6d9afd),
 
       // 지방
-      Color(0xffc68484),
+      Color(0xfffa6161),
 
       // 비타민
-      Color(0xffa2fb81)
+      Color(0xff91ff68)
     ];
   }
 

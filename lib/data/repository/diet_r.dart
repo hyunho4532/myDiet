@@ -14,6 +14,7 @@ class DietRepository<T> {
   
   Future<void> fetchRatio(Function(List<dynamic>) onSuccess) async {
     final response = await _client.rpc("get_nutrient_ratio_from_food_list");
+    print("Diet R: $response");
 
     final data = response as List<dynamic>;
     onSuccess(data);

@@ -7,10 +7,10 @@ part of 'ratio.dart';
 // **************************************************************************
 
 Ratio _$RatioFromJson(Map<String, dynamic> json) => Ratio(
-  proteinPct: (json['protein_pct'] as num?)?.toInt(),
-  fatPct: (json['fat_pct'] as num?)?.toInt(),
-  carbPct: (json['carb_pct'] as num?)?.toInt(),
-  vitaminPct: (json['vitamin_pct'] as num?)?.toInt(),
+  proteinPct: (json['protein_pct'] as num?)?.toDouble(),
+  fatPct: (json['fat_pct'] as num?)?.toDouble(),
+  carbPct: (json['carb_pct'] as num?)?.toDouble(),
+  vitaminPct: (json['vitamin_pct'] as num?)?.toDouble(),
 );
 
 Map<String, dynamic> _$RatioToJson(Ratio instance) => <String, dynamic>{
