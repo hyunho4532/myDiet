@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mydiet/presentation/const.dart';
 
 // 영양 성분 Row 위젯
 class DietInfoRow<T> extends StatefulWidget {
@@ -15,7 +16,7 @@ class DietInfoRow<T> extends StatefulWidget {
   State<DietInfoRow> createState() => _RowState();
 }
 
-// 4대 영양 성분 차트 형태 Row 위젯
+// 4대 영양 성분 차트 형태 Row 위젯 (Home 탭에 구현)
 class HomeDietRow<T> extends StatefulWidget {
   final String label;
   final String value;
@@ -58,29 +59,23 @@ class _RowState extends State<DietInfoRow> {
   }
 }
 
-class _DietRowState extends State<DietInfoRow> {
+class _DietRowState extends State<HomeDietRow> {
+  final color = Const().buildColors()[1];
+
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-
       children: [
-        Text(
-          widget.text,
-          style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey
+        Expanded(
+          child: Text(
+            widget.label,
+            style: TextStyle(fontSize: 14, color: color),
           ),
         ),
-
         Text(
-          "${widget.data}",
-          style: TextStyle(
-              fontSize: 14,
-              color: Colors.black
-          ),
-        )
+          widget.value,
+          style: TextStyle(fontSize: 14, color: color),
+        ),
       ],
     );
   }

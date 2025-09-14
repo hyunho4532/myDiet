@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
+import 'package:mydiet/presentation/widget/row/row.dart';
 
 class HomeS extends StatefulWidget {
   const HomeS({super.key});
@@ -26,13 +27,29 @@ class _HomeSState extends State<HomeS> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
+      return Padding(
+        padding: const EdgeInsets.only(top: 30, left: 8, right: 8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(
+                  onTap: () {
+
+                  },
+                  child: Text("최근 7일")
+                ),
+                Text("최근 30일"),
+                Text("직접 입력")
+              ],
+            ),
+
+            const SizedBox(height: 18),
+
+            Card(
               child: SizedBox(
                 height: 140,
                 child: Row(
@@ -74,95 +91,16 @@ class _HomeSState extends State<HomeS> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "탄수화물",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Const().buildColors()[1]
-                                  ),
-                                ),
-
-                                Text(
-                                  "${dietController.ratios[0].carbPct}%",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Const().buildColors()[1]
-                                  ),
-                                )
-                              ],
-                            ),
-
+                            HomeDietRow(label: "탄수화물", value: "${dietController.ratios[0].carbPct}%"),
                             const SizedBox(height: 4),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "단백질",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Const().buildColors()[1]
-                                  ),
-                                ),
-
-                                Text(
-                                  "${dietController.ratios[0].proteinPct}%",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Const().buildColors()[1]
-                                  ),
-                                )
-                              ],
-                            ),
-
+                            HomeDietRow(label: "단백질", value: "${dietController.ratios[0].proteinPct}%"),
                             const SizedBox(height: 4),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "지방",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Const().buildColors()[1]
-                                  ),
-                                ),
-
-                                Text(
-                                  "${dietController.ratios[0].fatPct}%",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Const().buildColors()[1]
-                                  ),
-                                )
-                              ],
-                            ),
-
+                            HomeDietRow(label: "지방", value: "${dietController.ratios[0].fatPct}%"),
                             const SizedBox(height: 4),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "비타민",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Const().buildColors()[1]
-                                  ),
-                                ),
-
-                                Text(
-                                  "${dietController.ratios[0].vitaminPct}%",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Const().buildColors()[1]
-                                  ),
-                                )
-                              ],
-                            )
+                            HomeDietRow(label: "비타민", value: "${dietController.ratios[0].vitaminPct}%"),
                           ],
                         ),
                       ),
@@ -171,8 +109,8 @@ class _HomeSState extends State<HomeS> {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     });
   }
