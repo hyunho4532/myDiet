@@ -22,6 +22,7 @@ class _HomeSState extends State<HomeS> {
   void initState() {
     super.initState();
     dietController.fetchRatio();
+    dietController.fetchDietDate();
   }
 
   @override
