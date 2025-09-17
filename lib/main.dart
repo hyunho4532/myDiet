@@ -5,12 +5,15 @@ import 'package:mydiet/presentation/widget/view/persistent_tabview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:intl/intl_standalone.dart' if (dart.library.html) 'package:intl/intl_browser.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // 1) 환경변수 로드
   await dotenv.load(fileName: ".env");
+
+  await findSystemLocale();
 
   // 2) Supabase 초기화
   await Supabase.initialize(

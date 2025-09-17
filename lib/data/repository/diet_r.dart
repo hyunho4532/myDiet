@@ -12,8 +12,16 @@ class DietRepository<T> {
     onSuccess(data);
   }
   
-  Future<void> fetchRatio(Function(List<dynamic>) onSuccess) async {
-    final response = await _client.rpc("get_nutrient_ratio_from_food_list");
+  Future<void> fetchRatio(DateTime? startDate, DateTime? endDate, Function(List<dynamic>) onSuccess) async {
+    print("Diet R: ${startDate} ${endDate}");
+
+    final response = await _client.rpc(
+      "get_nutrient_ratio_from_food_list",
+      params: {
+        "start_date": startDate!.toIso8601String(), // RPC 함수에서 정의한 파라미터명과 일치해야 함
+        "end_date": endDate!.toIso8601String(),
+      },
+    );
 
     final data = response as List<dynamic>;
     onSuccess(data);
@@ -21,6 +29,8 @@ class DietRepository<T> {
 
   Future<void> fetchDietDate(Function(List<dynamic>) onSuccess) async {
     final response = await _client.rpc("get_start_end_date");
+
+    print("Diet R: ${response}");
 
     final data = response as List<dynamic>;
     onSuccess(data);

@@ -32,8 +32,8 @@ class DietController extends GetxController {
     });
   }
 
-  Future<void> fetchRatio() {
-    return DietRepository().fetchRatio((data) {
+  Future<void> fetchRatio(DateTime? startDate, DateTime? endDate) {
+    return DietRepository().fetchRatio(startDate, endDate, (data) {
       ratios.value = data.map((e) => Ratio.fromJson(e)).toList();
     });
   }

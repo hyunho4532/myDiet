@@ -5,10 +5,9 @@ part 'diet_date.g.dart';
 @JsonSerializable(includeIfNull: false)
 class DietDate {
   @JsonKey(name: 'start_date')
-  final DateTime? startDate;
+  DateTime? startDate;
 
-  @JsonKey(name: 'end_date')
-  final DateTime? endDate;
+  @JsonKey(name: 'end_date')DateTime? endDate;
 
   DietDate({
     this.startDate,

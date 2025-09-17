@@ -1,6 +1,8 @@
+import 'package:date_field/date_field.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/widget/row/row.dart';
@@ -21,8 +23,11 @@ class _HomeSState extends State<HomeS> {
   @override
   void initState() {
     super.initState();
-    dietController.fetchRatio();
     dietController.fetchDietDate();
+
+    if (dietController.dietsDate.isNotEmpty) {
+      dietController.fetchRatio(dietController.dietsDate[0].startDate, dietController.dietsDate[0].endDate);
+    }
   }
 
   @override
@@ -45,6 +50,51 @@ class _HomeSState extends State<HomeS> {
                 ),
                 Text("최근 30일"),
                 Text("직접 입력")
+              ],
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: 140,
+                  height: 40,
+                  child: DateTimeFormField(
+                    initialValue: dietController.dietsDate[0].startDate,
+                    mode: DateTimeFieldPickerMode.date,
+                    dateFormat: DateFormat('yyyy-MM-dd'),
+                    onChanged: (DateTime? value) {
+                      dietController.dietsDate[0].startDate = value;
+                      dietController.fetchRatio(dietController.dietsDate[0].startDate, dietController.dietsDate[0].endDate);
+                    },
+                  ),
+                ),
+                const SizedBox(width: 8),
+
+                Text(
+                    "~",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey
+                  ),
+                ),
+
+                const SizedBox(width: 8),
+
+                SizedBox(
+                  width: 140,
+                  height: 40,
+                  child: DateTimeFormField(
+                    initialValue: dietController.dietsDate[0].endDate,
+                    mode: DateTimeFieldPickerMode.date,
+                    dateFormat: DateFormat('yyyy-MM-dd'),
+                    onChanged: (DateTime? value) {
+                      dietController.dietsDate[0].endDate = value;
+                      dietController.fetchRatio(dietController.dietsDate[0].startDate, dietController.dietsDate[0].endDate);
+                    },
+                  ),
+                ),
               ],
             ),
 
