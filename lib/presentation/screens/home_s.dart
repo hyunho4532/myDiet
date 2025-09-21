@@ -23,11 +23,7 @@ class _HomeSState extends State<HomeS> {
   @override
   void initState() {
     super.initState();
-    dietController.fetchDietDate();
-
-    if (dietController.dietsDate.isNotEmpty) {
-      dietController.fetchRatio(dietController.dietsDate[0].startDate, dietController.dietsDate[0].endDate);
-    }
+    dietController.fetchDietDate('week');
   }
 
   @override
@@ -44,11 +40,16 @@ class _HomeSState extends State<HomeS> {
               children: [
                 GestureDetector(
                   onTap: () {
-
+                    dietController.fetchDietDate('week');
                   },
                   child: Text("최근 7일")
                 ),
-                Text("최근 30일"),
+                GestureDetector(
+                  onTap: () {
+                    dietController.fetchDietDate('month');
+                  },
+                  child: Text("최근 30일")
+                ),
                 Text("직접 입력")
               ],
             ),

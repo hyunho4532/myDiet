@@ -27,10 +27,14 @@ class DietRepository<T> {
     onSuccess(data);
   }
 
-  Future<void> fetchDietDate(Function(List<dynamic>) onSuccess) async {
-    final response = await _client.rpc("get_start_end_date");
-
-    print("Diet R: ${response}");
+  Future<void> fetchDietDate(String type, Function(List<dynamic>) onSuccess) async {
+    dynamic response;
+    
+    if (type == 'week') {
+      response = await _client.rpc("get_start_end_date_week");
+    } else {
+      response = await _client.rpc("get_start_end_date_month");
+    }
 
     final data = response as List<dynamic>;
     onSuccess(data);

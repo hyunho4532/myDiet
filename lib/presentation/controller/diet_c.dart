@@ -38,9 +38,10 @@ class DietController extends GetxController {
     });
   }
 
-  Future<void> fetchDietDate() {
-    return DietRepository().fetchDietDate((data) {
+  Future<void> fetchDietDate(String type) {
+    return DietRepository().fetchDietDate(type, (data) {
       dietsDate.value = data.map((e) => DietDate.fromJson(e)).toList();
+      fetchRatio(dietsDate[0].startDate, dietsDate[0].endDate);
     });
   }
 
