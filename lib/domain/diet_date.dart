@@ -7,7 +7,8 @@ class DietDate {
   @JsonKey(name: 'start_date')
   DateTime? startDate;
 
-  @JsonKey(name: 'end_date')DateTime? endDate;
+  @JsonKey(name: 'end_date')
+  DateTime? endDate;
 
   DietDate({
     this.startDate,

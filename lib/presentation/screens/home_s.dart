@@ -53,49 +53,96 @@ class _HomeSState extends State<HomeS> {
               ],
             ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: 140,
-                  height: 40,
-                  child: DateTimeFormField(
-                    initialValue: dietController.dietsDate[0].startDate,
-                    mode: DateTimeFieldPickerMode.date,
-                    dateFormat: DateFormat('yyyy-MM-dd'),
-                    onChanged: (DateTime? value) {
-                      dietController.dietsDate[0].startDate = value;
-                      dietController.fetchRatio(dietController.dietsDate[0].startDate, dietController.dietsDate[0].endDate);
-                    },
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 168,
+                    height: 50,
+                    child: DateTimeFormField(
+                      initialValue: dietController.dietsDate[0].startDate,
+                      mode: DateTimeFieldPickerMode.date,
+                      dateFormat: DateFormat('yyyy-MM-dd'),
+                      decoration: InputDecoration(
+                        labelText: '시작일',
+                        hintText: '날짜 선택',
+                        prefixIcon: const Icon(Icons.calendar_today, size: 20),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.grey, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.blue, width: 2),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      ),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                      ),
+                      onChanged: (DateTime? value) {
+                        dietController.dietsDate[0].startDate = value;
+                        dietController.fetchRatio(
+                          dietController.dietsDate[0].startDate,
+                          dietController.dietsDate[0].endDate,
+                        );
+                      },
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
+                  const SizedBox(width: 8),
 
-                Text(
-                    "~",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey
+                  Text(
+                      "~",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey
+                    ),
                   ),
-                ),
 
-                const SizedBox(width: 8),
+                  const SizedBox(width: 8),
 
-                SizedBox(
-                  width: 140,
-                  height: 40,
-                  child: DateTimeFormField(
-                    initialValue: dietController.dietsDate[0].endDate,
-                    mode: DateTimeFieldPickerMode.date,
-                    dateFormat: DateFormat('yyyy-MM-dd'),
-                    onChanged: (DateTime? value) {
-                      dietController.dietsDate[0].endDate = value;
-                      dietController.fetchRatio(dietController.dietsDate[0].startDate, dietController.dietsDate[0].endDate);
-                    },
+                  SizedBox(
+                    width: 168,
+                    height: 50,
+                    child: DateTimeFormField(
+                      initialValue: dietController.dietsDate[0].endDate,
+                      mode: DateTimeFieldPickerMode.date,
+                      dateFormat: DateFormat('yyyy-MM-dd'),
+                      decoration: InputDecoration(
+                        labelText: '종료일',
+                        hintText: '날짜 선택',
+                        prefixIcon: const Icon(Icons.calendar_today, size: 20),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.grey, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.blue, width: 2),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      ),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                      ),
+                      onChanged: (DateTime? value) {
+                        dietController.dietsDate[0].endDate = value;
+                        dietController.fetchRatio(
+                          dietController.dietsDate[0].startDate,
+                          dietController.dietsDate[0].endDate,
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
 
             const SizedBox(height: 18),
