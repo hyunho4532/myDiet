@@ -9,6 +9,7 @@ import 'package:mydiet/presentation/utils/math.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/utils/visible.dart';
 import 'package:mydiet/presentation/widget/painter/cup_painter.dart';
+import 'package:mydiet/presentation/widget/responsive/widgets.dart';
 
 // Item 위젯 추가
 // type에 따라서 state 구분
@@ -228,12 +229,12 @@ class _DietItemState extends State<Item<Diet>> {
                                 ],
                               ),
 
-                              for (int i = 0; i < diet.foodList.length; i += 2)
+                              for (int i = 0; i < diet.foodList.length; i += Widgets().i())
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    for (int j = i; j < i + 2 && j < diet.foodList.length; j++)
+                                    for (int j = i; j < i + Widgets().i() && j < diet.foodList.length; j++)
                                       Container(
                                         constraints: BoxConstraints(
                                             minWidth: 100,

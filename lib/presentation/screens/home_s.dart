@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
+import 'package:mydiet/presentation/utils/format.dart';
 import 'package:mydiet/presentation/widget/row/row.dart';
-import 'package:mydiet/presentation/utils/size.dart';
 
 class HomeS extends StatefulWidget {
   const HomeS({super.key});
@@ -58,10 +58,10 @@ class _HomeSState extends State<HomeS> {
             Padding(
               padding: const EdgeInsets.only(top: 12),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: Format().axisAlignment(),
                 children: [
                   SizedBox(
-                    width: 168,
+                    width: Format().width(context, mobile: 360, webFactor: 0.4),
                     height: 50,
                     child: DateTimeFormField(
                       initialValue: dietController.dietsDate[0].startDate,
@@ -109,7 +109,7 @@ class _HomeSState extends State<HomeS> {
                   const SizedBox(width: 8),
 
                   SizedBox(
-                    width: 168,
+                    width: Format().width(context, mobile: 360, webFactor: 0.4),
                     height: 50,
                     child: DateTimeFormField(
                       initialValue: dietController.dietsDate[0].endDate,
@@ -152,7 +152,7 @@ class _HomeSState extends State<HomeS> {
             Center(
               child: Card(
                 child: SizedBox(
-                  width: FormatSize().width(),
+                  width: Format().width(context, mobile: 360, webFactor: 1),
                   height: 140,
                   child: Row(
                     children: [
