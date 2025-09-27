@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/widget/row/row.dart';
+import 'package:mydiet/presentation/utils/size.dart';
 
 class HomeS extends StatefulWidget {
   const HomeS({super.key});
@@ -148,63 +149,66 @@ class _HomeSState extends State<HomeS> {
 
             const SizedBox(height: 18),
 
-            Card(
-              child: SizedBox(
-                height: 140,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: PieChart(
-                        PieChartData(
-                          startDegreeOffset: -90,
-                          pieTouchData: PieTouchData(
-                            touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                              setState(() {
-                                if (!event.isInterestedForInteractions ||
-                                    pieTouchResponse == null ||
-                                    pieTouchResponse.touchedSection == null) {
-                                  touchedIndex = -1;
-                                  return;
-                                }
-                                touchedIndex =
-                                    pieTouchResponse.touchedSection!.touchedSectionIndex;
-                              });
-                            },
+            Center(
+              child: Card(
+                child: SizedBox(
+                  width: FormatSize().width(),
+                  height: 140,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: PieChart(
+                          PieChartData(
+                            startDegreeOffset: -90,
+                            pieTouchData: PieTouchData(
+                              touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                                setState(() {
+                                  if (!event.isInterestedForInteractions ||
+                                      pieTouchResponse == null ||
+                                      pieTouchResponse.touchedSection == null) {
+                                    touchedIndex = -1;
+                                    return;
+                                  }
+                                  touchedIndex =
+                                      pieTouchResponse.touchedSection!.touchedSectionIndex;
+                                });
+                              },
+                            ),
+                            borderData: FlBorderData(
+                              show: false,
+                            ),
+                            sectionsSpace: 3,
+                            centerSpaceRadius: 20,
+                            sections: showingSections(),
                           ),
-                          borderData: FlBorderData(
-                            show: false,
-                          ),
-                          sectionsSpace: 3,
-                          centerSpaceRadius: 20,
-                          sections: showingSections(),
                         ),
                       ),
-                    ),
 
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            HomeDietRow(label: "탄수화물", value: "${dietController.ratios[0].carbPct}%"),
-                            const SizedBox(height: 4),
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              HomeDietRow(label: "탄수화물", value: "${dietController.ratios[0].carbPct}%"),
+                              const SizedBox(height: 4),
 
-                            HomeDietRow(label: "단백질", value: "${dietController.ratios[0].proteinPct}%"),
-                            const SizedBox(height: 4),
+                              HomeDietRow(label: "단백질", value: "${dietController.ratios[0].proteinPct}%"),
+                              const SizedBox(height: 4),
 
-                            HomeDietRow(label: "지방", value: "${dietController.ratios[0].fatPct}%"),
-                            const SizedBox(height: 4),
+                              HomeDietRow(label: "지방", value: "${dietController.ratios[0].fatPct}%"),
+                              const SizedBox(height: 4),
 
-                            HomeDietRow(label: "비타민", value: "${dietController.ratios[0].vitaminPct}%"),
-                          ],
+                              HomeDietRow(label: "비타민", value: "${dietController.ratios[0].vitaminPct}%"),
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

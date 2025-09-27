@@ -4,6 +4,7 @@ import 'package:mydiet/data/repository/food_r.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/diet_date.dart';
 import 'package:mydiet/domain/food.dart';
+import 'package:mydiet/domain/nutrient.dart';
 import 'package:mydiet/domain/ratio.dart';
 
 class DietController extends GetxController {
@@ -17,6 +18,9 @@ class DietController extends GetxController {
 
   // 비율 관리
   var ratios = <Ratio>[].obs;
+
+  // 영양소 관리
+  var nutrient = <Nutrient>[].obs;
 
   // 시작일, 종료일 관리
   var dietsDate = <DietDate>[].obs;

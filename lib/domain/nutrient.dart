@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mydiet/domain/food.dart';
 
 part 'nutrient.g.dart';
 
