@@ -61,7 +61,7 @@ class _HomeSState extends State<HomeS> {
                 mainAxisAlignment: Format().axisAlignment(),
                 children: [
                   SizedBox(
-                    width: Format().width(context, mobile: 360, webFactor: 0.4),
+                    width: Format().width(context, mobile: 168, webFactor: 0.4),
                     height: 50,
                     child: DateTimeFormField(
                       initialValue: dietController.dietsDate[0].startDate,
@@ -109,7 +109,7 @@ class _HomeSState extends State<HomeS> {
                   const SizedBox(width: 8),
 
                   SizedBox(
-                    width: Format().width(context, mobile: 360, webFactor: 0.4),
+                    width: Format().width(context, mobile: 168, webFactor: 0.4),
                     height: 50,
                     child: DateTimeFormField(
                       initialValue: dietController.dietsDate[0].endDate,
@@ -149,16 +149,19 @@ class _HomeSState extends State<HomeS> {
 
             const SizedBox(height: 18),
 
-            Column(
-              children: [
-                HomeNutrientRow(label: "단백질", value: "${dietController.nutrient[0].proteinG}"),
-                HomeNutrientRow(label: "탄수화물", value: "${dietController.nutrient[0].carbG}"),
-                HomeNutrientRow(label: "지방", value: "${dietController.nutrient[0].fatG}"),
-                HomeNutrientRow(label: "비타민", value: "${dietController.nutrient[0].vitaminTotal}"),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: Column(
+                children: [
+                  HomeNutrientRow(label: "단백질", value: "${dietController.nutrient[0].proteinG}"),
+                  HomeNutrientRow(label: "탄수화물", value: "${dietController.nutrient[0].carbG}"),
+                  HomeNutrientRow(label: "지방", value: "${dietController.nutrient[0].fatG}"),
+                  HomeNutrientRow(label: "비타민", value: "${dietController.nutrient[0].vitaminTotal}"),
+                ],
+              ),
             ),
 
-            const SizedBox(height: 18),
+            const SizedBox(height: 8),
 
             Center(
               child: Card(

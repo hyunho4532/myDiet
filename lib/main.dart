@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/controller/temp_user_c.dart';
 import 'package:mydiet/presentation/widget/view/persistent_tabview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -62,6 +63,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  final UserController userController = Get.put(UserController());
+
+  @override
+  void initState() {
+    super.initState();
+    _printDeviceInfo();
+  }
+
+  Future<void> _printDeviceInfo() async {
+    final info = await userController.deviceInfo();
+
+    userController.insertTempUser(info.id);
+  }
 
   @override
   Widget build(BuildContext context) {
