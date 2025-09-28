@@ -6,9 +6,8 @@ class TempUserRepository<T> {
     await _client.rpc(
       "set_temp_user",
       params: {
-        "p_device_id": deviceId,
-        "p_user_code":
-      },
+        "p_device_id": deviceId
+      }
     );
   }
 }

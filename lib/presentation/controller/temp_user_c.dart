@@ -1,6 +1,7 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/data/repository/temp_user_r.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController extends GetxController {
   Future<AndroidDeviceInfo> deviceInfo() async {
@@ -10,7 +11,11 @@ class UserController extends GetxController {
     return androidDeviceInfo;
   }
 
-  void insertTempUser(String deviceId) {
+  void insertTempUser(String deviceId) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("uuid", deviceId);
+
     TempUserRepository().insert(deviceId);
   }
 }

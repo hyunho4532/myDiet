@@ -87,6 +87,9 @@ dependencies:
   # 장치 ID 라이브러리
   device_info_plus: ^10.0.1
 
+  # 데이터 저장 라이브러리
+  shared_preferences: ^2.5.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
