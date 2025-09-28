@@ -36,16 +36,23 @@ class DietController extends GetxController {
     });
   }
 
-  Future<void> fetchRatio(DateTime? startDate, DateTime? endDate) {
-    return DietRepository().fetchRatio(startDate, endDate, (data) {
+  /**
+   * 식단 - 영양소, 비율 조회
+   */
+  Future<void> fetchDietInfo(DateTime? startDate, DateTime? endDate) async {
+    await DietRepository().fetchRatio(startDate, endDate, (data) {
       ratios.value = data.map((e) => Ratio.fromJson(e)).toList();
+    });
+
+    await DietRepository().fetchNutrient(startDate, endDate, (data) {
+      nutrient.value = data.map((e) => Nutrient.fromJson(e)).toList();
     });
   }
 
   Future<void> fetchDietDate(String type) {
     return DietRepository().fetchDietDate(type, (data) {
       dietsDate.value = data.map((e) => DietDate.fromJson(e)).toList();
-      fetchRatio(dietsDate[0].startDate, dietsDate[0].endDate);
+      fetchDietInfo(dietsDate[0].startDate, dietsDate[0].endDate);
     });
   }
 

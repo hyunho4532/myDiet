@@ -88,7 +88,7 @@ class _HomeSState extends State<HomeS> {
                       ),
                       onChanged: (DateTime? value) {
                         dietController.dietsDate[0].startDate = value;
-                        dietController.fetchRatio(
+                        dietController.fetchDietInfo(
                           dietController.dietsDate[0].startDate,
                           dietController.dietsDate[0].endDate,
                         );
@@ -136,7 +136,7 @@ class _HomeSState extends State<HomeS> {
                       ),
                       onChanged: (DateTime? value) {
                         dietController.dietsDate[0].endDate = value;
-                        dietController.fetchRatio(
+                        dietController.fetchDietInfo(
                           dietController.dietsDate[0].startDate,
                           dietController.dietsDate[0].endDate,
                         );
@@ -145,6 +145,17 @@ class _HomeSState extends State<HomeS> {
                   ),
                 ],
               ),
+            ),
+
+            const SizedBox(height: 18),
+
+            Column(
+              children: [
+                HomeNutrientRow(label: "단백질", value: "${dietController.nutrient[0].proteinG}"),
+                HomeNutrientRow(label: "탄수화물", value: "${dietController.nutrient[0].carbG}"),
+                HomeNutrientRow(label: "지방", value: "${dietController.nutrient[0].fatG}"),
+                HomeNutrientRow(label: "비타민", value: "${dietController.nutrient[0].vitaminTotal}"),
+              ],
             ),
 
             const SizedBox(height: 18),
