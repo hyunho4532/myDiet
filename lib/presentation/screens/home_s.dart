@@ -186,6 +186,7 @@ class _HomeSState extends State<HomeS> {
 
                   Center(
                     child: Card(
+                      color: Colors.white,
                       child: SizedBox(
                         width: Format().width(context, mobile: 360, webFactor: 1),
                         height: 140,
