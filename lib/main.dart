@@ -5,7 +5,6 @@ import 'package:mydiet/presentation/controller/temp_user_c.dart';
 import 'package:mydiet/presentation/widget/view/persistent_tabview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:intl/intl_standalone.dart' if (dart.library.html) 'package:intl/intl_browser.dart';
 
@@ -65,22 +64,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  final UserController userController = Get.put(UserController());
-  
   @override
   void initState() {
     super.initState();
     _printDeviceInfo();
   }
 
+  final TempUserController tempUserController = Get.put(TempUserController());
+
   Future<void> _printDeviceInfo() async {
-    final info = await userController.deviceInfo();
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    userController.insertTempUser(info.id);
-
-    print("Main: ${prefs.getString("uuid")}");
+    final info = await tempUserController.deviceInfo();
+    tempUserController.insertTempUser(info.id);
   }
 
   @override

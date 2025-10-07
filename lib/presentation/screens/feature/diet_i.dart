@@ -15,6 +15,7 @@ import 'package:mydiet/presentation/widget/chips/chip.dart';
 import 'package:mydiet/presentation/widget/input/bottom_picker.dart';
 import 'package:mydiet/presentation/widget/painter/cup_painter.dart';
 import 'package:mydiet/presentation/widget/toast/snack_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DietI extends StatefulWidget {
   const DietI({super.key});
@@ -45,11 +46,15 @@ class _DietIState extends State<DietI> {
   // id가 없으면 date_controller의 selectedDate로 조회
   final TextEditingController textEditingController = TextEditingController();
 
+  late SharedPreferences prefs;
+
   int tagKind = 1;
 
   @override
   void initState() {
     super.initState();
+
+    initPrefs();
 
     id = (Get.arguments ?? 0) as int;
 
@@ -78,6 +83,10 @@ class _DietIState extends State<DietI> {
   }
   int tagAmount = 1;
 
+  Future<void> initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -100,6 +109,7 @@ class _DietIState extends State<DietI> {
                   if (id != 0) {
                     final diet = Diet(
                       id: id,
+                      userId: prefs.getString("uuid"),
                       foodType: '식단',
                       foodKind: foodKind.commons[tagKind].name,
                       foodAmount: foodAmount.commons[tagAmount].name,
@@ -111,6 +121,7 @@ class _DietIState extends State<DietI> {
                     diets.edit(diet);
                   } else {
                     final diet = Diet(
+                      userId: prefs.getString("uuid"),
                       foodType: '식단',
                       foodKind: foodKind.commons[tagKind].name,
                       foodAmount: foodAmount.commons[tagAmount].name,

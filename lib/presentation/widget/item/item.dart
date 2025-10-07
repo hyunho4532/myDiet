@@ -190,13 +190,6 @@ class _DietItemState extends State<Item<Diet>> {
                       title: Card(
                         elevation: 0,
                         color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(
-                                color: Colors.grey,
-                                width: 0.5
-                            )
-                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(

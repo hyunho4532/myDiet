@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TempUserRepository<T> {
@@ -9,5 +10,19 @@ class TempUserRepository<T> {
         "p_device_id": deviceId
       }
     );
+  }
+
+  Future<String> validate(String deviceId) async {
+    String message = "";
+
+    final result = _client.from("TempUser").select().eq("device_id", deviceId);
+
+    if (result.isNull) {
+      message = "사용자를 찾을 수 없습니다!";
+    } else {
+      message = "로그인을 해주세요";
+    }
+
+    return message;
   }
 }

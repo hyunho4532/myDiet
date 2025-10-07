@@ -6,6 +6,7 @@ import 'package:mydiet/domain/diet_date.dart';
 import 'package:mydiet/domain/food.dart';
 import 'package:mydiet/domain/nutrient.dart';
 import 'package:mydiet/domain/ratio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DietController extends GetxController {
 
@@ -30,8 +31,11 @@ class DietController extends GetxController {
 
   var selectedDate = DateTime.now().obs;
 
-  Future<void> fetchDiet() {
-    return DietRepository().fetchDiet((data) {
+  Future<void> fetchDiet() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uuid = prefs.getString("uuid")!;
+
+    return DietRepository().fetchDiet(uuid, (data) {
       diets.value = data.map((e) => Diet.fromJson(e)).toList();
     });
   }
@@ -72,6 +76,7 @@ class DietController extends GetxController {
     final index = diets.indexWhere((d) => d.id == id);
     if (index != -1) {
       diets[index] = Diet(
+        userId: '',
         foodType: '',
         foodKind: foodKind,
         foodAmount: diets[index].foodAmount,
