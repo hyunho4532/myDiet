@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/utils/format.dart';
+import 'package:mydiet/presentation/widget/chart/bar_chart.dart';
 import 'package:mydiet/presentation/widget/row/row.dart';
 
 class HomeS extends StatefulWidget {
@@ -172,14 +173,12 @@ class _HomeSState extends State<HomeS> {
 
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: Column(
-                      children: [
-                        HomeNutrientRow(label: "단백질", value: "${dietController.nutrient[0].proteinG}"),
-                        HomeNutrientRow(label: "탄수화물", value: "${dietController.nutrient[0].carbG}"),
-                        HomeNutrientRow(label: "지방", value: "${dietController.nutrient[0].fatG}"),
-                        HomeNutrientRow(label: "비타민", value: "${dietController.nutrient[0].vitaminTotal}"),
-                      ],
-                    ),
+                    child: NutrientBarChart(
+                        proteinG: dietController.nutrient[0].proteinG,
+                        carbG: dietController.nutrient[0].carbG,
+                        fatG: dietController.nutrient[0].fatG,
+                        vitaminTotal: dietController.nutrient[0].vitaminTotal
+                    )
                   ),
 
                   const SizedBox(height: 8),
@@ -197,20 +196,6 @@ class _HomeSState extends State<HomeS> {
                               child: PieChart(
                                 PieChartData(
                                   startDegreeOffset: -90,
-                                  pieTouchData: PieTouchData(
-                                    touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                                      setState(() {
-                                        if (!event.isInterestedForInteractions ||
-                                            pieTouchResponse == null ||
-                                            pieTouchResponse.touchedSection == null) {
-                                          touchedIndex = -1;
-                                          return;
-                                        }
-                                        touchedIndex =
-                                            pieTouchResponse.touchedSection!.touchedSectionIndex;
-                                      });
-                                    },
-                                  ),
                                   borderData: FlBorderData(
                                     show: false,
                                   ),
