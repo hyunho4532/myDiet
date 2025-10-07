@@ -236,31 +236,28 @@ class _DietItemState extends State<Item<Diet>> {
                                 ],
                               ),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                  child: Text(
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
                                     dietMessages,
                                     style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey
                                     ),
                                   ),
-                                ),
 
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                  child: Text(
+                                  Text(
                                     "${diet.foodDate.hour}시 ${diet.foodDate.minute}분 - ${diet.foodKind}",
                                     style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
