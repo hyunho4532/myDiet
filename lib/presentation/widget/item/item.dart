@@ -42,19 +42,19 @@ class _DietItemState extends State<Item<Diet>> {
         String dietMessages = "";
 
         // 칼로리 합계
-        final sumKcal = Math().sumBy(diet, (item) => item.energyKcal);
+        final sumKcal = Math().sumBy(diet.foodList, (item) => item.energyKcal);
 
         // 단백질 합계
-        final sumProtein = Math().sumBy(diet, (item) => item.proteinG);
+        final sumProtein = Math().sumBy(diet.foodList, (item) => item.proteinG);
 
         // 당류 합계
-        final sumSugar = Math().sumBy(diet, (item) => item.sugarsG);
+        final sumSugar = Math().sumBy(diet.foodList, (item) => item.sugarsG);
 
         // 지방 합계
-        final sumFat = Math().sumBy(diet, (item) => item.fatG);
+        final sumFat = Math().sumBy(diet.foodList, (item) => item.fatG);
 
         // 탄수화물 합계
-        final sumCarbohydrate = Math().sumBy(diet, (item) => item.carbohydrateG);
+        final sumCarbohydrate = Math().sumBy(diet.foodList, (item) => item.carbohydrateG);
 
         if (diet.foodKind == '아침') {
           if (sumKcal < 400) {
