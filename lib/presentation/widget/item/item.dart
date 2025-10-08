@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/mois.dart';
 import 'package:mydiet/presentation/const.dart';
@@ -7,8 +8,8 @@ import 'package:mydiet/presentation/controller/mois_c.dart';
 import 'package:mydiet/presentation/screens/feature/diet_i.dart';
 import 'package:mydiet/presentation/utils/math.dart';
 import 'package:get/get.dart';
-import 'package:mydiet/presentation/utils/visible.dart';
 import 'package:mydiet/presentation/widget/painter/cup_painter.dart';
+import 'package:mydiet/presentation/widget/responsive/widgets.dart';
 
 // Item 위젯 추가
 // type에 따라서 state 구분
@@ -41,19 +42,19 @@ class _DietItemState extends State<Item<Diet>> {
         String dietMessages = "";
 
         // 칼로리 합계
-        final sumKcal = Math().sumBy(diet, (item) => item.energyKcal);
+        final sumKcal = Math().sumBy(diet.foodList, (item) => item.energyKcal);
 
         // 단백질 합계
-        final sumProtein = Math().sumBy(diet, (item) => item.proteinG);
+        final sumProtein = Math().sumBy(diet.foodList, (item) => item.proteinG);
 
         // 당류 합계
-        final sumSugar = Math().sumBy(diet, (item) => item.sugarsG);
+        final sumSugar = Math().sumBy(diet.foodList, (item) => item.sugarsG);
 
         // 지방 합계
-        final sumFat = Math().sumBy(diet, (item) => item.fatG);
+        final sumFat = Math().sumBy(diet.foodList, (item) => item.fatG);
 
         // 탄수화물 합계
-        final sumCarbohydrate = Math().sumBy(diet, (item) => item.carbohydrateG);
+        final sumCarbohydrate = Math().sumBy(diet.foodList, (item) => item.carbohydrateG);
 
         if (diet.foodKind == '아침') {
           if (sumKcal < 400) {
@@ -100,85 +101,82 @@ class _DietItemState extends State<Item<Diet>> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: 60,
-                            child: Column(
-                              children: [
-                                Center(
+                        SizedBox(
+                          height: 70,
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                'icons/protein_category.svg',
+                                width: 46,
+                                height: 46,
+                              ),
+
+                              Center(
                                   child: Text(
-                                    '단백질'
-                                  ),
-                                ),
-
-                                Center(
-                                    child: Text(
-                                        sumProtein.toStringAsFixed(2)
-                                    )
-                                ),
-                              ],
-                            ),
+                                      sumProtein.toStringAsFixed(2)
+                                  )
+                              ),
+                            ],
                           ),
                         ),
-                        Expanded(
-                          child: SizedBox(
-                            height: 60,
-                            child: Column(
-                              children: [
-                                Center(
+
+                        SizedBox(
+                          height: 70,
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                'icons/carbohy_category.svg',
+                                width: 46,
+                                height: 46,
+                              ),
+
+                              Center(
                                   child: Text(
-                                      '탄수화물'
-                                  ),
-                                ),
-
-                                Center(
-                                    child: Text(
-                                        sumCarbohydrate.toStringAsFixed(2)
-                                    )
-                                ),
-                              ],
-                            ),
+                                      sumCarbohydrate.toStringAsFixed(2)
+                                  )
+                              ),
+                            ],
                           ),
                         ),
-                        Expanded(
-                          child: SizedBox(
-                            height: 60,
-                            child: Column(
-                              children: [
-                                Center(
-                                    child: Text(
-                                      '당류'
-                                    )
-                                ),
 
-                                Center(
-                                    child: Text(
-                                        sumSugar.toStringAsFixed(2)
-                                    )
-                                ),
-                              ],
-                            ),
+                        SizedBox(
+                          height: 70,
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                'icons/sugar_category.svg',
+                                width: 46,
+                                height: 46,
+                              ),
+
+                              Center(
+                                  child: Text(
+                                      sumSugar.toStringAsFixed(2)
+                                  )
+                              ),
+                            ],
                           ),
                         ),
-                        Expanded(
-                          child: SizedBox(
-                            height: 60,
-                            child: Column(
-                              children: [
-                                Center(
-                                    child: Text(
-                                      '지방'
-                                    )
-                                ),
 
-                                Center(
-                                    child: Text(
-                                        sumFat.toStringAsFixed(2)
-                                    )
-                                ),
-                              ],
-                            ),
+                        SizedBox(
+                          height: 70,
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                'icons/fat_category.svg',
+                                width: 46,
+                                height: 46,
+                              ),
+
+                              Center(
+                                  child: Text(
+                                      sumFat.toStringAsFixed(2)
+                                  )
+                              ),
+                            ],
                           ),
                         ),
                       ]
@@ -189,91 +187,79 @@ class _DietItemState extends State<Item<Diet>> {
                       title: Card(
                         elevation: 0,
                         color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            side: BorderSide(
-                                color: Colors.grey,
-                                width: 0.5
-                            )
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (int i = 0; i < diet.foodList.length; i += Widgets().i())
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  for (int j = i; j < i + Widgets().i() && j < diet.foodList.length; j++)
+                                    Container(
+                                      constraints: BoxConstraints(
+                                          minWidth: 100,
+                                          minHeight: 40
+                                      ),
+                                      child: Card(
+                                        color: Const().buildColors()[2],
+                                        child: Padding(
+                                          padding: EdgeInsets.all(6.0),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    diet.foodList[j].foodName.length > 10 ? "${diet.foodList[j].foodName.substring(0, 9)}..." : diet.foodList[j].foodName,
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 11,
+                                                      fontWeight: FontWeight.bold
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+
+                                              Text(
+                                                "${diet.foodList[j].energyKcal} kcal",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 13
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 4.0),
-                                    child: Text(
-                                      dietMessages,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey
-                                      ),
+                                  Text(
+                                    dietMessages,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey
                                     ),
                                   ),
 
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 4.0),
-                                    child: Text(
-                                      "${diet.foodDate.hour}시 ${diet.foodDate.minute}분 - ${diet.foodKind }",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey
-                                      ),
+                                  Text(
+                                    "${diet.foodDate.hour}시 ${diet.foodDate.minute}분 - ${diet.foodKind}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey
                                     ),
                                   ),
                                 ],
                               ),
-
-                              for (int i = 0; i < diet.foodList.length; i += 2)
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    for (int j = i; j < i + 2 && j < diet.foodList.length; j++)
-                                      Container(
-                                        constraints: BoxConstraints(
-                                            minWidth: 100,
-                                            minHeight: 60
-                                        ),
-                                        child: Card(
-                                          color: Const().buildColors()[2],
-                                          child: Padding(
-                                            padding: EdgeInsets.all(6.0),
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Visible().visibleCategory(diet.foodList[j].foodMajorCategoryName),
-
-                                                    Text(
-                                                      diet.foodList[j].foodName,
-                                                      style: TextStyle(
-                                                          color: Colors.white
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-
-                                                Text(
-                                                  "${diet.foodList[j].energyKcal} kcal",
-                                                  style: TextStyle(
-                                                      color: Colors.white
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                   ),

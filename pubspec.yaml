@@ -31,6 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # SVG 파일 등록
+  flutter_svg: ^2.2.1
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
@@ -77,6 +80,19 @@ dependencies:
   # 드롭다운 버튼 라이브러리
   dropdown_button2: ^2.3.9
 
+  # 차트 라이브러리
+  fl_chart: ^0.70.2
+  vector_math: ^2.1.4
+
+  # 날짜 입력 라이브러리
+  date_field: ^6.0.3+1
+
+  # 장치 ID 라이브러리
+  device_info_plus: ^10.0.1
+
+  # 데이터 저장 라이브러리
+  shared_preferences: ^2.5.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -105,6 +121,7 @@ flutter:
     - .env
     - images/lunch_icon.png
     - assets/
+    - icons/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

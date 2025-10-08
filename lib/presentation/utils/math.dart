@@ -1,9 +1,9 @@
-class Math {
+class Math<T> {
   /// 합계 구하기
-  double sumBy(dynamic data, double Function(dynamic) selector) {
-    return data.foodList.fold(
+  double sumBy(List<T> data, double Function(dynamic) selector) {
+    return data.fold(
       0.0,
       (sum, item) => sum += selector(item),
-    ) as double;
+    );
   }
 }

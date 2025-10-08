@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/controller/temp_user_c.dart';
 import 'package:mydiet/presentation/widget/view/persistent_tabview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:intl/intl_standalone.dart' if (dart.library.html) 'package:intl/intl_browser.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // 1) 환경변수 로드
   await dotenv.load(fileName: ".env");
+
+  await findSystemLocale();
 
   // 2) Supabase 초기화
   await Supabase.initialize(
@@ -59,6 +63,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    _printDeviceInfo();
+  }
+
+  final TempUserController tempUserController = Get.put(TempUserController());
+
+  Future<void> _printDeviceInfo() async {
+    final info = await tempUserController.deviceInfo();
+    tempUserController.insertTempUser(info.id);
+  }
 
   @override
   Widget build(BuildContext context) {
