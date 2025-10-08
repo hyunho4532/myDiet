@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/controller/temp_user_c.dart';
 import 'package:mydiet/presentation/controller/tip_c.dart';
+import 'package:mydiet/presentation/const.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileS extends StatefulWidget {
   const ProfileS({super.key});
@@ -67,35 +69,78 @@ class _ProfileSState extends State<ProfileS> {
           Padding(
             padding: const EdgeInsets.only(top: 4, left: 12, right: 12),
             child: SizedBox(
-              height: 70,
+              height: 90,
               child: Obx(() => ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: tipController.tips.length,
                 itemBuilder: (context, index) {
                   final tip = tipController.tips[index];
+                  final url = Uri.parse(tip.linkUrl);
+
                   return SizedBox(
-                    width: 140,
-                    child: Card(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 4.0, left: 4.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              tip.title,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold
+                    width: 170,
+                    child: InkWell(
+                      onTap: () {
+                        launchUrl(url);
+                      },
+                      child: Card(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 6.0, left: 8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                tip.title,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold
+                                ),
                               ),
-                            )
-                          ],
-                        ),
-                      )
+
+                              const Spacer(),
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "${tip.category} - ${tip.source}",
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        color: Const().buildColors()[2],
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )
+                      ),
                     ),
                   );
                 },
               )),
+            ),
+          ),
+
+          const SizedBox(height: 24),
+          const SizedBox(height: 24),
+
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Text(
+              "나의 일주일 식단 확인하기",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+                fontWeight: FontWeight.bold
+              ),
             ),
           )
         ],

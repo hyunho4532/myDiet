@@ -93,6 +93,9 @@ dependencies:
   # 데이터 저장 라이브러리
   shared_preferences: ^2.5.3
 
+  # URL 런칭 라이브러리
+  url_launcher: ^6.3.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
