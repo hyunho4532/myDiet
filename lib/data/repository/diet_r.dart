@@ -12,6 +12,18 @@ class DietRepository<T> {
     onSuccess(data);
   }
   
+  Future<void> fetchDietWeekly(String uuid, Function(List<dynamic>) onSuccess) async {
+    final response = await _client.rpc(
+      "get_diet_weekly",
+      params: {
+        "p_device_id": uuid
+      }
+    );
+
+    final data = response as List<dynamic>;
+    onSuccess(data);
+  }
+  
   Future<void> fetchRatio(DateTime? startDate, DateTime? endDate, Function(List<dynamic>) onSuccess) async {
     final response = await _client.rpc(
       "get_nutrient_ratio_from_food_list",

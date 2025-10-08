@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/controller/temp_user_c.dart';
 import 'package:mydiet/presentation/controller/tip_c.dart';
 import 'package:mydiet/presentation/const.dart';
@@ -15,6 +16,7 @@ class ProfileS extends StatefulWidget {
 class _ProfileSState extends State<ProfileS> {
   final TempUserController tempUserController = Get.put(TempUserController());
   final TipController tipController = Get.put(TipController());
+  final DietController dietController = Get.put(DietController(0));
 
   String message = "";
 
@@ -29,6 +31,7 @@ class _ProfileSState extends State<ProfileS> {
     });
 
     tipController.fetchTip();
+    dietController.fetchDietWeekly();
   }
 
   @override
@@ -142,7 +145,48 @@ class _ProfileSState extends State<ProfileS> {
                 fontWeight: FontWeight.bold
               ),
             ),
-          )
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 4, left: 12, right: 12),
+            child: SizedBox(
+              height: 150,
+              child: Obx(() => GridView.builder(
+                scrollDirection: Axis.horizontal,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 0.5
+                ),
+                itemCount: dietController.diets.length,
+                itemBuilder: (context, index) {
+                  final diet = dietController.diets[index];
+
+                  return Card(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 6.0, left: 8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              diet.foodType,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                  );
+                },
+              )),
+            ),
+          ),
         ],
       ),
     );

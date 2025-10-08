@@ -40,9 +40,7 @@ class DietController extends GetxController {
     });
   }
 
-  /**
-   * 식단 - 영양소, 비율 조회
-   */
+  /// 식단 - 영양소, 비율 조회
   Future<void> fetchDietInfo(DateTime? startDate, DateTime? endDate) async {
     await DietRepository().fetchRatio(startDate, endDate, (data) {
       ratios.value = data.map((e) => Ratio.fromJson(e)).toList();
@@ -53,10 +51,23 @@ class DietController extends GetxController {
     });
   }
 
+  /// 타입에 따라 날짜 조회 (예시)
+  /// month: 2025-07-01 ~ 2025-07-31
+  /// week: 2025-07-01 ~ 2025-07-08
   Future<void> fetchDietDate(String type) {
     return DietRepository().fetchDietDate(type, (data) {
       dietsDate.value = data.map((e) => DietDate.fromJson(e)).toList();
       fetchDietInfo(dietsDate[0].startDate, dietsDate[0].endDate);
+    });
+  }
+
+  /// 일주일 식단 조회
+  Future<void> fetchDietWeekly() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uuid = prefs.getString("uuid")!;
+
+    return DietRepository().fetchDietWeekly(uuid, (data) {
+      diets.value = data.map((e) => Diet.fromJson(e)).toList();
     });
   }
 
@@ -71,7 +82,7 @@ class DietController extends GetxController {
     diets.assignAll(result);
   }
 
-  // 특정 다이어트의 foodKind 수정
+  // 특정 식단의 foodKind 수정
   void setFoodKind(int id, String foodKind) {
     final index = diets.indexWhere((d) => d.id == id);
     if (index != -1) {
