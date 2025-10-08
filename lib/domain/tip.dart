@@ -16,15 +16,18 @@ class Tip {
   @JsonKey(name: 'source', defaultValue: '')
   final String source;
 
+  @JsonKey(name: 'category', defaultValue: '')
+  final String category;
+
   @JsonKey(name: 'created_at', defaultValue: '')
   final DateTime createdAt;
-
 
   Tip({
     required this.title,
     required this.description,
     required this.linkUrl,
     required this.source,
+    required this.category,
     required this.createdAt
   });
 

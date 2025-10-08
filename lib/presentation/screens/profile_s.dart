@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/controller/temp_user_c.dart';
+import 'package:mydiet/presentation/controller/tip_c.dart';
 
 class ProfileS extends StatefulWidget {
   const ProfileS({super.key});
@@ -11,6 +12,7 @@ class ProfileS extends StatefulWidget {
 
 class _ProfileSState extends State<ProfileS> {
   final TempUserController tempUserController = Get.put(TempUserController());
+  final TipController tipController = Get.put(TipController());
 
   String message = "";
 
@@ -23,6 +25,8 @@ class _ProfileSState extends State<ProfileS> {
         message = value;
       });
     });
+
+    tipController.fetchTip();
   }
 
   @override
@@ -31,6 +35,8 @@ class _ProfileSState extends State<ProfileS> {
       backgroundColor: Colors.white,
 
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -54,6 +60,43 @@ class _ProfileSState extends State<ProfileS> {
                 ),
               ),
             ],
+          ),
+
+          SizedBox(height: 24),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 4, left: 12, right: 12),
+            child: SizedBox(
+              height: 70,
+              child: Obx(() => ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: tipController.tips.length,
+                itemBuilder: (context, index) {
+                  final tip = tipController.tips[index];
+                  return SizedBox(
+                    width: 140,
+                    child: Card(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 4.0, left: 4.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              tip.title,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ),
+                  );
+                },
+              )),
+            ),
           )
         ],
       ),
