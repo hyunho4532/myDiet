@@ -49,7 +49,7 @@ class _ProfileSState extends State<ProfileS> {
                   message,
                   style: TextStyle(
                     color: Colors.grey,
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),
