@@ -152,12 +152,12 @@ class _ProfileSState extends State<ProfileS> {
             child: SizedBox(
               height: 150,
               child: Obx(() => GridView.builder(
-                scrollDirection: Axis.horizontal,
+                scrollDirection: Axis.vertical,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
-                  childAspectRatio: 0.5
+                  childAspectRatio: 1.5
                 ),
                 itemCount: dietController.diets.length,
                 itemBuilder: (context, index) {
@@ -171,14 +171,18 @@ class _ProfileSState extends State<ProfileS> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              diet.foodType,
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
+                            for (int i = 0; i < dietController.diets.length; i++)
+                              Row(
+                                children: [
+                                  Text(
+                                    diet.foodList[i].foodName,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey
+                                    ),
+                                  )
+                                ],
+                              )
                           ],
                         ),
                       )
