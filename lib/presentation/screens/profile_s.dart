@@ -140,54 +140,78 @@ class _ProfileSState extends State<ProfileS> {
 
               const SizedBox(height: 8),
 
-              Obx(() => GridView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  childAspectRatio: 1.5
-                ),
-                itemCount: dietController.diets.length,
-                itemBuilder: (context, index) {
-                  final diet = dietController.diets[index];
+              Obx(() => SizedBox(
+                height: 200,
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
+                    childAspectRatio: 1
+                  ),
+                  itemCount: dietController.diets.length,
+                  itemBuilder: (context, index) {
+                    final diet = dietController.diets[index];
 
-                  return Card(
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 6.0, left: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          for (int i = 0; i < diet.foodList.length; i++)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 1.0), // 줄 간격 조정
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    'icons/diet_icon.svg',
-                                    width: 24,
-                                    height: 24,
+                    return GestureDetector(
+                      onTap: () {
+                        dietController.setFavoriteDiet(diet.id!);
+                      },
+                      child: Card(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 6.0, left: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (int i = 0; i < diet.foodList.length; i++)
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 1.0), // 줄 간격 조정
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'icons/diet_icon.svg',
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                      const SizedBox(width: 2),
+                                      Expanded(
+                                        child: Text(
+                                          diet.foodList[i].foodName.length > 13
+                                              ? "${diet.foodList[i].foodName.substring(0, 12)}..."
+                                              : diet.foodList[i].foodName,
+                                          style: const TextStyle(fontSize: 12),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(width: 2),
-                                  Expanded(
-                                    child: Text(
-                                      diet.foodList[i].foodName.length > 13
-                                          ? "${diet.foodList[i].foodName.substring(0, 12)}..."
-                                          : diet.foodList[i].foodName,
-                                      style: const TextStyle(fontSize: 12),
-                                      overflow: TextOverflow.ellipsis,
+                                ),
+
+                              const Spacer(),
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SvgPicture.asset(
+                                      diet.isFavorite == true ? 'icons/bookmark_solid.svg' : 'icons/bookmark.svg',
+                                      width: 20,
+                                      height: 20,
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                        ],
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               )),
             ],
           ),

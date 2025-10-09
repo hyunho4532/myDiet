@@ -72,4 +72,10 @@ class DietRepository<T> {
 
     return RxList<Diet>(data);
   }
+
+  Future<void> setFavoriteDiet(int id, String uuid) async {
+    await _client.from("Diet").update({
+      "is_favorite": true
+    }).eq("user_id", uuid).eq("id", id);
+  }
 }

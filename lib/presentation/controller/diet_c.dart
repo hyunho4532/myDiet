@@ -82,6 +82,15 @@ class DietController extends GetxController {
     diets.assignAll(result);
   }
 
+  /// id 값을 가져온 후 해당 데이터에 is_favorite true로 체크
+  /// 즐겨 찾기한 식단 리스트로 간주
+  Future<void> setFavoriteDiet(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uuid = prefs.getString("uuid")!;
+
+    return DietRepository().setFavoriteDiet(id, uuid);
+  }
+
   // 특정 식단의 foodKind 수정
   void setFoodKind(int id, String foodKind) {
     final index = diets.indexWhere((d) => d.id == id);
@@ -92,7 +101,8 @@ class DietController extends GetxController {
         foodKind: foodKind,
         foodAmount: diets[index].foodAmount,
         foodDate: DateTime.now(),
-        foodList: []
+        foodList: [],
+        isFavorite: false
       );
     }
   }

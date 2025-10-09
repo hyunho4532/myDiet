@@ -32,7 +32,7 @@ class Diet {
   final List<Food> foodList;
 
   @JsonKey(name: 'is_favorite')
-  final bool isFavorite;
+  final bool? isFavorite;
 
   Diet({
     this.id,
