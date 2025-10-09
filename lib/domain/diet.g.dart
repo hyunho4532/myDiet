@@ -16,6 +16,7 @@ Diet _$DietFromJson(Map<String, dynamic> json) => Diet(
   foodList: (json['food_list'] as List<dynamic>)
       .map((e) => Food.fromJson(e as Map<String, dynamic>))
       .toList(),
+  isFavorite: json['is_favorite'] as bool,
 );
 
 Map<String, dynamic> _$DietToJson(Diet instance) => <String, dynamic>{
@@ -26,4 +27,5 @@ Map<String, dynamic> _$DietToJson(Diet instance) => <String, dynamic>{
   'food_amount': ?instance.foodAmount,
   'food_date': instance.foodDate.toIso8601String(),
   'food_list': instance.foodList,
+  'is_favorite': instance.isFavorite,
 };
