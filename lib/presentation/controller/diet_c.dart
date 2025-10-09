@@ -14,6 +14,9 @@ class DietController extends GetxController {
 
   final dynamic id;
 
+  // 로딩 상태
+  var isLoading = false.obs;
+
   // 식단 관리
   var diets = <Diet>[].obs;
 

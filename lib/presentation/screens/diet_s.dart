@@ -39,10 +39,17 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Obx(() {
-            return Padding(
+      body: Obx(() {
+        if (dietController.diets.isEmpty || moisController.moiss.isEmpty) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Const().buildColors()[2],
+            ),
+          );
+        }
+        return Column(
+          children: [
+            Padding(
               padding: const EdgeInsets.all(12.0),
               child: TableCalendar(
                   locale: 'ko_KR',
@@ -62,67 +69,67 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
                     dowBuilder: (context, day) => buildDow(context, day),
                   )
               ),
-            );
-          }),
-
-          TabBar.secondary(
-            controller: _tabController,
-            tabs: const <Widget>[
-              Tab(text: '식단'),
-              Tab(text: '운동'),
-              Tab(text: '수분'),
-            ],
-            onTap: (value) => {
-              setState(() {
-                _tabController.index = value;
-              })
-            },
-            indicatorColor: _tabController.index == 0 ? Const().buildColors()[0] : Const().buildColors()[1]
-          ),
-
-          // 식단 리스트 (스크롤 가능)
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: <Widget>[
-                Obx(() {
-                  dietController.fetchDiet();
-
-                  final diets = dietController.diets
-                      .where((diet) => isSameDay(diet.foodDate, constController.selectedDate.value))
-                      .toList();
-
-                  return Item(
-                    data: diets,
-                  );
-                }),
-
-                Obx(() {
-                  moisController.fetchMois();
-
-                  final moiss = moisController.moiss
-                    .where((mois) => isSameDay(mois.moisDate, constController.selectedDate.value))
-                    .toList();
-
-                  return Item(
-                    data: moiss,
-                  );
-                }),
-
-                Obx(() {
-                  final moiss = moisController.moiss
-                      .where((mois) => isSameDay(mois.moisDate, constController.selectedDate.value))
-                      .toList();
-
-                  return Item(
-                    data: moiss,
-                  );
-                }),
-              ],
             ),
-          ),
-        ],
-      )
+
+            TabBar.secondary(
+                controller: _tabController,
+                tabs: const <Widget>[
+                  Tab(text: '식단'),
+                  Tab(text: '운동'),
+                  Tab(text: '수분'),
+                ],
+                onTap: (value) => {
+                  setState(() {
+                    _tabController.index = value;
+                  })
+                },
+                indicatorColor: _tabController.index == 0 ? Const().buildColors()[0] : Const().buildColors()[1]
+            ),
+
+            // 식단 리스트 (스크롤 가능)
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: <Widget>[
+                  Obx(() {
+                    dietController.fetchDiet();
+
+                    final diets = dietController.diets
+                        .where((diet) => isSameDay(diet.foodDate, constController.selectedDate.value))
+                        .toList();
+
+                    return Item(
+                      data: diets,
+                    );
+                  }),
+
+                  Obx(() {
+                    moisController.fetchMois();
+
+                    final moiss = moisController.moiss
+                        .where((mois) => isSameDay(mois.moisDate, constController.selectedDate.value))
+                        .toList();
+
+                    return Item(
+                      data: moiss,
+                    );
+                  }),
+
+                  Obx(() {
+                    final moiss = moisController.moiss
+                        .where((mois) => isSameDay(mois.moisDate, constController.selectedDate.value))
+                        .toList();
+
+                    return Item(
+                      data: moiss,
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }
