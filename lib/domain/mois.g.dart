@@ -13,7 +13,7 @@ Mois _$MoisFromJson(Map<String, dynamic> json) => Mois(
 );
 
 Map<String, dynamic> _$MoisToJson(Mois instance) => <String, dynamic>{
-  if (instance.id case final value?) 'id': value,
+  'id': ?instance.id,
   'amount_mois': instance.amountMois,
   'mois_date': instance.moisDate.toIso8601String(),
 };

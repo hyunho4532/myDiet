@@ -33,146 +33,151 @@ class _HomeSState extends State<HomeS> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Obx(() {
-            return Padding(
-              padding: const EdgeInsets.only(top: 30, left: 8, right: 8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: Obx(() {
+        if (dietController.dietsDate.isEmpty || dietController.ratios.isEmpty || dietController.nutrient.isEmpty) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Const().buildColors()[2],
+            ),
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.only(top: 30, left: 8, right: 8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          dietController.fetchDietDate('week');
+                        },
+                        child: Text("최근 7일")
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          dietController.fetchDietDate('month');
+                        },
+                        child: Text("최근 30일")
+                    ),
+                    Text("직접 입력")
+                  ],
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 24),
+                  child: Row(
+                    mainAxisAlignment: Format().axisAlignment(),
                     children: [
-                      GestureDetector(
-                          onTap: () {
-                            dietController.fetchDietDate('week');
-                          },
-                          child: Text("최근 7일")
+                      SizedBox(
+                        width: Format().width(context, mobile: 168, webFactor: 0.4),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: DateTimeFormField(
+                            initialValue: dietController.dietsDate[0].startDate,
+                            mode: DateTimeFieldPickerMode.date,
+                            dateFormat: DateFormat('yyyy-MM-dd'),
+                            decoration: InputDecoration(
+                              labelText: '시작일',
+                              hintText: '날짜 선택',
+                              hintStyle: const TextStyle(color: Colors.grey, fontSize: 12),
+                              prefixIcon: const Icon(Icons.calendar_today_outlined, size: 18, color: Colors.grey),
+                              filled: true,
+                              fillColor: Colors.white,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(color: Colors.blueAccent, width: 1.2),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(color: Colors.grey, width: 0),
+                              ),
+                            ),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black87,
+                            ),
+                            onChanged: (DateTime? value) {
+                              dietController.dietsDate[0].startDate = value;
+                              dietController.fetchDietInfo(
+                                dietController.dietsDate[0].startDate,
+                                dietController.dietsDate[0].endDate,
+                              );
+                            },
+                          ),
+                        ),
                       ),
-                      GestureDetector(
-                          onTap: () {
-                            dietController.fetchDietDate('month');
-                          },
-                          child: Text("최근 30일")
+
+                      const SizedBox(width: 8),
+
+                      Text(
+                        "~",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey
+                        ),
                       ),
-                      Text("직접 입력")
+
+                      const SizedBox(width: 8),
+
+                      SizedBox(
+                        width: Format().width(context, mobile: 168, webFactor: 0.4),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: DateTimeFormField(
+                            initialValue: dietController.dietsDate[0].endDate,
+                            mode: DateTimeFieldPickerMode.date,
+                            dateFormat: DateFormat('yyyy-MM-dd'),
+                            decoration: InputDecoration(
+                              labelText: '종료일',
+                              hintText: '날짜 선택',
+                              hintStyle: const TextStyle(color: Colors.grey, fontSize: 12),
+                              prefixIcon: const Icon(Icons.calendar_today_outlined, size: 18, color: Colors.grey),
+                              filled: true,
+                              fillColor: Colors.white,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(color: Colors.blueAccent, width: 1.2),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(color: Colors.grey, width: 0),
+                              ),
+                            ),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black87,
+                            ),
+                            onChanged: (DateTime? value) {
+                              dietController.dietsDate[0].endDate = value;
+                              dietController.fetchDietInfo(
+                                dietController.dietsDate[0].startDate,
+                                dietController.dietsDate[0].endDate,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
                     ],
                   ),
+                ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24),
-                    child: Row(
-                      mainAxisAlignment: Format().axisAlignment(),
-                      children: [
-                        SizedBox(
-                          width: Format().width(context, mobile: 168, webFactor: 0.4),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: DateTimeFormField(
-                              initialValue: dietController.dietsDate[0].startDate,
-                              mode: DateTimeFieldPickerMode.date,
-                              dateFormat: DateFormat('yyyy-MM-dd'),
-                              decoration: InputDecoration(
-                                labelText: '시작일',
-                                hintText: '날짜 선택',
-                                hintStyle: const TextStyle(color: Colors.grey, fontSize: 12),
-                                prefixIcon: const Icon(Icons.calendar_today_outlined, size: 18, color: Colors.grey),
-                                filled: true,
-                                fillColor: Colors.white,
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(color: Colors.blueAccent, width: 1.2),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(color: Colors.grey, width: 0),
-                                ),
-                              ),
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
-                              ),
-                              onChanged: (DateTime? value) {
-                                dietController.dietsDate[0].startDate = value;
-                                dietController.fetchDietInfo(
-                                  dietController.dietsDate[0].startDate,
-                                  dietController.dietsDate[0].endDate,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
+                const SizedBox(height: 18),
 
-                        const SizedBox(width: 8),
-
-                        Text(
-                          "~",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey
-                          ),
-                        ),
-
-                        const SizedBox(width: 8),
-
-                        SizedBox(
-                          width: Format().width(context, mobile: 168, webFactor: 0.4),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: DateTimeFormField(
-                              initialValue: dietController.dietsDate[0].endDate,
-                              mode: DateTimeFieldPickerMode.date,
-                              dateFormat: DateFormat('yyyy-MM-dd'),
-                              decoration: InputDecoration(
-                                labelText: '종료일',
-                                hintText: '날짜 선택',
-                                hintStyle: const TextStyle(color: Colors.grey, fontSize: 12),
-                                prefixIcon: const Icon(Icons.calendar_today_outlined, size: 18, color: Colors.grey),
-                                filled: true,
-                                fillColor: Colors.white,
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(color: Colors.blueAccent, width: 1.2),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(color: Colors.grey, width: 0),
-                                ),
-                              ),
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
-                              ),
-                              onChanged: (DateTime? value) {
-                                dietController.dietsDate[0].endDate = value;
-                                dietController.fetchDietInfo(
-                                  dietController.dietsDate[0].startDate,
-                                  dietController.dietsDate[0].endDate,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 18),
-
-                  Padding(
+                Padding(
                     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                     child: NutrientBarChart(
                         proteinG: dietController.nutrient[0].proteinG,
@@ -180,66 +185,65 @@ class _HomeSState extends State<HomeS> {
                         fatG: dietController.nutrient[0].fatG,
                         vitaminTotal: dietController.nutrient[0].vitaminTotal
                     )
-                  ),
+                ),
 
-                  const SizedBox(height: 8),
+                const SizedBox(height: 8),
 
-                  Center(
-                    child: Card(
-                      color: Colors.white,
-                      child: SizedBox(
-                        width: Format().width(context, mobile: 360, webFactor: 1),
-                        height: 140,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: PieChart(
-                                PieChartData(
-                                  startDegreeOffset: -90,
-                                  borderData: FlBorderData(
-                                    show: false,
-                                  ),
-                                  sectionsSpace: 3,
-                                  centerSpaceRadius: 20,
-                                  sections: showingSections(),
+                Center(
+                  child: Card(
+                    color: Colors.white,
+                    child: SizedBox(
+                      width: Format().width(context, mobile: 360, webFactor: 1),
+                      height: 140,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: PieChart(
+                              PieChartData(
+                                startDegreeOffset: -90,
+                                borderData: FlBorderData(
+                                  show: false,
                                 ),
+                                sectionsSpace: 3,
+                                centerSpaceRadius: 20,
+                                sections: showingSections(),
                               ),
                             ),
+                          ),
 
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    HomeDietRow(label: "탄수화물", value: "${dietController.ratios[0].carbPct}%"),
-                                    const SizedBox(height: 4),
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  HomeDietRow(label: "탄수화물", value: "${dietController.ratios[0].carbPct}%"),
+                                  const SizedBox(height: 4),
 
-                                    HomeDietRow(label: "단백질", value: "${dietController.ratios[0].proteinPct}%"),
-                                    const SizedBox(height: 4),
+                                  HomeDietRow(label: "단백질", value: "${dietController.ratios[0].proteinPct}%"),
+                                  const SizedBox(height: 4),
 
-                                    HomeDietRow(label: "지방", value: "${dietController.ratios[0].fatPct}%"),
-                                    const SizedBox(height: 4),
+                                  HomeDietRow(label: "지방", value: "${dietController.ratios[0].fatPct}%"),
+                                  const SizedBox(height: 4),
 
-                                    HomeDietRow(label: "비타민", value: "${dietController.ratios[0].vitaminPct}%"),
-                                  ],
-                                ),
+                                  HomeDietRow(label: "비타민", value: "${dietController.ratios[0].vitaminPct}%"),
+                                ],
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
-            );
-          }),
-        ]
-      ),
+                ),
+              ],
+            ),
+          );
+        }
+      }),
     );
   }
 

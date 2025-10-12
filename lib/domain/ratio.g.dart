@@ -14,8 +14,8 @@ Ratio _$RatioFromJson(Map<String, dynamic> json) => Ratio(
 );
 
 Map<String, dynamic> _$RatioToJson(Ratio instance) => <String, dynamic>{
-  if (instance.proteinPct case final value?) 'protein_pct': value,
-  if (instance.fatPct case final value?) 'fat_pct': value,
-  if (instance.carbPct case final value?) 'carb_pct': value,
-  if (instance.vitaminPct case final value?) 'vitamin_pct': value,
+  'protein_pct': ?instance.proteinPct,
+  'fat_pct': ?instance.fatPct,
+  'carb_pct': ?instance.carbPct,
+  'vitamin_pct': ?instance.vitaminPct,
 };

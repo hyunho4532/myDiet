@@ -13,18 +13,19 @@ Diet _$DietFromJson(Map<String, dynamic> json) => Diet(
   foodKind: json['food_kind'] as String?,
   foodAmount: json['food_amount'] as String?,
   foodDate: DateTime.parse(json['food_date'] as String),
-  foodList:
-      (json['food_list'] as List<dynamic>)
-          .map((e) => Food.fromJson(e as Map<String, dynamic>))
-          .toList(),
+  foodList: (json['food_list'] as List<dynamic>)
+      .map((e) => Food.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  isFavorite: json['is_favorite'] as bool?,
 );
 
 Map<String, dynamic> _$DietToJson(Diet instance) => <String, dynamic>{
-  if (instance.id case final value?) 'id': value,
-  if (instance.userId case final value?) 'user_id': value,
+  'id': ?instance.id,
+  'user_id': ?instance.userId,
   'food_type': instance.foodType,
-  if (instance.foodKind case final value?) 'food_kind': value,
-  if (instance.foodAmount case final value?) 'food_amount': value,
+  'food_kind': ?instance.foodKind,
+  'food_amount': ?instance.foodAmount,
   'food_date': instance.foodDate.toIso8601String(),
   'food_list': instance.foodList,
+  'is_favorite': ?instance.isFavorite,
 };

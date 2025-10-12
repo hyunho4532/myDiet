@@ -115,6 +115,7 @@ class _DietIState extends State<DietI> {
                       foodAmount: foodAmount.commons[tagAmount].name,
                       foodDate: diets.selectedDate.value,
                       foodList: diets.foods.toList(),
+                      isFavorite: false
                     );
 
                     SetToast().bar(context, "식단이 수정되었습니다!");
@@ -127,6 +128,7 @@ class _DietIState extends State<DietI> {
                       foodAmount: foodAmount.commons[tagAmount].name,
                       foodDate: diets.selectedDate.value,
                       foodList: diets.foods.toList(),
+                      isFavorite: false
                     );
 
                     SetToast().bar(context, "식단이 등록되었습니다!");

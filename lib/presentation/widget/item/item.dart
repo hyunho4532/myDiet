@@ -109,7 +109,7 @@ class _DietItemState extends State<Item<Diet>> {
                           child: Column(
                             children: [
                               SvgPicture.asset(
-                                'icons/protein_category.svg',
+                                'icons/category/protein_category.svg',
                                 width: 46,
                                 height: 46,
                               ),
@@ -128,7 +128,7 @@ class _DietItemState extends State<Item<Diet>> {
                           child: Column(
                             children: [
                               SvgPicture.asset(
-                                'icons/carbohy_category.svg',
+                                'icons/category/carbohy_category.svg',
                                 width: 46,
                                 height: 46,
                               ),
@@ -147,7 +147,7 @@ class _DietItemState extends State<Item<Diet>> {
                           child: Column(
                             children: [
                               SvgPicture.asset(
-                                'icons/sugar_category.svg',
+                                'icons/category/sugar_category.svg',
                                 width: 46,
                                 height: 46,
                               ),
@@ -166,7 +166,7 @@ class _DietItemState extends State<Item<Diet>> {
                           child: Column(
                             children: [
                               SvgPicture.asset(
-                                'icons/fat_category.svg',
+                                'icons/category/fat_category.svg',
                                 width: 46,
                                 height: 46,
                               ),

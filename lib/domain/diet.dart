@@ -31,6 +31,9 @@ class Diet {
   @JsonKey(name: 'food_list')
   final List<Food> foodList;
 
+  @JsonKey(name: 'is_favorite')
+  final bool? isFavorite;
+
   Diet({
     this.id,
     required this.userId,
@@ -38,7 +41,8 @@ class Diet {
     required this.foodKind,
     required this.foodAmount,
     required this.foodDate,
-    required this.foodList
+    required this.foodList,
+    required this.isFavorite
   });
 
   factory Diet.fromJson(Map<String, dynamic> json) => _$DietFromJson(json);

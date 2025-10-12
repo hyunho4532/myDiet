@@ -20,7 +20,7 @@ class TempUserRepository<T> {
     if (result.isNull) {
       message = "사용자를 찾을 수 없습니다!";
     } else {
-      message = "로그인을 해주세요";
+      message = "현재 게스트 상태입니다!\n로그인을 해주세요";
     }
 
     return message;
