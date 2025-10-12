@@ -77,6 +77,8 @@ class _DietIState extends State<DietI> {
       diets.selectedDate.value = date;
     });
 
+    diets.fetchFavoriteDiet();
+
     types.fetchCommon("TYPE");
     foodKind.fetchCommon('FOOD_KIND');
     foodAmount.fetchCommon('FOOD_AMOUNT');
@@ -316,7 +318,34 @@ class _DietIState extends State<DietI> {
                         padding: EdgeInsets.zero,
                         icon: Icon(Icons.bookmark_added, color: Colors.white, size: 24),
                         onPressed: () {
-                          Get.to(DietInfoI());
+                          showModalBottomSheet(
+                            backgroundColor: Const().buildColors()[3],
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 18, left: 12),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 400,
+                                    color: Const().buildColors()[3],
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                            "즐겨찾기한 식단 목록 조회",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }
+                          );
                         },
                       ),
                     ),

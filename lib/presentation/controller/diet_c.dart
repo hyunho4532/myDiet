@@ -34,6 +34,7 @@ class DietController extends GetxController {
 
   var selectedDate = DateTime.now().obs;
 
+  // 식단 조회
   Future<void> fetchDiet() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String uuid = prefs.getString("uuid")!;
@@ -41,6 +42,11 @@ class DietController extends GetxController {
     return DietRepository().fetchDiet(uuid, (data) {
       diets.value = data.map((e) => Diet.fromJson(e)).toList();
     });
+  }
+
+  // 즐겨찾기한 식단 조회.
+  Future<void> fetchFavoriteDiet() async {
+    
   }
 
   /// 식단 - 영양소, 비율 조회
