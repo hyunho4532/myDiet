@@ -292,6 +292,7 @@ class _DietIState extends State<DietI> {
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
+
                     const SizedBox(width: 8), // 간격
 
                     CircleAvatar(
@@ -300,6 +301,20 @@ class _DietIState extends State<DietI> {
                       child: IconButton(
                         padding: EdgeInsets.zero,
                         icon: Icon(Icons.add, color: Colors.white, size: 24),
+                        onPressed: () {
+                          Get.to(DietInfoI());
+                        },
+                      ),
+                    ),
+
+                    const SizedBox(width: 8),
+
+                    CircleAvatar(
+                      radius: 18,
+                      backgroundColor: Const().buildColors()[0],
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: Icon(Icons.bookmark_added, color: Colors.white, size: 24),
                         onPressed: () {
                           Get.to(DietInfoI());
                         },
