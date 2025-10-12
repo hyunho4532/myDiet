@@ -322,24 +322,81 @@ class _DietIState extends State<DietI> {
                             backgroundColor: Const().buildColors()[3],
                               context: context,
                               builder: (BuildContext context) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 18, left: 12),
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 400,
-                                    color: Const().buildColors()[3],
+                                return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 400,
+                                  color: Const().buildColors()[3],
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
-                                            "즐겨찾기한 식단 목록 조회",
+                                          "즐겨찾기한 식단 목록 조회",
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold
                                           ),
-                                        )
+                                        ),
+
+                                        const SizedBox(height: 6),
+
+                                        Obx(() => SizedBox(
+                                          height: 200,
+                                          child: GridView.builder(
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                mainAxisSpacing: 8,
+                                                crossAxisSpacing: 8,
+                                                childAspectRatio: 1
+                                            ),
+                                            itemCount: diets.favoriteDiets.length,
+                                            itemBuilder: (context, index) {
+                                              final diet = diets.favoriteDiets[index];
+
+                                              return GestureDetector(
+                                                onTap: () {
+
+                                                },
+                                                child: Card(
+                                                  color: Colors.white,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(top: 6.0, left: 8.0),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        for (int i = 0; i < diet.foodList.length; i++)
+                                                          Padding(
+                                                            padding: const EdgeInsets.symmetric(vertical: 1.0), // 줄 간격 조정
+                                                            child: Row(
+                                                              children: [
+                                                                const SizedBox(width: 2),
+                                                                Expanded(
+                                                                  child: Text(
+                                                                    diet.foodList[i].foodName.length > 13
+                                                                        ? "${diet.foodList[i].foodName.substring(0, 12)}..."
+                                                                        : diet.foodList[i].foodName,
+                                                                    style: const TextStyle(fontSize: 12),
+                                                                    overflow: TextOverflow.ellipsis,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+
+                                                        const Spacer()
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        )),
                                       ],
                                     ),
                                   ),

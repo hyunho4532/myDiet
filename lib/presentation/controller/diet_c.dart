@@ -20,6 +20,9 @@ class DietController extends GetxController {
   // 식단 관리
   var diets = <Diet>[].obs;
 
+  // 즐겨찾기 식단 관리
+  var favoriteDiets = <Diet>[].obs;
+
   // 비율 관리
   var ratios = <Ratio>[].obs;
 
@@ -46,7 +49,12 @@ class DietController extends GetxController {
 
   // 즐겨찾기한 식단 조회.
   Future<void> fetchFavoriteDiet() async {
-    
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uuid = prefs.getString("uuid")!;
+
+    return DietRepository().fetchFavoriteDiet(uuid, (data) {
+      favoriteDiets.value = data.map((e) => Diet.fromJson(e)).toList();
+    });
   }
 
   /// 식단 - 영양소, 비율 조회
