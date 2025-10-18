@@ -11,6 +11,7 @@ import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/controller/mois_c.dart';
 import 'package:mydiet/presentation/screens/feature/diet_info_i.dart';
 import 'package:mydiet/presentation/utils/format.dart';
+import 'package:mydiet/presentation/utils/math.dart';
 import 'package:mydiet/presentation/widget/chips/chip.dart';
 import 'package:mydiet/presentation/widget/input/bottom_picker.dart';
 import 'package:mydiet/presentation/widget/painter/cup_painter.dart';
@@ -357,10 +358,13 @@ class _DietIState extends State<DietI> {
                                             itemCount: diets.favoriteDiets.length,
                                             itemBuilder: (context, index) {
                                               final diet = diets.favoriteDiets[index];
+                                              final sumKcal = Math().sumBy(diet.foodList, (item) => item.energyKcal);
+                                              final sumProtein = Math().sumBy(diet.foodList, (item) => item.proteinG);
 
                                               return GestureDetector(
                                                 onTap: () {
-
+                                                  diets.setFoodLists(diet.foodList, context);
+                                                  SetToast().bar(context, "식단을 불러왔습니다!");
                                                 },
                                                 child: Card(
                                                   color: Colors.white,
@@ -375,18 +379,24 @@ class _DietIState extends State<DietI> {
                                                             child: Row(
                                                               children: [
                                                                 const SizedBox(width: 2),
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    diet.foodList[i].foodName.length > 13
-                                                                        ? "${diet.foodList[i].foodName.substring(0, 12)}..."
-                                                                        : diet.foodList[i].foodName,
-                                                                    style: const TextStyle(fontSize: 12),
-                                                                    overflow: TextOverflow.ellipsis,
-                                                                  ),
+                                                                Text(
+                                                                  diet.foodList[i].foodName.length > 13
+                                                                      ? "${diet.foodList[i].foodName.substring(0, 12)}..."
+                                                                      : diet.foodList[i].foodName,
+                                                                  style: const TextStyle(fontSize: 12),
+                                                                  overflow: TextOverflow.ellipsis,
                                                                 ),
                                                               ],
                                                             ),
                                                           ),
+
+                                                        Text(
+                                                            sumKcal.toString()
+                                                        ),
+
+                                                        Text(
+                                                          sumProtein.toString()
+                                                        ),
 
                                                         const Spacer()
                                                       ],

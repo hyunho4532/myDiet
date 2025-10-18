@@ -32,7 +32,7 @@ class _ProfileSState extends State<ProfileS> {
     });
 
     tipController.fetchTip();
-    dietController.fetchDietWeekly();
+    dietController.fetchDiet();
   }
 
   @override
@@ -130,7 +130,7 @@ class _ProfileSState extends State<ProfileS> {
               const SizedBox(height: 24),
 
               const Text(
-                "나의 일주일 식단 확인하기",
+                "나의 식단 확인하기",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey,

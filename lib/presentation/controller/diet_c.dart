@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/data/repository/diet_r.dart';
 import 'package:mydiet/data/repository/food_r.dart';
@@ -131,6 +132,12 @@ class DietController extends GetxController {
   // 식단 추가
   void setFoodList(int id, Food food) {
     foods.add(food);
+  }
+
+  // 즐겨찾기 식단에서 식단 추가
+  void setFoodLists(List<Food> foodList, BuildContext context) {
+    foods.addAll(foodList);
+    Navigator.pop(context);
   }
 
   // 식단 삭제
