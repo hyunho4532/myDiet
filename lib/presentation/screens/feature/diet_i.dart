@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mydiet/domain/common_code.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/mois.dart';
@@ -15,6 +16,7 @@ import 'package:mydiet/presentation/utils/math.dart';
 import 'package:mydiet/presentation/widget/chips/chip.dart';
 import 'package:mydiet/presentation/widget/input/bottom_picker.dart';
 import 'package:mydiet/presentation/widget/painter/cup_painter.dart';
+import 'package:mydiet/presentation/widget/sizedbox/svg_sizedbox.dart';
 import 'package:mydiet/presentation/widget/toast/snack_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -320,12 +322,13 @@ class _DietIState extends State<DietI> {
                         icon: Icon(Icons.bookmark_added, color: Colors.white, size: 24),
                         onPressed: () {
                           showModalBottomSheet(
+                            isScrollControlled: true,
                             backgroundColor: Const().buildColors()[3],
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
                                   width: MediaQuery.of(context).size.width,
-                                  height: 400,
+                                  height: MediaQuery.of(context).size.height * 0.9,
                                   color: Const().buildColors()[3],
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -345,7 +348,7 @@ class _DietIState extends State<DietI> {
                                         const SizedBox(height: 6),
 
                                         Obx(() => SizedBox(
-                                          height: 200,
+                                          height: 270,
                                           child: GridView.builder(
                                             shrinkWrap: true,
                                             scrollDirection: Axis.vertical,
@@ -353,13 +356,17 @@ class _DietIState extends State<DietI> {
                                                 crossAxisCount: 2,
                                                 mainAxisSpacing: 8,
                                                 crossAxisSpacing: 8,
-                                                childAspectRatio: 1
+                                                childAspectRatio: 0.75
                                             ),
                                             itemCount: diets.favoriteDiets.length,
                                             itemBuilder: (context, index) {
                                               final diet = diets.favoriteDiets[index];
+
                                               final sumKcal = Math().sumBy(diet.foodList, (item) => item.energyKcal);
                                               final sumProtein = Math().sumBy(diet.foodList, (item) => item.proteinG);
+                                              final sumCarbohydrate = Math().sumBy(diet.foodList, (item) => item.carbohydrateG);
+                                              final sumSugar = Math().sumBy(diet.foodList, (item) => item.sugarsG);
+                                              final sumFat = Math().sumBy(diet.foodList, (item) => item.fatG);
 
                                               return GestureDetector(
                                                 onTap: () {
@@ -390,15 +397,39 @@ class _DietIState extends State<DietI> {
                                                             ),
                                                           ),
 
-                                                        Text(
-                                                            sumKcal.toString()
+                                                        const SizedBox(height: 18),
+
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            SvgSizedBox(
+                                                              path: 'icons/category/protein_category.svg',
+                                                              data: sumProtein
+                                                            ),
+
+                                                            SvgSizedBox(
+                                                              path: 'icons/category/carbohy_category.svg',
+                                                              data: sumCarbohydrate
+                                                            )
+                                                          ]
                                                         ),
 
-                                                        Text(
-                                                          sumProtein.toString()
-                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            SvgSizedBox(
+                                                                path: 'icons/category/sugar_category.svg',
+                                                                data: sumSugar
+                                                            ),
 
-                                                        const Spacer()
+                                                            SvgSizedBox(
+                                                              path: 'icons/category/fat_category.svg',
+                                                              data: sumFat
+                                                            )
+                                                          ],
+                                                        )
                                                       ],
                                                     ),
                                                   ),
