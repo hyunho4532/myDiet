@@ -10,6 +10,7 @@ import 'package:mydiet/presentation/utils/math.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/presentation/widget/painter/cup_painter.dart';
 import 'package:mydiet/presentation/widget/responsive/widgets.dart';
+import 'package:mydiet/presentation/widget/sizedbox/svg_sizedbox.dart';
 
 // Item 위젯 추가
 // type에 따라서 state 구분
@@ -41,25 +42,13 @@ class _DietItemState extends State<Item<Diet>> {
         final diet = widget.data[index];
         String dietMessages = "";
 
-        // 칼로리 합계
-        final sumKcal = Math().sumBy(diet.foodList, (item) => item.energyKcal);
-
-        // 단백질 합계
-        final sumProtein = Math().sumBy(diet.foodList, (item) => item.proteinG);
-
-        // 당류 합계
-        final sumSugar = Math().sumBy(diet.foodList, (item) => item.sugarsG);
-
-        // 지방 합계
-        final sumFat = Math().sumBy(diet.foodList, (item) => item.fatG);
-
-        // 탄수화물 합계
-        final sumCarbohydrate = Math().sumBy(diet.foodList, (item) => item.carbohydrateG);
+        // 합계 계산
+        final sumData = Math().sumArray(diet);
 
         if (diet.foodKind == '아침') {
-          if (sumKcal < 400) {
+          if (sumData[0] < 400) {
             dietMessages = "너무 적게 먹었습니다!";
-          } else if (sumKcal >= 400 && sumKcal <= 600) {
+          } else if (sumData[0] >= 400 && sumData[0] <= 600) {
             dietMessages = "적당하게 먹었습니다!";
           } else {
             dietMessages = "너무 많이 먹었습니다!";
@@ -67,9 +56,9 @@ class _DietItemState extends State<Item<Diet>> {
         }
 
         if (diet.foodKind == '점심') {
-          if (sumKcal < 500) {
+          if (sumData[0] < 500) {
             dietMessages = "너무 적게 먹었습니다!";
-          } else if (sumKcal >= 560 && sumKcal <= 840) {
+          } else if (sumData[0] >= 560 && sumData[0] <= 840) {
             dietMessages = "적당하게 먹었습니다!";
           } else {
             dietMessages = "너무 많이 먹었습니다!";
@@ -77,9 +66,9 @@ class _DietItemState extends State<Item<Diet>> {
         }
 
         if (diet.foodKind == '저녁') {
-          if (sumKcal < 480) {
+          if (sumData[0] < 480) {
             dietMessages = "너무 적게 먹었습니다!";
-          } else if (sumKcal >= 480 && sumKcal <= 720) {
+          } else if (sumData[0] >= 480 && sumData[0] <= 720) {
             dietMessages = "적당하게 먹었습니다!";
           } else {
             dietMessages = "너무 많이 먹었습니다!";
@@ -104,81 +93,25 @@ class _DietItemState extends State<Item<Diet>> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          height: 70,
-                          child: Column(
-                            children: [
-                              SvgPicture.asset(
-                                'icons/category/protein_category.svg',
-                                width: 46,
-                                height: 46,
-                              ),
-
-                              Center(
-                                  child: Text(
-                                      sumProtein.toStringAsFixed(2)
-                                  )
-                              ),
-                            ],
-                          ),
+                        SvgSizedBox(
+                            path: 'icons/category/protein_category.svg',
+                            data: sumData[1]
                         ),
 
-                        SizedBox(
-                          height: 70,
-                          child: Column(
-                            children: [
-                              SvgPicture.asset(
-                                'icons/category/carbohy_category.svg',
-                                width: 46,
-                                height: 46,
-                              ),
-
-                              Center(
-                                  child: Text(
-                                      sumCarbohydrate.toStringAsFixed(2)
-                                  )
-                              ),
-                            ],
-                          ),
+                        SvgSizedBox(
+                            path: 'icons/category/carbohy_category.svg',
+                            data: sumData[2]
                         ),
 
-                        SizedBox(
-                          height: 70,
-                          child: Column(
-                            children: [
-                              SvgPicture.asset(
-                                'icons/category/sugar_category.svg',
-                                width: 46,
-                                height: 46,
-                              ),
-
-                              Center(
-                                  child: Text(
-                                      sumSugar.toStringAsFixed(2)
-                                  )
-                              ),
-                            ],
-                          ),
+                        SvgSizedBox(
+                            path: 'icons/category/sugar_category.svg',
+                            data: sumData[3]
                         ),
 
-                        SizedBox(
-                          height: 70,
-                          child: Column(
-                            children: [
-                              SvgPicture.asset(
-                                'icons/category/fat_category.svg',
-                                width: 46,
-                                height: 46,
-                              ),
-
-                              Center(
-                                  child: Text(
-                                      sumFat.toStringAsFixed(2)
-                                  )
-                              ),
-                            ],
-                          ),
-                        ),
+                        SvgSizedBox(
+                            path: 'icons/category/fat_category.svg',
+                            data: sumData[4]
+                        )
                       ]
                     ),
                   ),

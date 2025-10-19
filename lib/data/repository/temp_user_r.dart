@@ -25,4 +25,15 @@ class TempUserRepository<T> {
 
     return message;
   }
+
+  Future<int> validateHeight(String deviceId) async {
+    final response = await _client.rpc(
+      "validate_height",
+      params: {
+        "p_device_id": deviceId
+      },
+    );
+
+    return response;
+  }
 }

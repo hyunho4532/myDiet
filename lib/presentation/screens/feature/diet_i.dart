@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:mydiet/presentation/controller/const_c.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/controller/mois_c.dart';
+import 'package:mydiet/presentation/controller/temp_user_c.dart';
 import 'package:mydiet/presentation/screens/feature/diet_info_i.dart';
 import 'package:mydiet/presentation/utils/format.dart';
 import 'package:mydiet/presentation/utils/math.dart';
@@ -37,6 +38,9 @@ class _DietIState extends State<DietI> {
   // 홈에서 TableCalendar 클릭 시, 날짜 조회
   final ConstController constController = Get.put(ConstController());
 
+  // 임시 사용자 선언.
+  final TempUserController tempUserController = Get.put(TempUserController());
+
   // 수분 선언
   final MoisController moisController = Get.put(MoisController());
 
@@ -52,6 +56,8 @@ class _DietIState extends State<DietI> {
   late SharedPreferences prefs;
 
   int tagKind = 1;
+
+  int height = 0;
 
   @override
   void initState() {
@@ -80,8 +86,10 @@ class _DietIState extends State<DietI> {
       diets.selectedDate.value = date;
     });
 
-    diets.fetchFavoriteDiet();
+    // init Data 선언 (즐겨 찾기 식단 조회, 몸무게 유효성 검사)
+    initData();
 
+    // 공통 코드 조회
     types.fetchCommon("TYPE");
     foodKind.fetchCommon('FOOD_KIND');
     foodAmount.fetchCommon('FOOD_AMOUNT');
@@ -90,6 +98,13 @@ class _DietIState extends State<DietI> {
 
   Future<void> initPrefs() async {
     prefs = await SharedPreferences.getInstance();
+  }
+
+  Future<void> initData() async {
+    height = await tempUserController.validateHeight();
+
+    // 즐겨 찾기한 식단 조회
+    diets.fetchFavoriteDiet();
   }
 
   @override
@@ -362,11 +377,7 @@ class _DietIState extends State<DietI> {
                                             itemBuilder: (context, index) {
                                               final diet = diets.favoriteDiets[index];
 
-                                              final sumKcal = Math().sumBy(diet.foodList, (item) => item.energyKcal);
-                                              final sumProtein = Math().sumBy(diet.foodList, (item) => item.proteinG);
-                                              final sumCarbohydrate = Math().sumBy(diet.foodList, (item) => item.carbohydrateG);
-                                              final sumSugar = Math().sumBy(diet.foodList, (item) => item.sugarsG);
-                                              final sumFat = Math().sumBy(diet.foodList, (item) => item.fatG);
+                                              final sumData = Math().sumArray(diet);
 
                                               return GestureDetector(
                                                 onTap: () {
@@ -405,12 +416,12 @@ class _DietIState extends State<DietI> {
                                                           children: [
                                                             SvgSizedBox(
                                                               path: 'icons/category/protein_category.svg',
-                                                              data: sumProtein
+                                                              data: sumData[1]
                                                             ),
 
                                                             SvgSizedBox(
                                                               path: 'icons/category/carbohy_category.svg',
-                                                              data: sumCarbohydrate
+                                                              data: sumData[2]
                                                             )
                                                           ]
                                                         ),
@@ -421,12 +432,12 @@ class _DietIState extends State<DietI> {
                                                           children: [
                                                             SvgSizedBox(
                                                                 path: 'icons/category/sugar_category.svg',
-                                                                data: sumSugar
+                                                                data: sumData[3]
                                                             ),
 
                                                             SvgSizedBox(
                                                               path: 'icons/category/fat_category.svg',
-                                                              data: sumFat
+                                                              data: sumData[4]
                                                             )
                                                           ],
                                                         )

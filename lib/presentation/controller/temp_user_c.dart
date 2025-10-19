@@ -22,8 +22,13 @@ class TempUserController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceId = prefs.getString("uuid")!;
 
-    final message = await TempUserRepository().validate(deviceId);
+    return await TempUserRepository().validate(deviceId);
+  }
 
-    return message;
+  Future<int> validateHeight() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceId = prefs.getString("uuid")!;
+
+    return await TempUserRepository().validateHeight(deviceId);
   }
 }
