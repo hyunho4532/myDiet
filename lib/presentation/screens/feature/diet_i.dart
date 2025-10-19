@@ -223,8 +223,8 @@ class _DietIState extends State<DietI> {
                             Text(
                               "먼저! 식단을 등록하기 전\n간단히 정보를 입력해주세요!",
                               style: TextStyle(
+                                fontFamily: 'PyeojinGothicBold',
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold
                               ),
                             )
                           ],

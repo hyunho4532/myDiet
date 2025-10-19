@@ -59,11 +59,14 @@ class _ProfileSState extends State<ProfileS> {
                     backgroundColor: Colors.grey[200], // 이미지 없을 때 배경색
                   ),
 
+                  const SizedBox(width: 8),
+
                   Text(
                     message,
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
+                      fontFamily: 'PyeojinGothicBold'
                     ),
                   ),
                 ],
@@ -138,7 +141,7 @@ class _ProfileSState extends State<ProfileS> {
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey,
-                  fontWeight: FontWeight.bold,
+                  fontFamily: 'PyeojinGothicBold'
                 ),
               ),
 
