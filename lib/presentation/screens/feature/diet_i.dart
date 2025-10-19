@@ -203,312 +203,346 @@ class _DietIState extends State<DietI> {
         final sumKcal = diets.foods.fold(0.0, (sum, item) => sum += item.energyKcal);
 
         final widget = switch (constController.types.value) {
-          'TYPE_DIET' => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 24.0, left: 12.0),
-                child: Text(
-                  '오늘은 어떤 식사를 하셨나요?',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0, top: 12.0),
-                child: Text(
-                  '식사 종류는 어떻게 되시나요?',
-                  style: TextStyle(
-                      fontSize: 16
-                  ),
-                ),
-              ),
-
-              Chips(
-                type: 'FOOD_KIND',
-                tags: tagKind,
-                data: foodKind.commons,
-                onChanged: (val) {
-                  setState(() {
-                    tagKind = val;
-                  });
-                },
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0, top: 12.0),
-                child: Text(
-                  '식사량이 어떻게 되셨나요?',
-                  style: TextStyle(
-                      fontSize: 16
-                  ),
-                ),
-              ),
-
-              Chips(
-                type: 'FOOD_AMOUNT',
-                tags: tagAmount,
-                data: foodAmount.commons,
-                onChanged: (val) {
-                  setState(() {
-                    tagAmount = val;
-                  });
-                },
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0, top: 12.0),
-                child: Text(
-                  '언제 식사를 하셨나요?',
-                  style: TextStyle(
-                      fontSize: 16
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0, top: 12.0),
-                child: SizedBox(
-                  width: 240,
-                  height: 60,
-                  child: TextField(
-                    controller: textEditingController,
-                    readOnly: true, // 키보드 안 뜨게
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: "섭취 시간",
-                      labelStyle: TextStyle(
-                        color: Const().buildColors()[0],
-                        fontWeight: FontWeight.bold,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      suffixIcon: Icon(Icons.fastfood_sharp, color: Const().buildColors()[0]),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                    ),
-                    onTap: () => BottomPickers().showDatePicker(context, constController),
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
-                      child: Text(
-                        '식단을 등록해주세요',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-
-                    const SizedBox(width: 8), // 간격
-
-                    CircleAvatar(
-                      radius: 18,
-                      backgroundColor: Const().buildColors()[0],
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(Icons.add, color: Colors.white, size: 24),
-                        onPressed: () {
-                          Get.to(DietInfoI());
-                        },
-                      ),
-                    ),
-
-                    const SizedBox(width: 8),
-
-                    CircleAvatar(
-                      radius: 18,
-                      backgroundColor: Const().buildColors()[0],
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(Icons.bookmark_added, color: Colors.white, size: 24),
-                        onPressed: () {
-                          showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Const().buildColors()[3],
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height * 0.9,
-                                  color: Const().buildColors()[3],
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          "즐겨찾기한 식단 목록 조회",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-
-                                        const SizedBox(height: 6),
-
-                                        Obx(() => SizedBox(
-                                          height: 270,
-                                          child: GridView.builder(
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                mainAxisSpacing: 8,
-                                                crossAxisSpacing: 8,
-                                                childAspectRatio: 0.75
-                                            ),
-                                            itemCount: diets.favoriteDiets.length,
-                                            itemBuilder: (context, index) {
-                                              final diet = diets.favoriteDiets[index];
-
-                                              final sumData = Math().sumArray(diet);
-
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  diets.setFoodLists(diet.foodList, context);
-                                                  SetToast().bar(context, "식단을 불러왔습니다!");
-                                                },
-                                                child: Card(
-                                                  color: Colors.white,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.only(top: 6.0, left: 8.0),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        for (int i = 0; i < diet.foodList.length; i++)
-                                                          Padding(
-                                                            padding: const EdgeInsets.symmetric(vertical: 1.0), // 줄 간격 조정
-                                                            child: Row(
-                                                              children: [
-                                                                const SizedBox(width: 2),
-                                                                Text(
-                                                                  diet.foodList[i].foodName.length > 13
-                                                                      ? "${diet.foodList[i].foodName.substring(0, 12)}..."
-                                                                      : diet.foodList[i].foodName,
-                                                                  style: const TextStyle(fontSize: 12),
-                                                                  overflow: TextOverflow.ellipsis,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-
-                                                        const SizedBox(height: 18),
-
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                          children: [
-                                                            SvgSizedBox(
-                                                              path: 'icons/category/protein_category.svg',
-                                                              data: sumData[1]
-                                                            ),
-
-                                                            SvgSizedBox(
-                                                              path: 'icons/category/carbohy_category.svg',
-                                                              data: sumData[2]
-                                                            )
-                                                          ]
-                                                        ),
-
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                          children: [
-                                                            SvgSizedBox(
-                                                                path: 'icons/category/sugar_category.svg',
-                                                                data: sumData[3]
-                                                            ),
-
-                                                            SvgSizedBox(
-                                                              path: 'icons/category/fat_category.svg',
-                                                              data: sumData[4]
-                                                            )
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        )),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Column(
-                  children: [
-                    Text(
-                      '총 칼로리: $sumKcal kcal',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey
-                      ),
-                    )
-                  ],
-                ),
-              ),
-
-              SizedBox(
-                height: 230,
-                child: Obx(() {
-                  return ListView.builder(
-                    itemCount: diets.foods.length,
-                    itemBuilder: (context, index) {
-                      final food = diets.foods[index];
-
-                      return ListTile(
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
+          'TYPE_DIET' => Builder(
+            builder: (context) {
+              if (height == 0) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Const().buildColors()[3],
+                    builder: (_) => SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.9,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(food.foodName),
-                            GestureDetector(
-                              onTap: () {
-                                diets.deleteFoodList(index, food);
-                              },
-                              child: Icon(
-                                Icons.delete,
-                                color: Const().buildColors()[2],
+                            Text(
+                              "먼저! 식단을 등록하기 전\n간단히 정보를 입력해주세요!",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold
                               ),
                             )
                           ],
                         ),
-                        subtitle: Text("${food.energyKcal} kcal"),
-                      );
-                    },
+                      ),
+                    )
                   );
-                }),
-              ),
-            ],
+                });
+              }
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24.0, left: 12.0),
+                    child: Text(
+                      '오늘은 어떤 식사를 하셨나요?',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0, top: 12.0),
+                    child: Text(
+                      '식사 종류는 어떻게 되시나요?',
+                      style: TextStyle(
+                          fontSize: 16
+                      ),
+                    ),
+                  ),
+
+                  Chips(
+                    type: 'FOOD_KIND',
+                    tags: tagKind,
+                    data: foodKind.commons,
+                    onChanged: (val) {
+                      setState(() {
+                        tagKind = val;
+                      });
+                    },
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0, top: 12.0),
+                    child: Text(
+                      '식사량이 어떻게 되셨나요?',
+                      style: TextStyle(
+                          fontSize: 16
+                      ),
+                    ),
+                  ),
+
+                  Chips(
+                    type: 'FOOD_AMOUNT',
+                    tags: tagAmount,
+                    data: foodAmount.commons,
+                    onChanged: (val) {
+                      setState(() {
+                        tagAmount = val;
+                      });
+                    },
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0, top: 12.0),
+                    child: Text(
+                      '언제 식사를 하셨나요?',
+                      style: TextStyle(
+                          fontSize: 16
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0, top: 12.0),
+                    child: SizedBox(
+                      width: 240,
+                      height: 60,
+                      child: TextField(
+                        controller: textEditingController,
+                        readOnly: true, // 키보드 안 뜨게
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        decoration: InputDecoration(
+                          labelText: "섭취 시간",
+                          labelStyle: TextStyle(
+                            color: Const().buildColors()[0],
+                            fontWeight: FontWeight.bold,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          suffixIcon: Icon(Icons.fastfood_sharp, color: Const().buildColors()[0]),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
+                        ),
+                        onTap: () => BottomPickers().showDatePicker(context, constController),
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Text(
+                            '식단을 등록해주세요',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+
+                        const SizedBox(width: 8), // 간격
+
+                        CircleAvatar(
+                          radius: 18,
+                          backgroundColor: Const().buildColors()[0],
+                          child: IconButton(
+                            padding: EdgeInsets.zero,
+                            icon: Icon(Icons.add, color: Colors.white, size: 24),
+                            onPressed: () {
+                              Get.to(DietInfoI());
+                            },
+                          ),
+                        ),
+
+                        const SizedBox(width: 8),
+
+                        CircleAvatar(
+                          radius: 18,
+                          backgroundColor: Const().buildColors()[0],
+                          child: IconButton(
+                            padding: EdgeInsets.zero,
+                            icon: Icon(Icons.bookmark_added, color: Colors.white, size: 24),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Const().buildColors()[3],
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: MediaQuery.of(context).size.height * 0.9,
+                                      color: Const().buildColors()[3],
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              "즐겨찾기한 식단 목록 조회",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold
+                                              ),
+                                            ),
+
+                                            const SizedBox(height: 6),
+
+                                            Obx(() => SizedBox(
+                                              height: 270,
+                                              child: GridView.builder(
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 2,
+                                                    mainAxisSpacing: 8,
+                                                    crossAxisSpacing: 8,
+                                                    childAspectRatio: 0.75
+                                                ),
+                                                itemCount: diets.favoriteDiets.length,
+                                                itemBuilder: (context, index) {
+                                                  final diet = diets.favoriteDiets[index];
+
+                                                  final sumData = Math().sumArray(diet);
+
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      diets.setFoodLists(diet.foodList, context);
+                                                      SetToast().bar(context, "식단을 불러왔습니다!");
+                                                    },
+                                                    child: Card(
+                                                      color: Colors.white,
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.only(top: 6.0, left: 8.0),
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            for (int i = 0; i < diet.foodList.length; i++)
+                                                              Padding(
+                                                                padding: const EdgeInsets.symmetric(vertical: 1.0), // 줄 간격 조정
+                                                                child: Row(
+                                                                  children: [
+                                                                    const SizedBox(width: 2),
+                                                                    Text(
+                                                                      diet.foodList[i].foodName.length > 13
+                                                                          ? "${diet.foodList[i].foodName.substring(0, 12)}..."
+                                                                          : diet.foodList[i].foodName,
+                                                                      style: const TextStyle(fontSize: 12),
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+
+                                                            const SizedBox(height: 18),
+
+                                                            Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              children: [
+                                                                SvgSizedBox(
+                                                                  path: 'icons/category/protein_category.svg',
+                                                                  data: sumData[1]
+                                                                ),
+
+                                                                SvgSizedBox(
+                                                                  path: 'icons/category/carbohy_category.svg',
+                                                                  data: sumData[2]
+                                                                )
+                                                              ]
+                                                            ),
+
+                                                            Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                              children: [
+                                                                SvgSizedBox(
+                                                                    path: 'icons/category/sugar_category.svg',
+                                                                    data: sumData[3]
+                                                                ),
+
+                                                                SvgSizedBox(
+                                                                  path: 'icons/category/fat_category.svg',
+                                                                  data: sumData[4]
+                                                                )
+                                                              ],
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            )),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          '총 칼로리: $sumKcal kcal',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 230,
+                    child: Obx(() {
+                      return ListView.builder(
+                        itemCount: diets.foods.length,
+                        itemBuilder: (context, index) {
+                          final food = diets.foods[index];
+
+                          return ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                              children: [
+                                Text(food.foodName),
+                                GestureDetector(
+                                  onTap: () {
+                                    diets.deleteFoodList(index, food);
+                                  },
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Const().buildColors()[2],
+                                  ),
+                                )
+                              ],
+                            ),
+                            subtitle: Text("${food.energyKcal} kcal"),
+                          );
+                        },
+                      );
+                    }),
+                  ),
+                ],
+              );
+            }
           ),
 
           'TYPE_WATER' => Column(
