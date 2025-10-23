@@ -150,6 +150,9 @@ flutter:
    - family: PyeojinGothicMedium
      fonts:
        - asset: assets/fonts/PG_Medium.otf
+   - family: PaperLogyMedium
+     fonts:
+       - asset: assets/fonts/PL_Medium.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

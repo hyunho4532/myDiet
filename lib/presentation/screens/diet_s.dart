@@ -67,7 +67,7 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
                   calendarBuilders: CalendarBuilders(
                     markerBuilder: (context, day, events) => buildMarker(context, day, dietController, moisController),
                     dowBuilder: (context, day) => buildDow(context, day),
-                  )
+                  ),
               ),
             ),
 

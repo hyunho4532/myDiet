@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:mydiet/presentation/widget/painter/cup_painter.dart';
 import 'package:mydiet/presentation/widget/responsive/widgets.dart';
 import 'package:mydiet/presentation/widget/sizedbox/svg_sizedbox.dart';
+import 'package:mydiet/presentation/widget/text.dart';
 
 // Item 위젯 추가
 // type에 따라서 state 구분
@@ -143,14 +144,12 @@ class _DietItemState extends State<Item<Diet>> {
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    diet.foodList[j].foodName.length > 10 ? "${diet.foodList[j].foodName.substring(0, 9)}..." : diet.foodList[j].foodName,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 11,
-                                                      fontWeight: FontWeight.bold
-                                                    ),
-                                                  ),
+                                                  CustomText(
+                                                    message: diet.foodList[j].foodName.length > 10 ? "${diet.foodList[j].foodName.substring(0, 9)}..." : diet.foodList[j].foodName,
+                                                    fontSize: 11,
+                                                    fontFamily: 'PaperLogyMedium',
+                                                    color: Colors.white,
+                                                  )
                                                 ],
                                               ),
 

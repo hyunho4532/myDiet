@@ -18,6 +18,7 @@ import 'package:mydiet/presentation/widget/chips/chip.dart';
 import 'package:mydiet/presentation/widget/input/bottom_picker.dart';
 import 'package:mydiet/presentation/widget/painter/cup_painter.dart';
 import 'package:mydiet/presentation/widget/sizedbox/svg_sizedbox.dart';
+import 'package:mydiet/presentation/widget/text.dart';
 import 'package:mydiet/presentation/widget/toast/snack_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -240,23 +241,22 @@ class _DietIState extends State<DietI> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 24.0, left: 12.0),
-                    child: Text(
-                      '오늘은 어떤 식사를 하셨나요?',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
+                    child: CustomText(
+                      message: '오늘은 어떤 식사를 하셨나요?',
+                      fontSize: 20,
+                      fontFamily: 'PyeojinGothicBold',
+                      color: Colors.black,
+                    )
                   ),
 
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, top: 12.0),
-                    child: Text(
-                      '식사 종류는 어떻게 되시나요?',
-                      style: TextStyle(
-                          fontSize: 16
-                      ),
-                    ),
+                    child: CustomText(
+                      message: '식사 종류는 어떻게 되시나요?',
+                      fontSize: 16,
+                      fontFamily: 'PyeojinGothicMedium',
+                      color: Colors.black,
+                    )
                   ),
 
                   Chips(
@@ -676,13 +676,12 @@ class _DietIState extends State<DietI> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 12.0),
-                child: Text(
-                  '종류를 선택해주세요!',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
+                child: CustomText(
+                  message: '종류를 선택해주세요!',
+                  fontSize: 20,
+                  fontFamily: 'PyeojinGothicBold',
+                  color: Colors.black
+                )
               ),
 
               Padding(

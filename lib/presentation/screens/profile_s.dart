@@ -9,6 +9,7 @@ import 'package:mydiet/presentation/controller/tip_c.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/utils/math.dart';
 import 'package:mydiet/presentation/widget/sizedbox/svg_sizedbox.dart';
+import 'package:mydiet/presentation/widget/text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileS extends StatefulWidget {
@@ -97,13 +98,11 @@ class _ProfileSState extends State<ProfileS> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  tip.title,
-                                  style: TextStyle(
+                                CustomText(
+                                    message: tip.title,
                                     fontSize: 12,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold
-                                  ),
+                                    fontFamily: 'PaperLogyMedium',
+                                    color: Colors.grey
                                 ),
 
                                 const Spacer(),
@@ -113,13 +112,11 @@ class _ProfileSState extends State<ProfileS> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "${tip.category} - ${tip.source}",
-                                        style: TextStyle(
+                                      child: CustomText(
+                                          message: "${tip.category} - ${tip.source}",
                                           fontSize: 11,
-                                          color: Const().buildColors()[2],
-                                          fontWeight: FontWeight.bold
-                                        ),
+                                          fontFamily: 'PaperLogyMedium',
+                                          color: Colors.grey
                                       ),
                                     ),
                                   ],
@@ -182,12 +179,13 @@ class _ProfileSState extends State<ProfileS> {
                                   child: Row(
                                     children: [
                                       Expanded(
-                                        child: Text(
-                                          diet.foodList[i].foodName.length > 13
-                                              ? "${diet.foodList[i].foodName.substring(0, 12)}..."
-                                              : diet.foodList[i].foodName,
-                                          style: const TextStyle(fontSize: 12),
-                                          overflow: TextOverflow.ellipsis,
+                                        child: CustomText(
+                                            message: diet.foodList[i].foodName.length > 13
+                                                ? "${diet.foodList[i].foodName.substring(0, 12)}..."
+                                                : diet.foodList[i].foodName,
+                                            fontSize: 12,
+                                            fontFamily: 'PaperLogyMedium',
+                                            color: Colors.grey
                                         ),
                                       ),
                                     ],

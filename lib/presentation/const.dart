@@ -77,7 +77,7 @@ class Const {
         title: ("홈"),
         activeColorPrimary: buildColors()[0],
         inactiveColorPrimary: buildColors()[1],
-        routeAndNavigatorSettings: buildRouteAndNaviSettings()
+        routeAndNavigatorSettings: buildRouteAndNaviSettings(),
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.add),
