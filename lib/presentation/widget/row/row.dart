@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/widget/text.dart';
 
 // 영양 성분 Row 위젯
 class DietInfoRow<T> extends StatefulWidget {
@@ -54,12 +55,11 @@ class _RowState extends State<DietInfoRow> {
       crossAxisAlignment: CrossAxisAlignment.start,
 
       children: [
-        Text(
-          widget.text,
-          style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey
-          ),
+        CustomText(
+          message: widget.text,
+          fontSize: 14,
+          fontFamily: "PyeojinGothicMedium",
+          color: Colors.black,
         ),
 
         Text(
@@ -82,14 +82,19 @@ class _DietRowState extends State<HomeDietRow> {
     return Row(
       children: [
         Expanded(
-          child: Text(
-            widget.label,
-            style: TextStyle(fontSize: 14, color: color),
+          child: CustomText(
+            message: widget.label,
+            fontSize: 14,
+            fontFamily: "PyeojinGothicMedium",
+            color: Colors.black,
           ),
         ),
-        Text(
-          widget.value,
-          style: TextStyle(fontSize: 14, color: color),
+
+        CustomText(
+          message: widget.value,
+          fontSize: 14,
+          fontFamily: "PyeojinGothicMedium",
+          color: Colors.black,
         ),
       ],
     );

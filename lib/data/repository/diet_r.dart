@@ -11,7 +11,14 @@ class DietRepository<T> {
     final data = response as List<dynamic>;
     onSuccess(data);
   }
-  
+
+  Future<void> fetchFavoriteDiet(String uuid, Function(List<dynamic>) onSuccess) async {
+    final response = await _client.from("Diet").select().eq("is_favorite", true);
+
+    final data = response as List<dynamic>;
+    onSuccess(data);
+  }
+
   Future<void> fetchDietWeekly(String uuid, Function(List<dynamic>) onSuccess) async {
     final response = await _client.rpc(
       "get_diet_weekly",

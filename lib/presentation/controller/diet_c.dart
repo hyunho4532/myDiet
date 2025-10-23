@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mydiet/data/repository/diet_r.dart';
 import 'package:mydiet/data/repository/food_r.dart';
@@ -20,6 +21,9 @@ class DietController extends GetxController {
   // 식단 관리
   var diets = <Diet>[].obs;
 
+  // 즐겨찾기 식단 관리
+  var favoriteDiets = <Diet>[].obs;
+
   // 비율 관리
   var ratios = <Ratio>[].obs;
 
@@ -34,12 +38,23 @@ class DietController extends GetxController {
 
   var selectedDate = DateTime.now().obs;
 
+  // 식단 조회
   Future<void> fetchDiet() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String uuid = prefs.getString("uuid")!;
 
     return DietRepository().fetchDiet(uuid, (data) {
       diets.value = data.map((e) => Diet.fromJson(e)).toList();
+    });
+  }
+
+  // 즐겨찾기한 식단 조회.
+  Future<void> fetchFavoriteDiet() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uuid = prefs.getString("uuid")!;
+
+    return DietRepository().fetchFavoriteDiet(uuid, (data) {
+      favoriteDiets.value = data.map((e) => Diet.fromJson(e)).toList();
     });
   }
 
@@ -117,6 +132,12 @@ class DietController extends GetxController {
   // 식단 추가
   void setFoodList(int id, Food food) {
     foods.add(food);
+  }
+
+  // 즐겨찾기 식단에서 식단 추가
+  void setFoodLists(List<Food> foodList, BuildContext context) {
+    foods.addAll(foodList);
+    Navigator.pop(context);
   }
 
   // 식단 삭제

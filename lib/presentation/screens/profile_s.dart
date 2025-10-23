@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -5,6 +7,9 @@ import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/controller/temp_user_c.dart';
 import 'package:mydiet/presentation/controller/tip_c.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/utils/math.dart';
+import 'package:mydiet/presentation/widget/sizedbox/svg_sizedbox.dart';
+import 'package:mydiet/presentation/widget/text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileS extends StatefulWidget {
@@ -32,7 +37,7 @@ class _ProfileSState extends State<ProfileS> {
     });
 
     tipController.fetchTip();
-    dietController.fetchDietWeekly();
+    dietController.fetchDiet();
   }
 
   @override
@@ -55,11 +60,14 @@ class _ProfileSState extends State<ProfileS> {
                     backgroundColor: Colors.grey[200], // 이미지 없을 때 배경색
                   ),
 
+                  const SizedBox(width: 8),
+
                   Text(
                     message,
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
+                      fontFamily: 'PyeojinGothicBold'
                     ),
                   ),
                 ],
@@ -90,13 +98,11 @@ class _ProfileSState extends State<ProfileS> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  tip.title,
-                                  style: TextStyle(
+                                CustomText(
+                                    message: tip.title,
                                     fontSize: 12,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold
-                                  ),
+                                    fontFamily: 'PaperLogyMedium',
+                                    color: Colors.grey
                                 ),
 
                                 const Spacer(),
@@ -106,13 +112,11 @@ class _ProfileSState extends State<ProfileS> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "${tip.category} - ${tip.source}",
-                                        style: TextStyle(
+                                      child: CustomText(
+                                          message: "${tip.category} - ${tip.source}",
                                           fontSize: 11,
-                                          color: Const().buildColors()[2],
-                                          fontWeight: FontWeight.bold
-                                        ),
+                                          fontFamily: 'PaperLogyMedium',
+                                          color: Colors.grey
                                       ),
                                     ),
                                   ],
@@ -130,11 +134,11 @@ class _ProfileSState extends State<ProfileS> {
               const SizedBox(height: 24),
 
               const Text(
-                "나의 일주일 식단 확인하기",
+                "나의 식단 확인하기",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey,
-                  fontWeight: FontWeight.bold,
+                  fontFamily: 'PyeojinGothicBold'
                 ),
               ),
 
@@ -149,11 +153,14 @@ class _ProfileSState extends State<ProfileS> {
                     crossAxisCount: 2,
                     mainAxisSpacing: 8,
                     crossAxisSpacing: 8,
-                    childAspectRatio: 1
+                    childAspectRatio: 0.70
                   ),
                   itemCount: dietController.diets.length,
                   itemBuilder: (context, index) {
                     final diet = dietController.diets[index];
+
+                    // 합계 계산
+                    final sumData = Math().sumArray(diet);
 
                     return GestureDetector(
                       onTap: () {
@@ -166,29 +173,58 @@ class _ProfileSState extends State<ProfileS> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              for (int i = 0; i < diet.foodList.length; i++)
+                              for (int i = 0; i < min(2, diet.foodList.length); i++)
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 1.0), // 줄 간격 조정
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset(
-                                        'icons/diet_icon.svg',
-                                        width: 24,
-                                        height: 24,
-                                      ),
-                                      const SizedBox(width: 2),
                                       Expanded(
-                                        child: Text(
-                                          diet.foodList[i].foodName.length > 13
-                                              ? "${diet.foodList[i].foodName.substring(0, 12)}..."
-                                              : diet.foodList[i].foodName,
-                                          style: const TextStyle(fontSize: 12),
-                                          overflow: TextOverflow.ellipsis,
+                                        child: CustomText(
+                                            message: diet.foodList[i].foodName.length > 13
+                                                ? "${diet.foodList[i].foodName.substring(0, 12)}..."
+                                                : diet.foodList[i].foodName,
+                                            fontSize: 12,
+                                            fontFamily: 'PaperLogyMedium',
+                                            color: Colors.grey
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
+
+                              const SizedBox(height: 6),
+
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgSizedBox(
+                                        path: 'icons/category/protein_category.svg',
+                                        data: sumData[1]
+                                    ),
+
+                                    SvgSizedBox(
+                                        path: 'icons/category/carbohy_category.svg',
+                                        data: sumData[2]
+                                    ),
+                                  ]
+                              ),
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgSizedBox(
+                                      path: 'icons/category/sugar_category.svg',
+                                      data: sumData[3]
+                                  ),
+
+                                  SvgSizedBox(
+                                      path: 'icons/category/fat_category.svg',
+                                      data: sumData[4]
+                                  )
+                                ],
+                              ),
 
                               const Spacer(),
 

@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/widget/text.dart';
 
 // 바 차트 전용 위젯
 class NutrientBarChart extends StatelessWidget {
@@ -45,8 +46,12 @@ class NutrientBarChart extends StatelessWidget {
                   if (index < 0 || index >= nutrientData.length) return const SizedBox();
                   return Padding(
                     padding: const EdgeInsets.only(top: 4),
-                    child: Text(nutrientData[index]['label'] as String,
-                        style: const TextStyle(fontSize: 12)),
+                    child: CustomText(
+                      message: nutrientData[index]['label'] as String,
+                      fontSize: 12,
+                      fontFamily: "PyeojinGothicMedium",
+                      color: Colors.black,
+                    )
                   );
                 },
               ),

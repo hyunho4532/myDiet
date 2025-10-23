@@ -11,7 +11,8 @@ class Const {
     return [
       Color(0xff2d67f4),
       Color(0xffb8b8b8),
-      Color(0xff9ac2ff)
+      Color(0xff9ac2ff),
+      Color(0xffffffff)
     ];
   }
 
@@ -76,7 +77,7 @@ class Const {
         title: ("홈"),
         activeColorPrimary: buildColors()[0],
         inactiveColorPrimary: buildColors()[1],
-        routeAndNavigatorSettings: buildRouteAndNaviSettings()
+        routeAndNavigatorSettings: buildRouteAndNaviSettings(),
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.add),

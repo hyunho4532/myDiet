@@ -8,6 +8,7 @@ import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/utils/format.dart';
 import 'package:mydiet/presentation/widget/chart/bar_chart.dart';
 import 'package:mydiet/presentation/widget/row/row.dart';
+import 'package:mydiet/presentation/widget/text.dart';
 
 class HomeS extends StatefulWidget {
   const HomeS({super.key});
@@ -54,15 +55,30 @@ class _HomeSState extends State<HomeS> {
                         onTap: () {
                           dietController.fetchDietDate('week');
                         },
-                        child: Text("최근 7일")
+                        child: CustomText(
+                          message: "최근 7일",
+                          fontSize: 14.0,
+                          fontFamily: "PyeojinGothicBold",
+                          color: Colors.black,
+                        )
                     ),
                     GestureDetector(
                         onTap: () {
                           dietController.fetchDietDate('month');
                         },
-                        child: Text("최근 30일")
+                        child: CustomText(
+                          message: "최근 30일",
+                          fontSize: 14.0,
+                          fontFamily: "PyeojinGothicBold",
+                          color: Colors.black,
+                        )
                     ),
-                    Text("직접 입력")
+                    CustomText(
+                      message: "직접 입력",
+                      fontSize: 14.0,
+                      fontFamily: "PyeojinGothicBold",
+                      color: Colors.black,
+                    )
                   ],
                 ),
 
@@ -99,11 +115,7 @@ class _HomeSState extends State<HomeS> {
                                 borderSide: const BorderSide(color: Colors.grey, width: 0),
                               ),
                             ),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black87,
-                            ),
+                            style: customTextStyle(12, "PyeojinGothicBold"),
                             onChanged: (DateTime? value) {
                               dietController.dietsDate[0].startDate = value;
                               dietController.fetchDietInfo(
