@@ -26,4 +26,18 @@ class WeightKcal {
   factory WeightKcal.fromJson(Map<String, dynamic> json) => _$WeightKcalFromJson(json);
 
   Map<String, dynamic> toJson() => _$WeightKcalToJson(this);
+
+  WeightKcal copyWith({
+    double? weight,
+    int? dietId,
+    DateTime? foodDate,
+    double? sumKcal,
+  }) {
+    return WeightKcal(
+      weight: weight ?? this.weight,
+      dietId: dietId ?? this.dietId,
+      foodDate: foodDate ?? this.foodDate,
+      sumKcal: sumKcal ?? this.sumKcal,
+    );
+  }
 }

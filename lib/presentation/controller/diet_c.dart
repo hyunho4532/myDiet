@@ -8,6 +8,7 @@ import 'package:mydiet/domain/food.dart';
 import 'package:mydiet/domain/weight_kcal.dart';
 import 'package:mydiet/domain/nutrient.dart';
 import 'package:mydiet/domain/ratio.dart';
+import 'package:mydiet/presentation/utils/math.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DietController extends GetxController {
@@ -21,6 +22,9 @@ class DietController extends GetxController {
 
   // 식단 관리
   var diets = <Diet>[].obs;
+
+  // 등록한 식단 조회
+  var singleDiets = <Diet>[].obs;
 
   // 즐겨찾기 식단 관리
   var favoriteDiets = <Diet>[].obs;
@@ -152,8 +156,32 @@ class DietController extends GetxController {
   }
 
   // 등록 함수
-  void insert(Diet diet, WeightKcal weightKcal) {
-    FoodRepository().insert(diet, weightKcal);
+  void insert(Diet diet) {
+    FoodRepository().insert(diet, (data) {
+      singleDiets.add(data);
+
+      final sumKcal = Math().sumBy(diet.foodList, (item) => item.energyKcal);
+
+      // 1kg 체중 변화는 7,700kcal 기준
+      const double kcalPerKg = 7700;
+
+      // 칼로리 계산 후 몸무게 계산
+      final double weightChange = sumKcal / kcalPerKg;
+
+      final weightKcal = WeightKcal(
+        weight: weightChange,
+        dietId: data.id!,
+        foodDate: selectedDate.value,
+        sumKcal: sumKcal,
+      );
+
+      weightKcalInsert(weightKcal);
+    });
+  }
+
+  // weightKcal 등록 함수
+  void weightKcalInsert(WeightKcal weightKcal) {
+    FoodRepository().weightKcalInsert(weightKcal);
   }
 
   // 수정 함수

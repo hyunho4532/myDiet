@@ -160,23 +160,9 @@ class _DietIState extends State<DietI> {
                       isFavorite: false
                     );
 
-                    final sumKcal = Math().sumBy(diet.foodList, (item) => item.energyKcal);
-
-                    // 1kg 체중 변화는 7,700kcal 기준
-                    const double kcalPerKg = 7700;
-
-                    // 칼로리 계산 후 몸무게 계산
-                    final double weightChange = sumKcal / kcalPerKg;
-
-                    final weightKcal = WeightKcal(
-                      weight: weightChange,
-                      dietId: diet.id!,
-                      foodDate: diets.selectedDate.value,
-                      sumKcal: sumKcal
-                    );
+                    diets.insert(diet);
 
                     SetToast().bar(context, "식단이 등록되었습니다!");
-                    diets.insert(diet, weightKcal);
                   }
                   Get.back();
                 },

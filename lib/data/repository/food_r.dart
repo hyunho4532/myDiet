@@ -16,14 +16,20 @@ class FoodRepository<T> {
   }
 
   // 등록을 하면서, 식단 등록과 몸무게 기반 칼로리 계산을 한 후 등록한다.
-  void insert(Diet diet, WeightKcal weightKcal) async {
-    await _client
+  void insert(Diet diet, Function(Diet) onSuccess) async {
+    final response = await _client
         .from('Diet')
-        .insert(diet);
-    
+        .insert(diet)
+        .select()
+        .single();
+
+    onSuccess(Diet.fromJson(response));
+  }
+
+  void weightKcalInsert(WeightKcal weightKcal) async {
     await _client
-      .from("WeightKcal")
-      .insert(weightKcal);
+        .from("WeightKcal")
+        .insert(weightKcal);
   }
 
   void edit(Diet diet) async {
