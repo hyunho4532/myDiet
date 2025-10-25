@@ -597,6 +597,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  moform:
+    dependency: "direct main"
+    description:
+      name: moform
+      sha256: "2f72ec9d0258a6c8e92b3e840b5a61344bd31721498a04d08576cfc4e1452531"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.9"
   package_config:
     dependency: transitive
     description:

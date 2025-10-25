@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:moform/moform.dart';
 import 'package:mydiet/domain/common_code.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/mois.dart';
@@ -203,10 +204,14 @@ class _DietIState extends State<DietI> {
         // 칼로리 계산
         final sumKcal = diets.foods.fold(0.0, (sum, item) => sum += item.energyKcal);
 
+        // 플래그 변수로 팝업창 한번만 실행
+        bool _isPopupShown = false;
+
         final widget = switch (constController.types.value) {
           'TYPE_DIET' => Builder(
             builder: (context) {
-              if (height == 0) {
+              if (height == 0 && !_isPopupShown) {
+                _isPopupShown = true;
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   showModalBottomSheet(
                     context: context,
@@ -221,12 +226,30 @@ class _DietIState extends State<DietI> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "먼저! 식단을 등록하기 전\n간단히 정보를 입력해주세요!",
-                              style: TextStyle(
-                                fontFamily: 'PyeojinGothicBold',
-                                fontSize: 16,
-                              ),
+                            CustomText(
+                              message: '먼저 식단을 등록하기전\n간단한 정보를 입력해주세요!',
+                              fontSize: 16,
+                              fontFamily: 'PyeojinGothicBold',
+                              color: Colors.black,
+                            ),
+
+                            const SizedBox(height: 24),
+
+                            CustomText(
+                              message: "1. 먼저 몸무게를 입력해주세요!",
+                              fontSize: 14,
+                              fontFamily: 'PyeojinGothicMedium',
+                              color: Colors.black
+                            ),
+
+                            IntField(
+                              value: 0,
+                              onChanged: (value) {
+
+                              },
+                              builder: (context, controller) {
+                                
+                              },
                             )
                           ],
                         ),
