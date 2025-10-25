@@ -99,6 +99,8 @@ class _DietIState extends State<DietI> {
     types.fetchCommon("TYPE");
     foodKind.fetchCommon('FOOD_KIND');
     foodAmount.fetchCommon('FOOD_AMOUNT');
+
+
   }
   int tagAmount = 1;
 
@@ -287,6 +289,7 @@ class _DietIState extends State<DietI> {
                                     // 모달 창 닫기
                                     Navigator.of(context).pop();
                                     tempUserController.insertHeight(height);
+                                    _isPopupShown = true;
                                   },
                                 ),
                               )

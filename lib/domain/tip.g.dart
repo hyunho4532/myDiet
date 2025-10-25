@@ -12,7 +12,9 @@ Tip _$TipFromJson(Map<String, dynamic> json) => Tip(
   linkUrl: json['link_url'] as String? ?? '',
   source: json['source'] as String? ?? '',
   category: json['category'] as String? ?? '',
-  createdAt: DateTime.parse(json['created_at'] as String),
+  createdAt: json['created_at'] == null
+      ? ''
+      : DateTime.parse(json['created_at'] as String),
 );
 
 Map<String, dynamic> _$TipToJson(Tip instance) => <String, dynamic>{
