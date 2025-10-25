@@ -10,9 +10,17 @@ class HeightKcal {
   @JsonKey(name: 'food_date')
   final DateTime foodDate;
 
+  @JsonKey(name: 'diet_id')
+  final int dietId;
+
+  @JsonKey(name: 'sum_kcal')
+  final double sumKcal;
+
   HeightKcal({
     required this.height,
-    required this.foodDate
+    required this.foodDate,
+    required this.dietId,
+    required this.sumKcal
   });
 
   factory HeightKcal.fromJson(Map<String, dynamic> json) => _$HeightKcalFromJson(json);

@@ -11,6 +11,11 @@ class TempUserController extends GetxController {
     return androidDeviceInfo;
   }
 
+  Future<void> fetchTempUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uuid = prefs.getString("uuid")!;
+  }
+
   void insertTempUser(String deviceId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("uuid", deviceId);

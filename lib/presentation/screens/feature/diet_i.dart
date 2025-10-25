@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moform/moform.dart';
 import 'package:mydiet/domain/common_code.dart';
 import 'package:mydiet/domain/diet.dart';
+import 'package:mydiet/domain/height_kcal.dart';
 import 'package:mydiet/domain/mois.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/common_c.dart';
@@ -159,8 +160,17 @@ class _DietIState extends State<DietI> {
                       isFavorite: false
                     );
 
+                    final sumKcal = Math().sumBy(diet.foodList, (item) => item.energyKcal);
+
+                    final heightKcal = HeightKcal(
+                      height: height,
+                      dietId: diet.id!,
+                      foodDate: diets.selectedDate.value,
+                      sumKcal: sumKcal
+                    );
+
                     SetToast().bar(context, "식단이 등록되었습니다!");
-                    diets.insert(diet);
+                    diets.insert(diet, heightKcal);
                   }
                   Get.back();
                 },

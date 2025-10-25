@@ -5,6 +5,7 @@ import 'package:mydiet/data/repository/food_r.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/diet_date.dart';
 import 'package:mydiet/domain/food.dart';
+import 'package:mydiet/domain/height_kcal.dart';
 import 'package:mydiet/domain/nutrient.dart';
 import 'package:mydiet/domain/ratio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -151,8 +152,8 @@ class DietController extends GetxController {
   }
 
   // 등록 함수
-  void insert(Diet diet) {
-    FoodRepository().insert(diet);
+  void insert(Diet diet, HeightKcal heightKcal) {
+    FoodRepository().insert(diet, heightKcal);
   }
 
   // 수정 함수
