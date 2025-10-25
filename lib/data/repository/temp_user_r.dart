@@ -3,7 +3,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TempUserRepository<T> {
   final SupabaseClient _client = Supabase.instance.client;
-  
+
+  Future<void> fetchTempUser(String uuid, Function(List<dynamic>) onSuccess) async {
+    final response = await _client.from("TempUser").select().eq("device_id", uuid);
+
+    final data = response as List<dynamic>;
+    onSuccess(data);
+  }
+
   void insert(String deviceId) async {
     await _client.rpc(
       "set_temp_user",

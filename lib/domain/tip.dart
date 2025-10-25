@@ -20,7 +20,7 @@ class Tip {
   final String category;
 
   @JsonKey(name: 'created_at', defaultValue: '')
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   Tip({
     required this.title,

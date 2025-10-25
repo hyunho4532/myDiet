@@ -1,11 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'height_kcal.g.dart';
+part 'weight_kcal.g.dart';
 
 @JsonSerializable()
-class HeightKcal {
-  @JsonKey(name: 'height', defaultValue: 0)
-  final int height;
+class WeightKcal {
+  @JsonKey(name: 'weight', defaultValue: 0)
+  final double weight;
 
   @JsonKey(name: 'food_date')
   final DateTime foodDate;
@@ -16,14 +16,14 @@ class HeightKcal {
   @JsonKey(name: 'sum_kcal')
   final double sumKcal;
 
-  HeightKcal({
-    required this.height,
+  WeightKcal({
+    required this.weight,
     required this.foodDate,
     required this.dietId,
     required this.sumKcal
   });
 
-  factory HeightKcal.fromJson(Map<String, dynamic> json) => _$HeightKcalFromJson(json);
+  factory WeightKcal.fromJson(Map<String, dynamic> json) => _$WeightKcalFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HeightKcalToJson(this);
+  Map<String, dynamic> toJson() => _$WeightKcalToJson(this);
 }

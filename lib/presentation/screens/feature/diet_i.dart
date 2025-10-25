@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moform/moform.dart';
 import 'package:mydiet/domain/common_code.dart';
 import 'package:mydiet/domain/diet.dart';
-import 'package:mydiet/domain/height_kcal.dart';
+import 'package:mydiet/domain/weight_kcal.dart';
 import 'package:mydiet/domain/mois.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/common_c.dart';
@@ -72,6 +72,8 @@ class _DietIState extends State<DietI> {
 
     initPrefs();
 
+    tempUserController.fetchTempUser();
+
     id = (Get.arguments ?? 0) as int;
 
     if (id != 0) {
@@ -100,8 +102,6 @@ class _DietIState extends State<DietI> {
     types.fetchCommon("TYPE");
     foodKind.fetchCommon('FOOD_KIND');
     foodAmount.fetchCommon('FOOD_AMOUNT');
-
-
   }
   int tagAmount = 1;
 
@@ -162,15 +162,21 @@ class _DietIState extends State<DietI> {
 
                     final sumKcal = Math().sumBy(diet.foodList, (item) => item.energyKcal);
 
-                    final heightKcal = HeightKcal(
-                      height: height,
+                    // 1kg 체중 변화는 7,700kcal 기준
+                    const double kcalPerKg = 7700;
+
+                    // 칼로리 계산 후 몸무게 계산
+                    final double weightChange = sumKcal / kcalPerKg;
+
+                    final weightKcal = WeightKcal(
+                      weight: weightChange,
                       dietId: diet.id!,
                       foodDate: diets.selectedDate.value,
                       sumKcal: sumKcal
                     );
 
                     SetToast().bar(context, "식단이 등록되었습니다!");
-                    diets.insert(diet, heightKcal);
+                    diets.insert(diet, weightKcal);
                   }
                   Get.back();
                 },
