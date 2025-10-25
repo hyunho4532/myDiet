@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:moform/moform.dart';
 import 'package:mydiet/domain/common_code.dart';
@@ -60,6 +61,9 @@ class _DietIState extends State<DietI> {
   int tagKind = 1;
 
   int height = 0;
+
+  // 플래그 변수로 팝업창 한번만 실행
+  bool _isPopupShown = false;
 
   @override
   void initState() {
@@ -200,12 +204,8 @@ class _DietIState extends State<DietI> {
       ),
 
       body: Obx(() {
-
         // 칼로리 계산
         final sumKcal = diets.foods.fold(0.0, (sum, item) => sum += item.energyKcal);
-
-        // 플래그 변수로 팝업창 한번만 실행
-        bool _isPopupShown = false;
 
         final widget = switch (constController.types.value) {
           'TYPE_DIET' => Builder(
@@ -221,47 +221,73 @@ class _DietIState extends State<DietI> {
                       height: MediaQuery.of(context).size.height * 0.9,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomText(
-                              message: '먼저 식단을 등록하기전\n간단한 정보를 입력해주세요!',
-                              fontSize: 16,
-                              fontFamily: 'PyeojinGothicBold',
-                              color: Colors.black,
-                            ),
+                        child: SafeArea(
+                          minimum: const EdgeInsets.only(bottom: 24),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      message: '먼저 식단을 등록하기전\n간단한 정보를 입력해주세요!',
+                                      fontSize: 16,
+                                      fontFamily: 'PyeojinGothicBold',
+                                      color: Colors.black,
+                                    ),
 
-                            const SizedBox(height: 24),
+                                    const SizedBox(height: 24),
 
-                            CustomText(
-                              message: "1. 먼저 몸무게를 입력해주세요!",
-                              fontSize: 14,
-                              fontFamily: 'PyeojinGothicMedium',
-                              color: Colors.black
-                            ),
+                                    CustomText(
+                                        message: "1. 먼저 몸무게를 입력해주세요!",
+                                        fontSize: 14,
+                                        fontFamily: 'PyeojinGothicMedium',
+                                        color: Colors.black
+                                    ),
 
-                            const SizedBox(height: 6),
+                                    const SizedBox(height: 6),
 
-                            IntField(
-                              value: 0,
-                              onChanged: (value) {
+                                    IntField(
+                                      value: 0,
+                                      onChanged: (value) {
 
-                              },
-                              builder: (context, controller) {
-                                return TextField(
-                                  controller: controller,
-                                  decoration: const InputDecoration(
-                                    labelText: '몸무게 입력 (kg)'
+                                      },
+                                      builder: (context, controller) {
+                                        return TextField(
+                                          controller: controller,
+                                          decoration: const InputDecoration(
+                                              labelText: '몸무게 입력 (kg)'
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  ]
+                                ),
+                              ),
+
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: AnimatedButton(
+                                  width: 160,
+                                  text: '등록 완료!',
+                                  selectedTextColor: Colors.grey,
+                                  transitionType: TransitionType.BOTTOM_TO_TOP,
+                                  textStyle: TextStyle(
+                                    fontSize: 18,
+                                    letterSpacing: 5,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500
                                   ),
-                                );
-                              },
-                            ),
+                                  onPress: () {
 
-                            const SizedBox(height: 24),
-
-
-                          ],
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     )
