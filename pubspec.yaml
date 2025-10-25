@@ -99,6 +99,9 @@ dependencies:
   # TextEditingController를 관리하는 오버헤드 없이 반응형, 모델 기반, 유형
   moform: ^0.2.9
 
+  # 애니메이션 버튼 라이브러리
+  flutter_animated_button: ^2.0.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

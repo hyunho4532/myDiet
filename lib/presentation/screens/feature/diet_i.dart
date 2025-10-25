@@ -215,7 +215,6 @@ class _DietIState extends State<DietI> {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   showModalBottomSheet(
                     context: context,
-                    isScrollControlled: true,
                     backgroundColor: Const().buildColors()[3],
                     builder: (_) => SizedBox(
                       width: MediaQuery.of(context).size.width,
@@ -242,15 +241,26 @@ class _DietIState extends State<DietI> {
                               color: Colors.black
                             ),
 
+                            const SizedBox(height: 6),
+
                             IntField(
                               value: 0,
                               onChanged: (value) {
 
                               },
                               builder: (context, controller) {
-                                
+                                return TextField(
+                                  controller: controller,
+                                  decoration: const InputDecoration(
+                                    labelText: '몸무게 입력 (kg)'
+                                  ),
+                                );
                               },
-                            )
+                            ),
+
+                            const SizedBox(height: 24),
+
+
                           ],
                         ),
                       ),
