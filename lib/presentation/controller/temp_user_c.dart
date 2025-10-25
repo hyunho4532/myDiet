@@ -31,4 +31,11 @@ class TempUserController extends GetxController {
 
     return await TempUserRepository().validateHeight(deviceId);
   }
+
+  void insertHeight(int height) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String deviceId = prefs.getString("uuid")!;
+
+    return await TempUserRepository().insertHeight(height, deviceId);
+  }
 }

@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TempUserRepository<T> {
   final SupabaseClient _client = Supabase.instance.client;
+  
   void insert(String deviceId) async {
     await _client.rpc(
       "set_temp_user",
@@ -35,5 +36,11 @@ class TempUserRepository<T> {
     );
 
     return response;
+  }
+  
+  Future<void> insertHeight(int height, String deviceId) async {
+    await _client.from("TempUser").update({
+      "height": height
+    }).eq("device_id", deviceId);
   }
 }
