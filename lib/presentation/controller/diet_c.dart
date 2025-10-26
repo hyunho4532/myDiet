@@ -5,6 +5,7 @@ import 'package:mydiet/data/repository/food_r.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/diet_date.dart';
 import 'package:mydiet/domain/food.dart';
+import 'package:mydiet/domain/recent_week_height.dart';
 import 'package:mydiet/domain/weight_kcal.dart';
 import 'package:mydiet/domain/nutrient.dart';
 import 'package:mydiet/domain/ratio.dart';
@@ -40,6 +41,9 @@ class DietController extends GetxController {
 
   // 음식 리스트 관리
   var foods = <Food>[].obs;
+
+  // 최근 일주일 치 몸무게 관리
+  var recentWeekHeights = <RecentWeekHeight>[].obs;
 
   var selectedDate = DateTime.now().obs;
 
@@ -81,6 +85,16 @@ class DietController extends GetxController {
     return DietRepository().fetchDietDate(type, (data) {
       dietsDate.value = data.map((e) => DietDate.fromJson(e)).toList();
       fetchDietInfo(dietsDate[0].startDate, dietsDate[0].endDate);
+    });
+  }
+
+  /// 최근 일주일 치 몸무게 조회
+  Future<void> fetchRecentWeekHeights() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uuid = prefs.getString("uuid")!;
+
+    return DietRepository().fetchRecentWeekHeight(uuid, (data) {
+      recentWeekHeights.value = data.map((e) => RecentWeekHeight.fromJson(e)).toList();
     });
   }
 

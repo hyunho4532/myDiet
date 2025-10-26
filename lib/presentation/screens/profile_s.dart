@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/controller/temp_user_c.dart';
 import 'package:mydiet/presentation/controller/tip_c.dart';
-import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/utils/math.dart';
 import 'package:mydiet/presentation/widget/sizedbox/svg_sizedbox.dart';
 import 'package:mydiet/presentation/widget/text.dart';
@@ -43,6 +42,7 @@ class _ProfileSState extends State<ProfileS> {
 
     tipController.fetchTip();
     dietController.fetchDiet();
+    dietController.fetchRecentWeekHeights();
   }
 
   @override
