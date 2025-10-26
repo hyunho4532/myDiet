@@ -6,7 +6,7 @@ class DietRepository<T> {
   final SupabaseClient _client = Supabase.instance.client;
 
   Future<void> fetchDiet(String uuid, Function(List<dynamic>) onSuccess) async {
-    final response = await _client.from("Diet").select().eq("user_id", uuid);
+    final response = await _client.from("Diet").select().eq("user_id", uuid).order("is_favorite", ascending: false);
 
     final data = response as List<dynamic>;
     onSuccess(data);
