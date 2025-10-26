@@ -31,6 +31,12 @@ class FoodRepository<T> {
         .from("WeightKcal")
         .insert(weightKcal);
   }
+  
+  void weightKcalUserEdit(double weight, String uuid) async {
+    await _client.from("TempUser").update({
+      "weight": weight
+    }).eq("device_id", uuid);
+  }
 
   void edit(Diet diet) async {
     await _client

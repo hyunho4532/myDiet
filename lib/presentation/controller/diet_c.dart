@@ -193,6 +193,8 @@ class DietController extends GetxController {
         sumKcal: sumKcal,
       );
 
+      weightKcalUserEdit(weightChange, uuid);
+
       weightKcalInsert(weightKcal);
     });
   }
@@ -200,6 +202,11 @@ class DietController extends GetxController {
   // weightKcal 등록 함수
   void weightKcalInsert(WeightKcal weightKcal) {
     FoodRepository().weightKcalInsert(weightKcal);
+  }
+
+  // weight 정보 수정 함수
+  void weightKcalUserEdit(double weight, String uuid) {
+    FoodRepository().weightKcalUserEdit(weight, uuid);
   }
 
   // 수정 함수

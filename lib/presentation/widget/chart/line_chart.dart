@@ -1,8 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:mydiet/domain/recent_week_height.dart';
 import 'package:mydiet/presentation/const.dart';
+import 'package:mydiet/presentation/widget/text.dart';
 
 class HeightLineChart extends StatelessWidget {
   const HeightLineChart({
@@ -16,23 +18,30 @@ class HeightLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LineChart(
-      sampleData1,
-      duration: const Duration(milliseconds: 250),
+    return Obx(() => LineChart(
+        sampleData1,
+        duration: const Duration(milliseconds: 250),
+      ),
     );
   }
 
-  LineChartData get sampleData1 => LineChartData(
-    lineTouchData: lineTouchData1,
-    gridData: gridData,
-    titlesData: titlesData1,
-    borderData: borderData,
-    lineBarsData: lineBarsData1,
-    minX: 0,
-    maxX: 14,
-    maxY: 4,
-    minY: 0,
-  );
+  LineChartData get sampleData1 {
+    final weights = data.map((e) => e.weight).toList();
+    final minWeight = weights.isEmpty ? 0 : weights.reduce((a, b) => a < b ? a : b);
+    final maxWeight = weights.isEmpty ? 0 : weights.reduce((a, b) => a > b ? a : b);
+
+    return LineChartData(
+      lineTouchData: lineTouchData1,
+      gridData: gridData,
+      titlesData: titlesData1,
+      borderData: borderData,
+      lineBarsData: lineBarsData1,
+      minX: 0,
+      maxX: (data.length - 1).toDouble(),
+      minY: minWeight - 1,
+      maxY: maxWeight + 1,
+    );
+  }
 
   LineTouchData get lineTouchData1 => LineTouchData(
     handleBuiltInTouches: true,
@@ -85,6 +94,7 @@ class HeightLineChart extends StatelessWidget {
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
+
     String text = switch (value.toInt()) {
       1 => '0',
       2 => '75',
@@ -121,12 +131,17 @@ class HeightLineChart extends StatelessWidget {
     }
 
     final date = data[index].foodDate;
-    final formattedDate = "${date.month}/${date.day}";
+    final formattedDate = "${date.day}일";
 
     return SideTitleWidget(
       meta: meta,
       space: 10,
-      child: Text(formattedDate, style: style),
+      child: CustomText(
+        message: formattedDate,
+        fontSize: 16,
+        fontFamily: 'PyeojinGothicMedium',
+        color: Colors.grey,
+      ),
     );
   }
 
@@ -159,13 +174,14 @@ class HeightLineChart extends StatelessWidget {
     belowBarData: BarAreaData(show: false),
     spots: List.generate(
       data.length,
-        (index) {
-          final item = data[index];
+          (index) {
+        final item = data[index];
 
-          print("LineChart: ${item.weight}, ${index.toDouble()}");
+        // 소수점 한자리 기준으로 계산
+        final roundedWeight = double.parse(item.weight.toStringAsFixed(2));
 
-          return FlSpot(item.weight, index.toDouble());
-        }
+        return FlSpot(index.toDouble(), roundedWeight);
+      },
     ),
   );
 }
