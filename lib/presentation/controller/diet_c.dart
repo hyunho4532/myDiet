@@ -156,7 +156,7 @@ class DietController extends GetxController {
   }
 
   // 등록 함수
-  void insert(Diet diet) {
+  void insert(Diet diet, int weight) {
     FoodRepository().insert(diet, (data) {
       singleDiets.add(data);
 
@@ -166,7 +166,7 @@ class DietController extends GetxController {
       const double kcalPerKg = 7700;
 
       // 칼로리 계산 후 몸무게 계산
-      final double weightChange = sumKcal / kcalPerKg;
+      final double weightChange = weight + (sumKcal / kcalPerKg);
 
       final weightKcal = WeightKcal(
         weight: weightChange,
