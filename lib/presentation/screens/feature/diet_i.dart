@@ -61,7 +61,7 @@ class _DietIState extends State<DietI> {
 
   int tagKind = 1;
 
-  int height = 0;
+  double weight = 0;
 
   // 플래그 변수로 팝업창 한번만 실행
   bool _isPopupShown = false;
@@ -110,7 +110,7 @@ class _DietIState extends State<DietI> {
   }
 
   Future<void> initData() async {
-    height = await tempUserController.validateHeight();
+    weight = await tempUserController.validateWeight();
 
     // 즐겨 찾기한 식단 조회
     diets.fetchFavoriteDiet();
@@ -214,7 +214,7 @@ class _DietIState extends State<DietI> {
         final widget = switch (constController.types.value) {
           'TYPE_DIET' => Builder(
             builder: (context) {
-              if (height == 0 && !_isPopupShown) {
+              if (weight == 0 && !_isPopupShown) {
                 _isPopupShown = true;
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   showModalBottomSheet(
@@ -257,9 +257,9 @@ class _DietIState extends State<DietI> {
                                     const SizedBox(height: 6),
 
                                     IntField(
-                                      value: height,
+                                      value: weight.toInt(),
                                       onChanged: (value) {
-                                        height = value;
+                                        weight = value as double;
                                       },
                                       builder: (context, controller) {
                                         return TextField(
@@ -290,7 +290,7 @@ class _DietIState extends State<DietI> {
                                   onPress: () {
                                     // 모달 창 닫기
                                     Navigator.of(context).pop();
-                                    tempUserController.insertHeight(height);
+                                    tempUserController.insertWeight(weight);
                                     _isPopupShown = true;
                                   },
                                 ),
