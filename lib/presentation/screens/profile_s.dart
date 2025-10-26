@@ -272,7 +272,8 @@ class _ProfileSState extends State<ProfileS> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16, left: 6),
                   child: HeightLineChart(
-                      isShowingMainData: isShowingMainData
+                    isShowingMainData: isShowingMainData,
+                    data: dietController.recentWeekHeights
                   ),
                 ),
               )

@@ -1,16 +1,23 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:mydiet/domain/recent_week_height.dart';
 import 'package:mydiet/presentation/const.dart';
 
 class HeightLineChart extends StatelessWidget {
-  const HeightLineChart({super.key, required this.isShowingMainData});
+  const HeightLineChart({
+    super.key,
+    required this.isShowingMainData,
+    required this.data
+  });
 
   final bool isShowingMainData;
+  final RxList<RecentWeekHeight> data;
 
   @override
   Widget build(BuildContext context) {
     return LineChart(
-      isShowingMainData ? sampleData1 : sampleData2,
+      sampleData1,
       duration: const Duration(milliseconds: 250),
     );
   }
@@ -24,18 +31,6 @@ class HeightLineChart extends StatelessWidget {
     minX: 0,
     maxX: 14,
     maxY: 4,
-    minY: 0,
-  );
-
-  LineChartData get sampleData2 => LineChartData(
-    lineTouchData: lineTouchData2,
-    gridData: gridData,
-    titlesData: titlesData2,
-    borderData: borderData,
-    lineBarsData: lineBarsData2,
-    minX: 0,
-    maxX: 14,
-    maxY: 6,
     minY: 0,
   );
 
@@ -63,9 +58,7 @@ class HeightLineChart extends StatelessWidget {
   );
 
   List<LineChartBarData> get lineBarsData1 => [
-    lineChartBarData1_1,
-    lineChartBarData1_2,
-    lineChartBarData1_3,
+    lineChartBarData1_1
   ];
 
   LineTouchData get lineTouchData2 => const LineTouchData(
@@ -87,23 +80,15 @@ class HeightLineChart extends StatelessWidget {
     ),
   );
 
-  List<LineChartBarData> get lineBarsData2 => [
-    lineChartBarData2_1,
-    lineChartBarData2_2,
-    lineChartBarData2_3,
-  ];
-
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
     String text = switch (value.toInt()) {
-      1 => '1m',
-      2 => '2m',
-      3 => '3m',
-      4 => '5m',
-      5 => '6m',
+      1 => '0',
+      2 => '75',
+      3 => '150',
       _ => '',
     };
     return SideTitleWidget(
@@ -128,17 +113,20 @@ class HeightLineChart extends StatelessWidget {
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
-    String text = switch (value.toInt()) {
-      2 => 'SEPT',
-      7 => 'OCT',
-      12 => 'DEC',
-      _ => '',
-    };
+
+    final index = value.toInt();
+
+    if (index < 0 || index >= data.length) {
+      return const SizedBox.shrink();
+    }
+
+    final date = data[index].foodDate;
+    final formattedDate = "${date.month}/${date.day}";
 
     return SideTitleWidget(
       meta: meta,
       space: 10,
-      child: Text(text, style: style),
+      child: Text(formattedDate, style: style),
     );
   }
 
@@ -169,106 +157,15 @@ class HeightLineChart extends StatelessWidget {
     isStrokeCapRound: true,
     dotData: const FlDotData(show: false),
     belowBarData: BarAreaData(show: false),
-    spots: const [
-      FlSpot(1, 1),
-      FlSpot(3, 1.5),
-      FlSpot(5, 1.4),
-      FlSpot(7, 3.4),
-      FlSpot(10, 2),
-      FlSpot(12, 2.2),
-      FlSpot(13, 1.8),
-    ],
-  );
+    spots: List.generate(
+      data.length,
+        (index) {
+          final item = data[index];
 
-  LineChartBarData get lineChartBarData1_2 => LineChartBarData(
-    isCurved: true,
-    color: AppColors.contentColorPink,
-    barWidth: 8,
-    isStrokeCapRound: true,
-    dotData: const FlDotData(show: false),
-    belowBarData: BarAreaData(
-      show: false,
-      color: AppColors.contentColorPink.withValues(alpha: 0),
+          print("LineChart: ${item.weight}, ${index.toDouble()}");
+
+          return FlSpot(item.weight, index.toDouble());
+        }
     ),
-    spots: const [
-      FlSpot(1, 1),
-      FlSpot(3, 2.8),
-      FlSpot(7, 1.2),
-      FlSpot(10, 2.8),
-      FlSpot(12, 2.6),
-      FlSpot(13, 3.9),
-    ],
-  );
-
-  LineChartBarData get lineChartBarData1_3 => LineChartBarData(
-    isCurved: true,
-    color: AppColors.contentColorCyan,
-    barWidth: 8,
-    isStrokeCapRound: true,
-    dotData: const FlDotData(show: false),
-    belowBarData: BarAreaData(show: false),
-    spots: const [
-      FlSpot(1, 2.8),
-      FlSpot(3, 1.9),
-      FlSpot(6, 3),
-      FlSpot(10, 1.3),
-      FlSpot(13, 2.5),
-    ],
-  );
-
-  LineChartBarData get lineChartBarData2_1 => LineChartBarData(
-    isCurved: true,
-    curveSmoothness: 0,
-    color: AppColors.contentColorGreen.withValues(alpha: 0.5),
-    barWidth: 4,
-    isStrokeCapRound: true,
-    dotData: const FlDotData(show: false),
-    belowBarData: BarAreaData(show: false),
-    spots: const [
-      FlSpot(1, 1),
-      FlSpot(3, 4),
-      FlSpot(5, 1.8),
-      FlSpot(7, 5),
-      FlSpot(10, 2),
-      FlSpot(12, 2.2),
-      FlSpot(13, 1.8),
-    ],
-  );
-
-  LineChartBarData get lineChartBarData2_2 => LineChartBarData(
-    isCurved: true,
-    color: AppColors.contentColorPink.withValues(alpha: 0.5),
-    barWidth: 4,
-    isStrokeCapRound: true,
-    dotData: const FlDotData(show: false),
-    belowBarData: BarAreaData(
-      show: true,
-      color: AppColors.contentColorPink.withValues(alpha: 0.2),
-    ),
-    spots: const [
-      FlSpot(1, 1),
-      FlSpot(3, 2.8),
-      FlSpot(7, 1.2),
-      FlSpot(10, 2.8),
-      FlSpot(12, 2.6),
-      FlSpot(13, 3.9),
-    ],
-  );
-
-  LineChartBarData get lineChartBarData2_3 => LineChartBarData(
-    isCurved: true,
-    curveSmoothness: 0,
-    color: AppColors.contentColorCyan.withValues(alpha: 0.5),
-    barWidth: 2,
-    isStrokeCapRound: true,
-    dotData: const FlDotData(show: true),
-    belowBarData: BarAreaData(show: false),
-    spots: const [
-      FlSpot(1, 3.8),
-      FlSpot(3, 1.9),
-      FlSpot(6, 5),
-      FlSpot(10, 3.3),
-      FlSpot(13, 4.5),
-    ],
   );
 }
