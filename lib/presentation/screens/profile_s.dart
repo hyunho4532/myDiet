@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/controller/temp_user_c.dart';
 import 'package:mydiet/presentation/controller/tip_c.dart';
@@ -258,7 +259,7 @@ class _ProfileSState extends State<ProfileS> {
               const SizedBox(height: 24),
 
               const Text(
-                "몸무게 변화",
+                "현재 내 상태는?",
                 style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
@@ -276,6 +277,29 @@ class _ProfileSState extends State<ProfileS> {
                     data: dietController.recentWeekHeights
                   ),
                 ),
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CustomText(
+                    message: "몸무게",
+                    fontSize: 11.0,
+                    fontFamily: "PyeojinGothicMedium",
+                    color: Colors.grey,
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  Container(
+                    width: 26,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      color: Const().buildColors()[2], // 색상
+                      borderRadius: BorderRadius.circular(20), // 둥근 정도
+                    ),
+                  )
+                ],
               )
             ],
           ),
