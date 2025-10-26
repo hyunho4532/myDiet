@@ -20,6 +20,8 @@ class ProfileS extends StatefulWidget {
 }
 
 class _ProfileSState extends State<ProfileS> {
+  late bool isShowingMainData;
+
   final TempUserController tempUserController = Get.put(TempUserController());
   final TipController tipController = Get.put(TipController());
   final DietController dietController = Get.put(DietController(0));
@@ -29,6 +31,8 @@ class _ProfileSState extends State<ProfileS> {
   @override
   void initState() {
     super.initState();
+
+    isShowingMainData = true;
 
     tempUserController.validateTempUser().then((value) {
       setState(() {
@@ -249,6 +253,17 @@ class _ProfileSState extends State<ProfileS> {
                   },
                 ),
               )),
+
+              const SizedBox(height: 24),
+
+              const Text(
+                "몸무게 변화",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                    fontFamily: 'PyeojinGothicBold'
+                ),
+              )
             ],
           ),
         ),
