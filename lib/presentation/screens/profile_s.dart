@@ -11,6 +11,7 @@ import 'package:mydiet/presentation/utils/math.dart';
 import 'package:mydiet/presentation/widget/sizedbox/svg_sizedbox.dart';
 import 'package:mydiet/presentation/widget/text.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mydiet/presentation/widget/chart/line_chart.dart';
 
 class ProfileS extends StatefulWidget {
   const ProfileS({super.key});
@@ -262,6 +263,17 @@ class _ProfileSState extends State<ProfileS> {
                     fontSize: 16,
                     color: Colors.grey,
                     fontFamily: 'PyeojinGothicBold'
+                ),
+              ),
+
+              const SizedBox(height: 6),
+
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16, left: 6),
+                  child: HeightLineChart(
+                      isShowingMainData: isShowingMainData
+                  ),
                 ),
               )
             ],

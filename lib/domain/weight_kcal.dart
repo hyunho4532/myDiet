@@ -4,6 +4,9 @@ part 'weight_kcal.g.dart';
 
 @JsonSerializable()
 class WeightKcal {
+  @JsonKey(name: 'user_id')
+  final String userId;
+
   @JsonKey(name: 'weight', defaultValue: 0)
   final double weight;
 
@@ -17,6 +20,7 @@ class WeightKcal {
   final double sumKcal;
 
   WeightKcal({
+    required this.userId,
     required this.weight,
     required this.foodDate,
     required this.dietId,
@@ -26,18 +30,4 @@ class WeightKcal {
   factory WeightKcal.fromJson(Map<String, dynamic> json) => _$WeightKcalFromJson(json);
 
   Map<String, dynamic> toJson() => _$WeightKcalToJson(this);
-
-  WeightKcal copyWith({
-    double? weight,
-    int? dietId,
-    DateTime? foodDate,
-    double? sumKcal,
-  }) {
-    return WeightKcal(
-      weight: weight ?? this.weight,
-      dietId: dietId ?? this.dietId,
-      foodDate: foodDate ?? this.foodDate,
-      sumKcal: sumKcal ?? this.sumKcal,
-    );
-  }
 }

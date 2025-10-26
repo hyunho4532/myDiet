@@ -156,7 +156,10 @@ class DietController extends GetxController {
   }
 
   // 등록 함수
-  void insert(Diet diet, int weight) {
+  void insert(Diet diet, int weight) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uuid = prefs.getString("uuid")!;
+
     FoodRepository().insert(diet, (data) {
       singleDiets.add(data);
 
@@ -169,6 +172,7 @@ class DietController extends GetxController {
       final double weightChange = weight + (sumKcal / kcalPerKg);
 
       final weightKcal = WeightKcal(
+        userId: uuid,
         weight: weightChange,
         dietId: data.id!,
         foodDate: selectedDate.value,
