@@ -170,7 +170,7 @@ class DietController extends GetxController {
   }
 
   // 등록 함수
-  void insert(Diet diet, int weight) async {
+  void insert(Diet diet, double weight) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String uuid = prefs.getString("uuid")!;
 

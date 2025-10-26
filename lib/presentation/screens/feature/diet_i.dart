@@ -160,7 +160,7 @@ class _DietIState extends State<DietI> {
                       isFavorite: false
                     );
 
-                    diets.insert(diet, tempUserController.tempUser[0].height);
+                    diets.insert(diet, tempUserController.tempUser[0].weight);
 
                     SetToast().bar(context, "식단이 등록되었습니다!");
                   }
