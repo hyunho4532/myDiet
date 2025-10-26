@@ -119,11 +119,6 @@ class HeightLineChart extends StatelessWidget {
   );
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 16,
-    );
-
     final index = value.toInt();
 
     if (index < 0 || index >= data.length) {
@@ -138,7 +133,7 @@ class HeightLineChart extends StatelessWidget {
       space: 10,
       child: CustomText(
         message: formattedDate,
-        fontSize: 16,
+        fontSize: 12,
         fontFamily: 'PyeojinGothicMedium',
         color: Colors.grey,
       ),
@@ -152,13 +147,16 @@ class HeightLineChart extends StatelessWidget {
     getTitlesWidget: bottomTitleWidgets,
   );
 
-  FlGridData get gridData => const FlGridData(show: false);
+  FlGridData get gridData => FlGridData(
+    show: true,
+    drawVerticalLine: true, // 세로선 표시
+    drawHorizontalLine: true, // 가로선 표시
+  );
 
   FlBorderData get borderData => FlBorderData(
     show: true,
     border: Border(
-      bottom: BorderSide(
-          color: AppColors.primary.withValues(alpha: 0.2), width: 4),
+      bottom: BorderSide(color: Colors.transparent),
       left: const BorderSide(color: Colors.transparent),
       right: const BorderSide(color: Colors.transparent),
       top: const BorderSide(color: Colors.transparent),
@@ -167,10 +165,10 @@ class HeightLineChart extends StatelessWidget {
 
   LineChartBarData get lineChartBarData1_1 => LineChartBarData(
     isCurved: true,
-    color: AppColors.contentColorGreen,
-    barWidth: 8,
+    color: Const().buildColors()[2],
+    barWidth: 4,
     isStrokeCapRound: true,
-    dotData: const FlDotData(show: false),
+    dotData: FlDotData(show: true),
     belowBarData: BarAreaData(show: false),
     spots: List.generate(
       data.length,
