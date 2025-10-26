@@ -115,7 +115,7 @@ class _HomeSState extends State<HomeS> {
                                 borderSide: const BorderSide(color: Colors.grey, width: 0),
                               ),
                             ),
-                            style: customTextStyle(12, "PyeojinGothicBold"),
+                            style: customTextStyle(11, "PyeojinGothicBold"),
                             onChanged: (DateTime? value) {
                               dietController.dietsDate[0].startDate = value;
                               dietController.fetchDietInfo(
@@ -168,11 +168,7 @@ class _HomeSState extends State<HomeS> {
                                 borderSide: const BorderSide(color: Colors.grey, width: 0),
                               ),
                             ),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black87,
-                            ),
+                            style: customTextStyle(11, "PyeojinGothicBold"),
                             onChanged: (DateTime? value) {
                               dietController.dietsDate[0].endDate = value;
                               dietController.fetchDietInfo(

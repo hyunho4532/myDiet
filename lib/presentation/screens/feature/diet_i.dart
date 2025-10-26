@@ -1,8 +1,11 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:moform/moform.dart';
 import 'package:mydiet/domain/common_code.dart';
 import 'package:mydiet/domain/diet.dart';
+import 'package:mydiet/domain/weight_kcal.dart';
 import 'package:mydiet/domain/mois.dart';
 import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/common_c.dart';
@@ -60,11 +63,16 @@ class _DietIState extends State<DietI> {
 
   int height = 0;
 
+  // 플래그 변수로 팝업창 한번만 실행
+  bool _isPopupShown = false;
+
   @override
   void initState() {
     super.initState();
 
     initPrefs();
+
+    tempUserController.fetchTempUser();
 
     id = (Get.arguments ?? 0) as int;
 
@@ -152,8 +160,9 @@ class _DietIState extends State<DietI> {
                       isFavorite: false
                     );
 
+                    diets.insert(diet, tempUserController.tempUser[0].height);
+
                     SetToast().bar(context, "식단이 등록되었습니다!");
-                    diets.insert(diet);
                   }
                   Get.back();
                 },
@@ -199,36 +208,95 @@ class _DietIState extends State<DietI> {
       ),
 
       body: Obx(() {
-
         // 칼로리 계산
         final sumKcal = diets.foods.fold(0.0, (sum, item) => sum += item.energyKcal);
 
         final widget = switch (constController.types.value) {
           'TYPE_DIET' => Builder(
             builder: (context) {
-              if (height == 0) {
+              if (height == 0 && !_isPopupShown) {
+                _isPopupShown = true;
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   showModalBottomSheet(
                     context: context,
-                    isScrollControlled: true,
+                    isDismissible: false,
+                    isScrollControlled: false,
                     backgroundColor: Const().buildColors()[3],
                     builder: (_) => SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "먼저! 식단을 등록하기 전\n간단히 정보를 입력해주세요!",
-                              style: TextStyle(
-                                fontFamily: 'PyeojinGothicBold',
-                                fontSize: 16,
+                        child: SafeArea(
+                          minimum: const EdgeInsets.only(bottom: 24),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      message: '먼저 식단을 등록하기전\n간단한 정보를 입력해주세요!',
+                                      fontSize: 16,
+                                      fontFamily: 'PyeojinGothicBold',
+                                      color: Colors.black,
+                                    ),
+
+                                    const SizedBox(height: 24),
+
+                                    CustomText(
+                                        message: "1. 먼저 몸무게를 입력해주세요!",
+                                        fontSize: 14,
+                                        fontFamily: 'PyeojinGothicMedium',
+                                        color: Colors.black
+                                    ),
+
+                                    const SizedBox(height: 6),
+
+                                    IntField(
+                                      value: height,
+                                      onChanged: (value) {
+                                        height = value;
+                                      },
+                                      builder: (context, controller) {
+                                        return TextField(
+                                          controller: controller,
+                                          decoration: const InputDecoration(
+                                              labelText: '몸무게 입력 (kg)'
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  ]
+                                ),
                               ),
-                            )
-                          ],
+
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: AnimatedButton(
+                                  width: 160,
+                                  text: '등록 완료!',
+                                  selectedTextColor: Colors.grey,
+                                  transitionType: TransitionType.BOTTOM_TO_TOP,
+                                  textStyle: TextStyle(
+                                    fontSize: 18,
+                                    letterSpacing: 5,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500
+                                  ),
+                                  onPress: () {
+                                    // 모달 창 닫기
+                                    Navigator.of(context).pop();
+                                    tempUserController.insertHeight(height);
+                                    _isPopupShown = true;
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     )
