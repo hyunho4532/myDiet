@@ -45,7 +45,8 @@ class DietController extends GetxController {
   // 최근 일주일 치 몸무게 관리
   var recentWeekHeights = <RecentWeekHeight>[].obs;
 
-  var selectedDate = DateTime.now().obs;
+  Rx<DateTime> focusedDay = DateTime.now().obs;
+  Rx<DateTime> selectedDate = DateTime.now().obs;
 
   // 식단 조회
   Future<void> fetchDiet() async {

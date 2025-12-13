@@ -55,14 +55,18 @@ class _DietSState extends State<DietS> with TickerProviderStateMixin {
                   locale: 'ko_KR',
                   firstDay: DateTime.utc(2010, 10, 16),
                   lastDay: DateTime.utc(2030, 3, 14),
-                  focusedDay: constController.selectedDate.value,
+                  focusedDay: dietController.focusedDay.value,
                   headerStyle: HeaderStyle(
                       formatButtonVisible: false,
                       titleCentered: true
                   ),
                   selectedDayPredicate: (day) => isSameDay(constController.selectedDate.value, day),
-                  onDaySelected: (day, _ ) {
-                    constController.selectedDate.value = day;
+                  onDaySelected: (day, focusedDay) {
+                    dietController.focusedDay.value = day;
+                    constController.selectedDate.value = focusedDay;
+                  },
+                  onPageChanged: (focusedDay) {
+                    dietController.focusedDay.value = focusedDay;
                   },
                   calendarBuilders: CalendarBuilders(
                     markerBuilder: (context, day, events) => buildMarker(context, day, dietController, moisController),
