@@ -175,6 +175,8 @@ class HeightLineChart extends StatelessWidget {
           (index) {
         final item = data[index];
 
+        print("LineChart: ${item.weight}");
+
         // 소수점 한자리 기준으로 계산
         final roundedWeight = double.parse(item.weight.toStringAsFixed(2));
 

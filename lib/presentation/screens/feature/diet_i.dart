@@ -259,7 +259,9 @@ class _DietIState extends State<DietI> {
                                     IntField(
                                       value: weight.toInt(),
                                       onChanged: (value) {
-                                        weight = value as double;
+                                        setState(() {
+                                          weight = value.toDouble();
+                                        });
                                       },
                                       builder: (context, controller) {
                                         return TextField(

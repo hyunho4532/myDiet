@@ -16,6 +16,8 @@ void main() async {
 
   await findSystemLocale();
 
+  print("Main: ${dotenv.env['SUPABASE_URL']}");
+
   // 2) Supabase 초기화
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
