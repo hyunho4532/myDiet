@@ -37,17 +37,17 @@ class TempUserController extends GetxController {
     return await TempUserRepository().validate(deviceId);
   }
 
-  Future<int> validateHeight() async {
+  Future<double> validateWeight() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceId = prefs.getString("uuid")!;
 
-    return await TempUserRepository().validateHeight(deviceId);
+    return await TempUserRepository().validateWeight(deviceId);
   }
 
-  void insertHeight(int height) async {
+  void insertWeight(double weight) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceId = prefs.getString("uuid")!;
 
-    return await TempUserRepository().insertHeight(height, deviceId);
+    return await TempUserRepository().insertWeight(weight, deviceId);
   }
 }

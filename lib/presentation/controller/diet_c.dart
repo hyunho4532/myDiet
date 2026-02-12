@@ -5,6 +5,7 @@ import 'package:mydiet/data/repository/food_r.dart';
 import 'package:mydiet/domain/diet.dart';
 import 'package:mydiet/domain/diet_date.dart';
 import 'package:mydiet/domain/food.dart';
+import 'package:mydiet/domain/recent_week_height.dart';
 import 'package:mydiet/domain/weight_kcal.dart';
 import 'package:mydiet/domain/nutrient.dart';
 import 'package:mydiet/domain/ratio.dart';
@@ -41,7 +42,11 @@ class DietController extends GetxController {
   // 음식 리스트 관리
   var foods = <Food>[].obs;
 
-  var selectedDate = DateTime.now().obs;
+  // 최근 일주일 치 몸무게 관리
+  var recentWeekHeights = <RecentWeekHeight>[].obs;
+
+  Rx<DateTime> focusedDay = DateTime.now().obs;
+  Rx<DateTime> selectedDate = DateTime.now().obs;
 
   // 식단 조회
   Future<void> fetchDiet() async {
@@ -81,6 +86,16 @@ class DietController extends GetxController {
     return DietRepository().fetchDietDate(type, (data) {
       dietsDate.value = data.map((e) => DietDate.fromJson(e)).toList();
       fetchDietInfo(dietsDate[0].startDate, dietsDate[0].endDate);
+    });
+  }
+
+  /// 최근 일주일 치 몸무게 조회
+  Future<void> fetchRecentWeekHeights() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uuid = prefs.getString("uuid")!;
+
+    return DietRepository().fetchRecentWeekHeight(uuid, (data) {
+      recentWeekHeights.value = data.map((e) => RecentWeekHeight.fromJson(e)).toList();
     });
   }
 
@@ -156,7 +171,10 @@ class DietController extends GetxController {
   }
 
   // 등록 함수
-  void insert(Diet diet, int weight) {
+  void insert(Diet diet, double weight) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uuid = prefs.getString("uuid")!;
+
     FoodRepository().insert(diet, (data) {
       singleDiets.add(data);
 
@@ -169,11 +187,14 @@ class DietController extends GetxController {
       final double weightChange = weight + (sumKcal / kcalPerKg);
 
       final weightKcal = WeightKcal(
+        userId: uuid,
         weight: weightChange,
         dietId: data.id!,
         foodDate: selectedDate.value,
         sumKcal: sumKcal,
       );
+
+      weightKcalUserEdit(weightChange, uuid);
 
       weightKcalInsert(weightKcal);
     });
@@ -182,6 +203,11 @@ class DietController extends GetxController {
   // weightKcal 등록 함수
   void weightKcalInsert(WeightKcal weightKcal) {
     FoodRepository().weightKcalInsert(weightKcal);
+  }
+
+  // weight 정보 수정 함수
+  void weightKcalUserEdit(double weight, String uuid) {
+    FoodRepository().weightKcalUserEdit(weight, uuid);
   }
 
   // 수정 함수

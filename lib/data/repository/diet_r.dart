@@ -6,7 +6,7 @@ class DietRepository<T> {
   final SupabaseClient _client = Supabase.instance.client;
 
   Future<void> fetchDiet(String uuid, Function(List<dynamic>) onSuccess) async {
-    final response = await _client.from("Diet").select().eq("user_id", uuid);
+    final response = await _client.from("Diet").select().eq("user_id", uuid).order("is_favorite", ascending: false);
 
     final data = response as List<dynamic>;
     onSuccess(data);
@@ -14,6 +14,18 @@ class DietRepository<T> {
 
   Future<void> fetchFavoriteDiet(String uuid, Function(List<dynamic>) onSuccess) async {
     final response = await _client.from("Diet").select().eq("is_favorite", true);
+
+    final data = response as List<dynamic>;
+    onSuccess(data);
+  }
+
+  Future<void> fetchRecentWeekHeight(String uuid, Function(List<dynamic>) onSuccess) async {
+    final response = await _client.rpc(
+        "get_recent_week_weights",
+        params: {
+          "p_user_id": uuid
+        }
+    );
 
     final data = response as List<dynamic>;
     onSuccess(data);

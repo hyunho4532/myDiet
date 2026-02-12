@@ -34,9 +34,9 @@ class TempUserRepository<T> {
     return message;
   }
 
-  Future<int> validateHeight(String deviceId) async {
+  Future<double> validateWeight(String deviceId) async {
     final response = await _client.rpc(
-      "validate_height",
+      "validate_weight",
       params: {
         "p_device_id": deviceId
       },
@@ -45,9 +45,9 @@ class TempUserRepository<T> {
     return response;
   }
   
-  Future<void> insertHeight(int height, String deviceId) async {
+  Future<void> insertWeight(double weight, String deviceId) async {
     await _client.from("TempUser").update({
-      "height": height
+      "weight": weight
     }).eq("device_id", deviceId);
   }
 }

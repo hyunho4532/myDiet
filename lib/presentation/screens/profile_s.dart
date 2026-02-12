@@ -3,14 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/controller/diet_c.dart';
 import 'package:mydiet/presentation/controller/temp_user_c.dart';
 import 'package:mydiet/presentation/controller/tip_c.dart';
-import 'package:mydiet/presentation/const.dart';
 import 'package:mydiet/presentation/utils/math.dart';
 import 'package:mydiet/presentation/widget/sizedbox/svg_sizedbox.dart';
 import 'package:mydiet/presentation/widget/text.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mydiet/presentation/widget/chart/line_chart.dart';
 
 class ProfileS extends StatefulWidget {
   const ProfileS({super.key});
@@ -20,6 +21,8 @@ class ProfileS extends StatefulWidget {
 }
 
 class _ProfileSState extends State<ProfileS> {
+  late bool isShowingMainData;
+
   final TempUserController tempUserController = Get.put(TempUserController());
   final TipController tipController = Get.put(TipController());
   final DietController dietController = Get.put(DietController(0));
@@ -30,6 +33,8 @@ class _ProfileSState extends State<ProfileS> {
   void initState() {
     super.initState();
 
+    isShowingMainData = true;
+
     tempUserController.validateTempUser().then((value) {
       setState(() {
         message = value;
@@ -38,6 +43,7 @@ class _ProfileSState extends State<ProfileS> {
 
     tipController.fetchTip();
     dietController.fetchDiet();
+    dietController.fetchRecentWeekHeights();
   }
 
   @override
@@ -249,6 +255,52 @@ class _ProfileSState extends State<ProfileS> {
                   },
                 ),
               )),
+
+              const SizedBox(height: 24),
+
+              const Text(
+                "현재 내 상태는?",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                    fontFamily: 'PyeojinGothicBold'
+                ),
+              ),
+
+              const SizedBox(height: 6),
+
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16, left: 6),
+                  child: HeightLineChart(
+                    isShowingMainData: isShowingMainData,
+                    data: dietController.recentWeekHeights
+                  ),
+                ),
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CustomText(
+                    message: "몸무게",
+                    fontSize: 11.0,
+                    fontFamily: "PyeojinGothicMedium",
+                    color: Colors.grey,
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  Container(
+                    width: 26,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      color: Const().buildColors()[2], // 색상
+                      borderRadius: BorderRadius.circular(20), // 둥근 정도
+                    ),
+                  )
+                ],
+              )
             ],
           ),
         ),

@@ -13,8 +13,8 @@ class TempUser {
   final String? deviceId;
 
   // 몸무게
-  @JsonKey(name: 'height')
-  final int height;
+  @JsonKey(name: 'weight')
+  final double weight;
 
   // 사용자 코드
   @JsonKey(name: 'user_code')
@@ -27,7 +27,7 @@ class TempUser {
   TempUser({
     this.id,
     required this.deviceId,
-    required this.height,
+    required this.weight,
     required this.userCode,
     required this.createdAt
   });
